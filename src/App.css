@@ -1,4 +1,7 @@
 /* PAGE */
+* {
+  box-sizing: border-box;
+}
 
 body,
 .pure-g [class*=pure-u] {
