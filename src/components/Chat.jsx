@@ -6,10 +6,10 @@ import SendMessage from './SendMessage';
 
 const stub = [...Array(20)].map((u, i) => u = { id: i, text: `Text${i}`, author: 'Dr Who', date: Date.now() })
 
-export default function Sidebar(props) {
+export default function Sidebar({name = 'JOE', avatar = './images/joe.png'}) {
   return (
     <Card style={{width: 'calc(66% - 10px)'}}>
-      <CardHeader title='JOE' avatar='./images/joe.png' />
+      <CardHeader title={name} avatar={avatar} />
       <Divider />
       <CardTitle title="Last messages" style={{textAlign: 'center'}}/>
       <CardText style={{height: 'calc(100vh - 248px)', overflowY: 'scroll'}}>

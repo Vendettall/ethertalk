@@ -3,11 +3,11 @@ import UserPanel from './UserPanel';
 import UsersList from './UsersList';
 import Paper from 'material-ui/Paper'
 
-export default function Sidebar(props) {
+export default function Sidebar({userInfo, allUsers}) {
   return (
     <Paper style={{width: '33%'}}>
-      <UserPanel name={props.userInfo.name} avatar={props.userInfo.avatar} />
-      <UsersList invites={props.userInfo.invites} allUsers={props.allUsers} />
+      <UserPanel name={userInfo.name} avatar={userInfo.avatar} />
+      <UsersList invites={userInfo.invites} allUsers={allUsers} />
     </Paper>
   );
 }

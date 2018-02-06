@@ -3,17 +3,12 @@ import Avatar from 'material-ui/Avatar';
 import AppBar from 'material-ui/AppBar';
 import InviteUser from './InviteUser'
 
-function handleClick() {
-  alert('onClick triggered on the title component');
-}
-
-export default function UserPanel(props) {
+export default function UserPanel({name, avatar}) {
   return (
     <AppBar
-      title={props.name}
+      title={name}
       iconElementRight={<InviteUser />}
-      iconElementLeft={<Avatar src={props.avatar} />}
-      onRightIconButtonClick={handleClick}
+      iconElementLeft={<Avatar src={avatar} />}
       style={{boxShadow: 'none'}}
     />
   );

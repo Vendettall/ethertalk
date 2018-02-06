@@ -8,19 +8,19 @@ import getWeb3 from './utils/getWeb3'
 import Sidebar from './components/Sidebar'
 import Chat from './components/Chat'
 
-import './css/oswald.css'
-import './css/open-sans.css'
-import './css/pure-min.css'
+import './assets/css/oswald.css'
+import './assets/css/open-sans.css'
+import './assets/css/pure-min.css'
 import './App.css'
 
 const stub = {
   currentUser: {
     id: 0,
     name: 'Joe',
-    avatar: '/images/joe.png',
-    invites: [...Array(5)].map((u, i) =>u = { id: i*3, name: `User${i*3}`, avatar: `/images/user${i*3}.png` })
+    avatar: '/assets/images/joe.png',
+    invites: [...Array(5)].map((u, i) =>u = { id: i*3, name: `User${i*3}`, avatar: `/assets/images/user${i*3}.png` })
   },
-  allUsers: [...Array(20)].map((u, i) => u = { id: i, name: `User${i}`, avatar: `/images/user${i*3}.png` })
+  allUsers: [...Array(20)].map((u, i) => u = { id: i, name: `User${i}`, avatar: `/assets/images/user${i*3}.png` })
 }
 
 class App extends Component {
