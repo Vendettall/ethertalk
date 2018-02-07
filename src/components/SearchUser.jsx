@@ -1,10 +1,10 @@
-import React from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
+import React from 'react'
+import AutoComplete from 'material-ui/AutoComplete'
 
 export default class SearchUser extends React.Component {
     state = {
       dataSource: [],
-    };
+    }
   
     handleUpdateInput = (value) => {
       this.setState({
@@ -13,8 +13,8 @@ export default class SearchUser extends React.Component {
           value + value,
           value + value + value,
         ],
-      });
-    };
+      })
+    }
   
     render() {
       return (
@@ -24,7 +24,7 @@ export default class SearchUser extends React.Component {
           onUpdateInput={this.handleUpdateInput}
           fullWidth={true}
         />
-      );
+      )
     }
   }
   

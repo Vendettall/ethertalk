@@ -6,7 +6,7 @@ import getWeb3 from './utils/getWeb3'
 
 //components
 import Sidebar from './components/Sidebar'
-import Chat from './components/Chat'
+import ChatView from './containers/ChatView'
 
 import './assets/css/oswald.css'
 import './assets/css/open-sans.css'
@@ -17,10 +17,8 @@ const stub = {
   currentUser: {
     id: 0,
     name: 'Joe',
-    avatar: '/assets/images/joe.png',
-    invites: [...Array(5)].map((u, i) =>u = { id: i*3, name: `User${i*3}`, avatar: `/assets/images/user${i*3}.png` })
-  },
-  allUsers: [...Array(20)].map((u, i) => u = { id: i, name: `User${i}`, avatar: `/assets/images/user${i*3}.png` })
+    avatar: '/assets/images/joe.png'
+  }
 }
 
 class App extends Component {
@@ -87,8 +85,8 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div style={{display: 'flex', justifyContent: 'space-between', padding: '20px', height: '100vh', boxSizing: 'border-box'}}>
-          <Sidebar userInfo={stub.currentUser} allUsers={stub.allUsers} />
-          <Chat />
+          <Sidebar userInfo={stub.currentUser} />
+          <ChatView />
         </div>
       </MuiThemeProvider>
     );
