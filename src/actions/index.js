@@ -70,3 +70,10 @@ export const updateMessageText = text => {
     text
   }
 }
+
+export const initCurrentUser = user => {
+  return {
+    type: 'INIT_CURRENT_USER',
+    user
+  }
+}

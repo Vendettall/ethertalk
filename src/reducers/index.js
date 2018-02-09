@@ -5,6 +5,8 @@ import invitations from './invitations'
 import contacts from './contacts'
 import chatView from './chatView'
 import messages from './messages'
+import currentUser from './currentUser'
+import { routerReducer } from 'react-router-redux'
 
 const chatApp = combineReducers({
   inviteUserForm,
@@ -12,7 +14,9 @@ const chatApp = combineReducers({
   invitations,
   contacts,
   chatView,
-  messages
+  messages,
+  currentUser,
+  routerReducer
 })
 
 export default chatApp

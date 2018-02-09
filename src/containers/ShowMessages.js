@@ -3,9 +3,8 @@ import { addMessage, updateMessageText } from '../actions'
 import Messages from '../components/Messages'
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
-    avatar: 'avatar.jpg',// state.currentUser.avatar
+    avatar: state.currentUser.avatar,
     text: state.messages.text,
     messages: state.messages.messages,
   }

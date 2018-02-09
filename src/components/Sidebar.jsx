@@ -3,10 +3,10 @@ import UserPanel from './UserPanel'
 import VisibleUsersList from '../containers/VisibleUsersList'
 import Paper from 'material-ui/Paper'
 
-export default function Sidebar({userInfo}) {
+export default function Sidebar({user}) {
   return (
     <Paper style={{width: '33%'}}>
-      <UserPanel name={userInfo.name} avatar={userInfo.avatar} />
+      <UserPanel name={user.name} avatar={user.avatar} />
       <VisibleUsersList />
     </Paper>
   )
