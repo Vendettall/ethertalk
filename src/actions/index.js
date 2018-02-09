@@ -77,3 +77,17 @@ export const initCurrentUser = user => {
     user
   }
 }
+
+export const updateUserName = name => {
+  return {
+    type: 'UPDATE_USER_NAME',
+    name
+  }
+}
+
+export const updateUserAvatar = avatar => {
+  return {
+    type: 'UPDATE_USER_AVATAR',
+    avatar
+  }
+}

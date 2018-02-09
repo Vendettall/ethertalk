@@ -1,5 +1,4 @@
 import React from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 
 //components
@@ -17,12 +16,10 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <MuiThemeProvider>
-        <div style={{display: 'flex', justifyContent: 'space-between', padding: '20px', height: '100vh', boxSizing: 'border-box'}}>
-          <Sidebar user={this.props.user} />
-          <ChatView />
-        </div>
-      </MuiThemeProvider>
+      <div style={{display: 'flex', justifyContent: 'space-between', padding: '20px', height: '100vh', boxSizing: 'border-box'}}>
+        <Sidebar user={this.props.user} />
+        <ChatView />
+      </div>
     )
   }
 }

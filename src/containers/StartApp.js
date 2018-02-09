@@ -13,11 +13,14 @@ const currentUser = () => {
       .then((accounts) => { // Search for account with registered user. If not found - register with 0 account
         let found = accounts.find((value) => value.user != null)
         if (found) {
+          console.log("HERE")
           api.Accounts.instance().currentAccount = found.id
           return found
         } else {
+          console.log("WHERE")
           let account = accounts[0]
-          return api.Registry.instance().register().then((user) => {
+          return api.UserRegistry.instance().register().then((user) => {
+            console.log('USER', user)
             account.user = user
             return account
           })
