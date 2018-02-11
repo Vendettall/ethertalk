@@ -1,11 +1,8 @@
-const stub = {
-  1: { id: 1, name: 'User1', avatar: '/images/avatar1.jpg' },
-  2: { id: 2, name: 'User2', avatar: '/images/avatar2.jpg' },
-  3: { id: 3, name: 'User3', avatar: '/images/avatar3.jpg' }
-}
-
-export default function contacts(state = stub, action) {
+export default function contacts(state = {}, action) {
   switch (action.type) {
+    case 'INIT_CONTACTS': {
+      return action.contacts
+    }
     case 'ADD_CONTACT': {
       return {
         ...state,

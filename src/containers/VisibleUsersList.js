@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { setVisibilityFilter, setChatView, showMessageHistory } from '../actions'
+import { setVisibilityFilter, setChatView } from '../actions'
+import { showMessageHistory } from '../actions/messages'
 import UsersList from '../components/UsersList'
 
 const getVisibleUsers = (invitations, contacts, filter) => {

@@ -1,11 +1,40 @@
 import { connect } from 'react-redux'
-import { updateUserName, updateUserAvatar } from '../actions'
+import { updateUserName, updateUserAvatar } from '../actions/currentUser'
 import { push } from 'react-router-redux'
 import RegistrationForm from '../components/RegistrationForm'
-import getBase64 from '../utils/imageToBase64'
+import API from '../api'
+import getWeb3 from '../utils/getWeb3'
+
+function register(id, name, avatar, dispatch){
+  console.log(id)
+  getWeb3.then((web3) => {
+    let api = API(web3)
+    api.UserRegistry.instance().getUser(id).then((user) => {
+      // TODO: bag
+      user.setProfile(name, avatar)
+      dispatch(push('/'))
+      return
+    })
+  })
+}
+
+function updateAvatar(avatar, dispatch) {
+  getWeb3.then((web3) => {
+    // let api = API(web3)
+    // TODO: bag
+    // web3.bzz.upload(avatar).then((hash) => {
+    // api.Swarm.instance().uploadFile(avatar).then((hash) => {
+    //   console.log(hash, "HASH")
+    //   dispatch(updateUserAvatar(hash))
+    //   return
+    // })
+    dispatch(updateUserAvatar('avatar'))
+  })
+}
 
 const mapStateToProps = state => {
   return {
+    id: state.currentUser.id,
     avatar: state.currentUser.avatar,
     name: state.currentUser.name
   }
@@ -16,17 +45,11 @@ const mapDispatchToProps = dispatch => {
     updateName: name => {
       dispatch(updateUserName(name))
     },
-    updateAvatar: avatar => {
-      getBase64(avatar['0']).then(base64 => dispatch(updateUserAvatar(base64)))
-    },
+    updateAvatar: avatar => updateAvatar(avatar['0'], dispatch),
     emitUploadClick: () => {
       document.getElementById('upload_avatar').click()
     },
-    register: (name, avatar) => {
-      //TODO: use setProfile(name, avatar)
-      console.log("REGISTERED")
-      dispatch(push('/'))
-    }
+    register: (id, name, avatar) => register(id, name, avatar)
   }
 }
 

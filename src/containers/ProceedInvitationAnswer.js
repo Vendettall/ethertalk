@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-import { deleteInvitation, addContact, setChatView, showMessageHistory } from '../actions'
+import { setChatView } from '../actions'
+import { deleteInvitation } from '../actions/invitations'
+import { showMessageHistory } from '../actions/messages'
+import { addContact } from '../actions/contacts'
 import ShowInvitation from '../components/ShowInvitation'
 
 const mapStateToProps = (state, ownProps) => {

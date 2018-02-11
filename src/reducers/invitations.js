@@ -1,11 +1,7 @@
-const stub =  {
-  4: { id: 4, name: 'User4', avatar: '/images/avatar4.jpg', isMy: false },
-  5: { id: 5, name: 'User5', avatar: '/images/avatar5.jpg', isMy: true },
-  6: { id: 6, name: 'User6', avatar: '/images/avatar6.jpg', isMy: false }
-}
-
-export default function invitations(state = stub, action) {
+export default function invitations(state = {}, action) {
   switch (action.type) {
+    case 'INIT_INVITATIONS':
+      return action.invitations
     case 'ADD_INVITATION':
       return {
         ...state,
