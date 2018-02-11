@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { initCurrentUser, updateUserId } from '../actions/currentUser'
+import { updateCurrentUser, setApi } from '../actions/general'
 import { initContacts } from '../actions/contacts'
 import { initInvitations } from '../actions/invitations'
 import API from '../api'
@@ -59,11 +60,12 @@ function initUser(dispatch){
   // See utils/getWeb3 for more info.
   getWeb3.then((web3) => {
     let api = API(web3)
+    dispatch(setApi(api)) // init api in general state
     api.Accounts.instance().getAccounts()
       .then((accounts) => { // Search for account with registered user. If not found - register with 0 account
         let accountWithUser = accounts.find((value) => value.user != null)
         if (accountWithUser) {
-          api.Accounts.instance().currentAccount = accountWithUser.id
+          dispatch(updateCurrentUser(accountWithUser.user)) // init user in general state
           dispatch(initCurrentUser(convertToStateUser(accountWithUser.user))) // init currentUser state
           getContacts(accountWithUser.user).then(c => dispatch(initContacts(c))) // init contacts state
           getInvitations(accountWithUser.user).then(i => dispatch(initInvitations(i))) // init invitations state
@@ -72,7 +74,8 @@ function initUser(dispatch){
           let account = accounts[0]
           return api.UserRegistry.instance().register().then((user) => {
             account.user = user
-            dispatch(updateUserId(user.id))
+            dispatch(updateCurrentUser(user)) // init user in general state
+            dispatch(updateUserId(user.id)) // init currentUser id in state
             dispatch(push('/registration'))
             return
           })
