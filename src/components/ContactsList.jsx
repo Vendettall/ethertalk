@@ -2,15 +2,15 @@ import React from 'react'
 import Avatar from 'material-ui/Avatar'
 import {List, ListItem} from 'material-ui/List'
 
-export default function UserList({userList, onListItemClick}) {
+export default function UserList({contactsList, onListItemClick}) {
   return (
     <List style={{height: 'calc(100vh - 152px)', overflowY: 'scroll'}}>
-      {userList.map((user) =>
+      {contactsList.map((contact) =>
         <ListItem
-          primaryText={user.name}
-          leftAvatar={<Avatar src={user.avatar} />}
-          onClick={() => onListItemClick(user.id)}
-          key={user.id}
+          primaryText={contact.name}
+          leftAvatar={<Avatar src={contact.avatar} />}
+          onClick={() => onListItemClick(contact.id)}
+          key={contact.id}
         />
       )}
     </List>

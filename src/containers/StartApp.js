@@ -1,59 +1,51 @@
 import { connect } from 'react-redux'
 import { initCurrentUser, updateUserId } from '../actions/currentUser'
-import { updateCurrentUser, setApi } from '../actions/general'
-import { initContacts } from '../actions/contacts'
-import { initInvitations } from '../actions/invitations'
+import { updateCurrentUser, setApi, updateCurrentUserWalletId } from '../actions/general'
+// import { initContacts } from '../actions/contacts'
+// import { initInvitations } from '../actions/invitations'
 import API from '../api'
 import getWeb3 from '../utils/getWeb3'
 import App from '../App'
 import { push } from 'react-router-redux'
+import convertToStateUser from '../utils/convertToStateUser'
 
-function convertToStateUser(user) {
-  let profile = user.getProfile()
-  return {
-    id: user.id,
-    name: profile.name? profile.name: '',
-    avatar: profile.avatar? profile.avatar: ''
-  }
-}
+// function getContacts(user) {
+//   return user.getContacts().then(contacts => {
+//     if (!contacts.length) return {}
+//     contacts.reduce((obj, user) => {
+//       obj[user.id.toString()] = convertToStateUser(user)
+//       return obj
+//     }, {})
+//   })
+// }
 
-function getContacts(user) {
-  return user.getContacts().then(contacts => {
-    if (!contacts.length) return {}
-    contacts.reduce((obj, user) => {
-      obj[user.id.toString()] = convertToStateUser(user)
-      return obj
-    }, {})
-  })
-}
-
-function getInvitations(user) {
-  let sentInvitations = user.getSentInvitations().then(invitations => {
-    if (!invitations.length) return {}
-    invitations.reduce((obj, inv) => {
-      obj[inv.id] = {
-        id: inv.id,
-        isMy: true,
-        user: convertToStateUser(inv.user)
-      }
-      return obj
-    }, {})
-  })
-  let inboxInvitations = user.getInboxInvitations().then(invitations => {
-    if (!invitations.length) return {}
-    invitations.reduce((obj, inv) => {
-      obj[inv.id] = {
-        id: inv.id,
-        isMy: false,
-        user: convertToStateUser(inv.user)
-      }
-      return obj
-    }, {})
-  })
-  return Promise.all([sentInvitations, inboxInvitations]).then((sentInv, inboxInv) => {
-    return Object.assign({}, sentInv, inboxInv)
-  }) 
-}
+// function getInvitations(user) {
+//   let sentInvitations = user.getSentInvitations().then(invitations => {
+//     if (!invitations.length) return {}
+//     invitations.reduce((obj, inv) => {
+//       obj[inv.id] = {
+//         id: inv.id,
+//         isMy: true,
+//         user: convertToStateUser(inv.user)
+//       }
+//       return obj
+//     }, {})
+//   })
+//   let inboxInvitations = user.getInboxInvitations().then(invitations => {
+//     if (!invitations.length) return {}
+//     invitations.reduce((obj, inv) => {
+//       obj[inv.id] = {
+//         id: inv.id,
+//         isMy: false,
+//         user: convertToStateUser(inv.user)
+//       }
+//       return obj
+//     }, {})
+//   })
+//   return Promise.all([sentInvitations, inboxInvitations]).then((sentInv, inboxInv) => {
+//     return Object.assign({}, sentInv, inboxInv)
+//   }) 
+// }
 
 function initUser(dispatch){
   // Get network provider and web3 instance.
@@ -65,10 +57,11 @@ function initUser(dispatch){
       .then((accounts) => { // Search for account with registered user. If not found - register with 0 account
         let accountWithUser = accounts.find((value) => value.user != null)
         if (accountWithUser) {
+          dispatch(updateCurrentUserWalletId(accountWithUser.id))
           dispatch(updateCurrentUser(accountWithUser.user)) // init user in general state
           dispatch(initCurrentUser(convertToStateUser(accountWithUser.user))) // init currentUser state
-          getContacts(accountWithUser.user).then(c => dispatch(initContacts(c))) // init contacts state
-          getInvitations(accountWithUser.user).then(i => dispatch(initInvitations(i))) // init invitations state
+          // getContacts(accountWithUser.user).then(c => dispatch(initContacts(c))) // init contacts state
+          // getInvitations(accountWithUser.user).then(i => dispatch(initInvitations(i))) // init invitations state
           return
         } else {
           let account = accounts[0]

@@ -3,25 +3,17 @@ import { setVisibilityFilter, setChatView } from '../actions'
 import { showMessageHistory } from '../actions/messages'
 import UsersList from '../components/UsersList'
 
-const getVisibleUsers = (invitations, contacts, filter) => {
-  switch (filter) {
-    case 'SHOW_INVITED':
-      return Object.keys(invitations).reduce((arr, key) => {
-        arr.push(invitations[key])
-        return arr
-      }, [])
-    case 'SHOW_CONTACTS':
-    default:
-      return Object.keys(contacts).reduce((arr, key) => {
-        arr.push(contacts[key])
-        return arr
-      }, [])
-  }
+function objectToArray(objectAsMap) {
+  return  Object.keys(objectAsMap).reduce((arr, key) => {
+    arr.push(objectAsMap[key])
+    return arr
+  }, [])
 }
 
 const mapStateToProps = state => {
   return {
-    users: getVisibleUsers(state.invitations, state.contacts, state.visibilityFilter),
+    contacts: objectToArray(state.contacts),
+    invitations: objectToArray(state.invitations),
     filter: state.visibilityFilter
   }
 }

@@ -5,10 +5,10 @@ export const initContacts = contacts => {
   }
 }
 
-export const addContact = user => {
+export const addContact = contact => {
   return {
     type: 'ADD_CONTACT',
-    user
+    contact
   }
 }
 

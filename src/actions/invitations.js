@@ -1,15 +1,14 @@
 export const initInvitations = invitations => {
   return {
-    type: 'INITI_INVITATIONS',
+    type: 'INIT_INVITATIONS',
     invitations
   }
 }
 
-export const addInvitation = (user, isMy) => {
+export const addInvitation = invitation => {
   return {
     type: 'ADD_INVITATION',
-    user,
-    isMy
+    invitation
   }
 }
 

@@ -1,10 +1,3 @@
-export const toggleInviteUserForm = isOpened => {
-  return {
-    type: 'TOGGLE_INVITE_USER_FORM',
-    isOpened
-  }
-}
-
 export const setVisibilityFilter = filter => {
   return {
     type: 'SET_VISIBILITY_FILTER',

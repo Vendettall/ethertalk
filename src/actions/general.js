@@ -11,3 +11,10 @@ export const updateCurrentUser = user => {
     user
   }
 }
+
+export const updateCurrentUserWalletId = walletId => {
+  return {
+    type: 'UPDATE_CURRENT_USER_WALLET_ID',
+    walletId
+  }
+}
