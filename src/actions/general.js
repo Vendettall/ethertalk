@@ -5,16 +5,9 @@ export const setApi = api => {
   }
 }
 
-export const updateCurrentUser = user => {
+export const setSocket = socket => {
   return {
-    type: 'UPDATE_CURRENT_USER',
-    user
-  }
-}
-
-export const updateCurrentUserWalletId = walletId => {
-  return {
-    type: 'UPDATE_CURRENT_USER_WALLET_ID',
-    walletId
+    type: 'SET_SOCKET',
+    socket
   }
 }

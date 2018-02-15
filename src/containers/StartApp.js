@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { initCurrentUser, updateUserId } from '../actions/currentUser'
-import { updateCurrentUser, setApi, updateCurrentUserWalletId } from '../actions/general'
+import { initCurrentUser } from '../actions/currentUser'
+import { setApi, setSocket } from '../actions/general'
+// import { addPubKey, updatePubKey } from '../actions/pubKeys'
 // import { initContacts } from '../actions/contacts'
 // import { initInvitations } from '../actions/invitations'
 import API from '../api'
@@ -9,29 +10,39 @@ import App from '../App'
 import { push } from 'react-router-redux'
 import convertToStateUser from '../utils/convertToStateUser'
 
-// function getContacts(user) {
-//   return user.getContacts().then(contacts => {
+// function initPubKey(apiUser, stateUser, dispatch) {
+//   apiUser.getPubKey().then(pubKey => {
+//     dispatch(addPubKey(pubKey, stateUser))
+//     return
+//   })
+// }
+
+// function proceedContacts(apiUser, dispatch) {
+//   return apiUser.getContacts().then(contacts => {
 //     if (!contacts.length) return {}
-//     contacts.reduce((obj, user) => {
-//       obj[user.id.toString()] = convertToStateUser(user)
+//     contacts.reduce((obj, apiUser) => {
+//       obj[apiUser.id.toString()] = convertToStateUser(apiUser)
+//       initPubKey(apiUser, obj[apiUser.id.toString()], dispatch)
 //       return obj
 //     }, {})
 //   })
 // }
 
-// function getInvitations(user) {
-//   let sentInvitations = user.getSentInvitations().then(invitations => {
+// function getInvitations(apiUser) {
+//   let sentInvitations = apiUser.getSentInvitations().then(invitations => {
 //     if (!invitations.length) return {}
 //     invitations.reduce((obj, inv) => {
-//       obj[inv.id] = {
-//         id: inv.id,
-//         isMy: true,
-//         user: convertToStateUser(inv.user)
-//       }
-//       return obj
+//       return inv.getUser().then(user => {
+//         obj[inv.id] = {
+//           id: inv.id,
+//           isMy: true,
+//           user: convertToStateUser(user)
+//         }
+//         return obj
+//       })
 //     }, {})
 //   })
-//   let inboxInvitations = user.getInboxInvitations().then(invitations => {
+//   let inboxInvitations = apiUser.getInboxInvitations().then(invitations => {
 //     if (!invitations.length) return {}
 //     invitations.reduce((obj, inv) => {
 //       obj[inv.id] = {
@@ -47,9 +58,27 @@ import convertToStateUser from '../utils/convertToStateUser'
 //   }) 
 // }
 
-function initUser(dispatch){
-  // Get network provider and web3 instance.
-  // See utils/getWeb3 for more info.
+function setSocet(api, currentUser, dispatch) {
+  let socket = new api.Whisper(currentUser)
+  socket.start()
+  dispatch(setSocket(socket))
+
+  // socket.on('message', (message) => {
+  //   getMessage()
+  // })
+}
+
+// function getMessage(apiMessage, pubKeys) {
+//   let interlocutorId = pubKeys[apiMessage.from]
+//   Storage.set(interlocutorId, {
+//     text: apiMessage.message,
+//     isMy: false,
+//     date: formatDate(apiMessage.sent)
+//   })
+//   return
+// }
+
+function initGeneralState(dispatch){
   getWeb3.then((web3) => {
     let api = API(web3)
     dispatch(setApi(api)) // init api in general state
@@ -57,18 +86,25 @@ function initUser(dispatch){
       .then((accounts) => { // Search for account with registered user. If not found - register with 0 account
         let accountWithUser = accounts.find((value) => value.user != null)
         if (accountWithUser) {
-          dispatch(updateCurrentUserWalletId(accountWithUser.id))
-          dispatch(updateCurrentUser(accountWithUser.user)) // init user in general state
-          dispatch(initCurrentUser(convertToStateUser(accountWithUser.user))) // init currentUser state
-          // getContacts(accountWithUser.user).then(c => dispatch(initContacts(c))) // init contacts state
+          dispatch(initCurrentUser({
+            ...convertToStateUser(accountWithUser.user),
+            apiUser: accountWithUser.user,
+            walletId: accountWithUser.id
+          })) // init currentUser state
+          setSocet(api, accountWithUser.user, dispatch) // init socket in general state
+          // proceedContacts(accountWithUser.user, dispatch).then(c => dispatch(initContacts(c))) // init contacts state and pubKeys state
           // getInvitations(accountWithUser.user).then(i => dispatch(initInvitations(i))) // init invitations state
           return
         } else {
           let account = accounts[0]
           return api.UserRegistry.instance().register().then((user) => {
             account.user = user
-            dispatch(updateCurrentUser(user)) // init user in general state
-            dispatch(updateUserId(user.id)) // init currentUser id in state
+            dispatch(initCurrentUser({
+              id: user.id,
+              apiUser: user,
+              walletId: account.id
+            })) // init user in general state
+            setSocet(api, user, dispatch) // init socket in general state
             dispatch(push('/registration'))
             return
           })
@@ -85,7 +121,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    initUser: () => initUser(dispatch)
+    initGeneralState: () => initGeneralState(dispatch)
   }
 }
 

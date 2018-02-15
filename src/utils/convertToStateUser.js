@@ -1,7 +1,7 @@
-export default function convertToStateUser(user) {
-  let profile = user.getProfile()
+export default function convertToStateUser(apiUser) {
+  let profile = apiUser.getProfile()
   return {
-    id: user.id,
+    id: apiUser.id,
     name: profile.name? profile.name: '',
     avatar: profile.avatar? profile.avatar: ''
   }

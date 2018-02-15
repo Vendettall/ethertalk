@@ -3,7 +3,7 @@ const stub = {
     id: 1,
     isMy: true,
     user: {
-      id: 15,
+      id: 1,
       name: 'Kirill',
       avatar: 'KirillsAvatar'
     }

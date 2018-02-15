@@ -1,7 +1,4 @@
 import React from 'react'
-// import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-
-//components
 import Sidebar from './components/Sidebar'
 import ChatView from './containers/ChatView'
 
@@ -12,7 +9,7 @@ import './App.css'
 
 export default class App extends React.Component {
   componentWillMount() {
-    this.props.initUser()
+    this.props.initGeneralState()
   }
   render() {
     return (

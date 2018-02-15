@@ -25,3 +25,17 @@ export const updateUserAvatar = avatar => {
     avatar
   }
 }
+
+export const updateApiUser = apiUser => {
+  return {
+    type: 'UPDATE_API_USER',
+    apiUser
+  }
+}
+
+export const updateUserWalletId = walletId => {
+  return {
+    type: 'UPDATE_USER_WALLET_ID',
+    walletId
+  }
+}

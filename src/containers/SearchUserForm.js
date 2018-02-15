@@ -4,60 +4,50 @@ import { toggleForm, updateSearchText, responseStateUser, responseApiUser, respo
 import InviteUser from '../components/InviteUser'
 import convertToStateUser from '../utils/convertToStateUser'
 
-function checkInInboxInvitations(general, userId) {
-  return general.user.getInboxInvitations().then(invitations => {
-    return invitations.find(invitation => invitation.user.id === userId)
+function proceedInInvitations(invitations, userId, dispatch) {
+  let isFound = false
+  Object.keys(invitations).forEach(invKey => {
+    if (invitations[invKey].user.id === userId) {
+      if (invitations[invKey].isMy === true) dispatch(responseAnswer('You have already invited this user.'))
+      else dispatch(responseAnswer('This user has already invited you.'))    
+      dispatch(responseStateUser(invitations[invKey].user))
+      isFound = true
+      return
+    }
   })
+  return isFound
 }
 
-function checkInSentInvitations(general, userId) {
-  return general.user.getSentInvitations().then(invitations => {
-    return invitations.find(invitation => invitation.user.id === userId)
-  })
+function poceedInContacts(contacts, userId, dispatch) {
+  if (contacts.hasOwnProperty(userId)) {
+    dispatch(responseAnswer('This user has already in your contacts.'))
+    dispatch(responseStateUser(contacts[userId]))
+    return true
+  }
+  return false
 }
 
-function checkInContacts(general, userId) {
-  return general.user.getContacts().then(contacts => {
-    return contacts.find(contact => contact.id === userId)
-  })
-}
-
-function searchUser(general, text, prevAnswer, dispatch) {
+function searchUser(general, currentUser, invitations, contacts, text, prevAnswer, dispatch) {
   if(prevAnswer) dispatch(wipePreviousResponse())
-  if (text === general.walletId) {
+  if (text === currentUser.walletId) {
     dispatch(responseAnswer('It is you.'))
     return
   }
   general.api.UserRegistry.instance().getUser(text).then(user => {
-    if (!user) {
-      dispatch(responseAnswer('User not found.'))
-      return
-    } else {
+    if (!user) dispatch(responseAnswer('User not found.'))
+    else if (proceedInInvitations(invitations, user.id, dispatch)) {} 
+    else if (poceedInContacts(contacts, user.id, dispatch)) {} 
+    else {
       dispatch(responseStateUser(convertToStateUser(user)))
+      dispatch(responseAnswer('You can invite this user.'))
+      dispatch(responseApiUser(user))
     }
-    Promise.all([checkInInboxInvitations(general, user.id),
-      checkInSentInvitations(general, user.id), checkInContacts(general, user.id)])
-      .then((isInInboxInv, isInSentInv, isInContacts) => {
-        if(isInInboxInv) dispatch(responseAnswer('This user has already invited you.'))
-        else if (isInSentInv) dispatch(responseAnswer('You have already invited this user.'))
-        else if (isInContacts) dispatch(responseAnswer('This user has already in your contacts.'))
-        else {
-          dispatch(responseAnswer('You can invite this user.'))
-          dispatch(responseApiUser(user))
-        }
-        return 
-      })
+    return 
   })
 }
 
-function inviteUser(general, apiUser, dispatch) {
-  // general.api.UserRegistry.instance().getUser('0x295370683493e415c8a42d45d19f0d3240eb85b0').then(user=>{
-  //   console.log(user)
-  //   general.user.invite(user).then(response => {
-  //     console.log(response)
-  //   })
-  // })
-  general.user.invite(apiUser).then(response => {
+function inviteUser(currentUser, apiUser, dispatch) {
+  currentUser.apiUser.invite(apiUser).then(response => {
     if(response) {
       dispatch(responseAnswer('Invitation was sent.'))
     } else {
@@ -68,9 +58,11 @@ function inviteUser(general, apiUser, dispatch) {
 }
 
 const mapStateToProps = state => {
-  console.log(state.searchUserForm.response)
   return {
     general: state.general,
+    currentUser: state.currentUser,
+    invitations: state.invitations,
+    contacts: state.contacts,
     isOpened: state.searchUserForm.isOpened,
     text: state.searchUserForm.text,
     stateUser: state.searchUserForm.response.stateUser,
@@ -83,8 +75,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onToggle: isOpened => dispatch(toggleForm(isOpened)),
     onUpdateText: text => dispatch(updateSearchText(text)),
-    onSearch: (general, text, answer) => searchUser(general, text, answer, dispatch),
-    onInvite: (general, apiUser) => inviteUser(general, apiUser, dispatch)
+    onSearch: (general, currentUser, invitations, contacts, text, answer) =>
+      searchUser(general, currentUser, invitations, contacts, text, answer, dispatch),
+    onInvite: (currentUser, apiUser) => inviteUser(currentUser, apiUser, dispatch)
   }
 }
 

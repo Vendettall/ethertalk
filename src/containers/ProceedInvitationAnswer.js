@@ -5,26 +5,26 @@ import { showMessageHistory } from '../actions/messages'
 import { addContact } from '../actions/contacts'
 import ShowInvitation from '../components/ShowInvitation'
 
-function getInvitation(general, invitationId) {
-  return general.user.getInboxInvitations().then(invitations => {
+function getInvitation(apiUser, invitationId) {
+  return apiUser.getInboxInvitations().then(invitations => {
     return invitations.find(invitation => invitation.id === invitationId)
   })
 }
 
-function acceptInvitation(general, user, invitationId, dispatch) {
-  getInvitation(general, invitationId).then(invitation => {
-    general.user.acceptInvitation(invitation)
-    dispatch(addContact({[user.id]: user}))
-    dispatch(showMessageHistory(user.id))
-    dispatch(setChatView('CHAT_WITH_USER', user.id))
+function acceptInvitation(apiUser, interlocutor, invitationId, dispatch) {
+  getInvitation(apiUser, invitationId).then(invitation => {
+    apiUser.acceptInvitation(invitation)
+    dispatch(addContact({[interlocutor.id]: interlocutor}))
+    dispatch(showMessageHistory(interlocutor.id))
+    dispatch(setChatView('CHAT_WITH_USER', interlocutor.id))
     dispatch(deleteInvitation(invitationId)) // should be after changing chatView
     return
   })
 }
 
-function rejectInvitation(general, invitationId, dispatch) {
-  getInvitation(general, invitationId).then(invitation => {
-    general.user.rejectInvitation(invitation)
+function rejectInvitation(apiUser, invitationId, dispatch) {
+  getInvitation(apiUser, invitationId).then(invitation => {
+    apiUser.rejectInvitation(invitation)
     dispatch(setChatView('SHOW_FALLBACK', null))
     dispatch(deleteInvitation(invitationId)) // should be after changing chatView
   })
@@ -32,18 +32,18 @@ function rejectInvitation(general, invitationId, dispatch) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    general: state.general,
-    user: ownProps.user,
+    apiUser: state.currentUser.apiUser,
+    interlocutor: ownProps.interlocutor,
     invitationId: ownProps.invitationId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAccept: (general, user, invitationId) => 
-      acceptInvitation(general, user, invitationId, dispatch),
-    onReject: (general, invitationId) =>
-      rejectInvitation(general, invitationId, dispatch)
+    onAccept: (apiUser, interlocutor, invitationId) => 
+      acceptInvitation(apiUser, interlocutor, invitationId, dispatch),
+    onReject: (apiUser, invitationId) =>
+      rejectInvitation(apiUser, invitationId, dispatch)
   }
 }
 

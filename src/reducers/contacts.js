@@ -18,12 +18,10 @@ const stub = {
 
 export default function contacts(state = stub, action) {
   switch (action.type) {
-    case 'INIT_CONTACTS': {
+    case 'INIT_CONTACTS': 
       return action.contacts
-    }
-    case 'ADD_CONTACT': {
+    case 'ADD_CONTACT':
       return Object.assign({}, state, action.contact)
-    }
     case 'DELETE_CONTACT': {
       let newState = Object.assign({}, state)
       delete newState[action.id]

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { setVisibilityFilter, setChatView } from '../actions'
-import { showMessageHistory } from '../actions/messages'
 import UsersList from '../components/UsersList'
 
 function objectToArray(objectAsMap) {
@@ -23,10 +22,7 @@ const mapDispatchToProps = dispatch => {
     changeFilter: filter => {
       dispatch(setVisibilityFilter(filter))
     },
-    chatWithUser: id => {
-      dispatch(showMessageHistory(id))
-      dispatch(setChatView("CHAT_WITH_USER", id))
-    },
+    chatWithUser: id => dispatch(setChatView("CHAT_WITH_USER", id)),
     proceedInvitation: (id, isMy) => {
       if(isMy) {
         dispatch(setChatView("SHOW_PENDING_STATE", id))

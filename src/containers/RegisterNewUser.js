@@ -4,12 +4,12 @@ import { push } from 'react-router-redux'
 import RegistrationForm from '../components/RegistrationForm'
 import imageFromHash from '../utils/imageFromHash'
 
-function register(general, name, avatarAsFile, dispatch){
+function register(general, apiUser, name, avatarAsFile, dispatch){
   general.api.Swarm.instance().upload(avatarAsFile).then(hash => {
     console.log('Image hash', hash)
     imageFromHash(general.api, hash).then(image => {
       dispatch(updateUserAvatar(image))
-      general.user.setProfile(name, hash)
+      apiUser.setProfile(name, hash)
       dispatch(push('/'))
       return
     })
@@ -19,6 +19,7 @@ function register(general, name, avatarAsFile, dispatch){
 const mapStateToProps = state => {
   return {
     general: state.general,
+    apiUser: state.currentUser.apiUser,
     avatar: state.currentUser.avatar,
     name: state.currentUser.name
   }
@@ -29,7 +30,7 @@ const mapDispatchToProps = dispatch => {
     updateName: name => dispatch(updateUserName(name)),
     updateAvatar: avatar => dispatch(updateUserAvatar(avatar)),
     emitUploadClick: () => document.getElementById('upload_avatar').click(),
-    register: (general, name, avatar) => register(general, name, avatar, dispatch)
+    register: (general, apiUser, name, avatar) => register(general, apiUser, name, avatar, dispatch)
   }
 }
 

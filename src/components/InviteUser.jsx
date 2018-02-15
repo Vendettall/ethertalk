@@ -6,8 +6,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import SearchWindow from './SearchWindow'
 import ShowFoundUser from './ShowFoundUser'
 
-export default function InviteUser({general, isOpened, text, stateUser, apiUser, answer, onToggle,
-                                    onUpdateText, onSearch, onInvite}) {
+export default function InviteUser({general, currentUser, invitations, contacts, isOpened, text, stateUser,
+                                    apiUser, answer, onToggle, onUpdateText, onSearch, onInvite}) {
   let formAnswer = null
   if(stateUser) {
     formAnswer = <ShowFoundUser general={general} stateUser={stateUser} apiUser={apiUser} 
@@ -28,8 +28,8 @@ export default function InviteUser({general, isOpened, text, stateUser, apiUser,
         open={isOpened}
         onRequestClose={() => onToggle(isOpened)}
       >
-        <SearchWindow general={general} text={text} answer={answer}
-                      onUpdateText={onUpdateText} onSearch={onSearch} />
+        <SearchWindow general={general} currentUser={currentUser} invitations={invitations} contacts={contacts}
+                      text={text} answer={answer} onUpdateText={onUpdateText} onSearch={onSearch} />
         {formAnswer}
       </Dialog>
     </div>
