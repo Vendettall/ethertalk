@@ -1,36 +1,24 @@
 import { connect } from 'react-redux'
-import { updateUserName, updateUserAvatar } from '../actions/currentUser'
-import { push } from 'react-router-redux'
+import { registerCurrentUser } from '../actions/currentUser'
+import { updateRegistrationName, updateRegistrationAvatar } from '../actions/registerUser'
 import RegistrationForm from '../components/RegistrationForm'
-import imageFromHash from '../utils/imageFromHash'
-
-function register(general, apiUser, name, avatarAsFile, dispatch){
-  general.api.Swarm.instance().upload(avatarAsFile).then(hash => {
-    console.log('Image hash', hash)
-    imageFromHash(general.api, hash).then(image => {
-      dispatch(updateUserAvatar(image))
-      apiUser.setProfile(name, hash)
-      dispatch(push('/'))
-      return
-    })
-  })
-}
 
 const mapStateToProps = state => {
   return {
-    general: state.general,
+    api: state.general.api,
     apiUser: state.currentUser.apiUser,
-    avatar: state.currentUser.avatar,
-    name: state.currentUser.name
+    avatar: state.registerUserForm.avatar,
+    name: state.registerUserForm.name
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateName: name => dispatch(updateUserName(name)),
-    updateAvatar: avatar => dispatch(updateUserAvatar(avatar)),
+    onUpdateName: name => dispatch(updateRegistrationName(name)),
+    onUpdateAvatar: avatar => dispatch(updateRegistrationAvatar(avatar)),
     emitUploadClick: () => document.getElementById('upload_avatar').click(),
-    register: (general, apiUser, name, avatar) => register(general, apiUser, name, avatar, dispatch)
+    onRegister: (api, apiUser, name, avatar) =>
+      dispatch(registerCurrentUser(api, apiUser, name, avatar))
   }
 }
 

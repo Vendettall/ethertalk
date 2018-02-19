@@ -8,8 +8,26 @@ export default function chatView(state = fallback, action) {
     case 'SET_CHAT_VIEW':
       return {
         view: action.view,
-        id: action.id
+        id: action.interlocutor.id
       }
+    case 'ACCEPT_INVITATION': {
+      if (action.response) {
+        return {
+          view: 'CHAT_WITH_USER',
+          id: action.interlocutor.id
+        }
+      }
+      else {
+        return state
+      }
+    }
+    case 'REJECT_INVITATION': {
+      if (action.response) {
+        return fallback
+      } else {
+        return state
+      }
+    }
     default:
       return state
   }

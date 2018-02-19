@@ -1,6 +1,15 @@
-export const initContacts = contacts => {
+import convertToStateUser from '../utils/convertToStateUser'
+
+export const replaceContacts = async apiUser => {
+  let contacts = await apiUser.getContacts().then(contacts => {
+    if (!contacts.length) return {}
+    return contacts.reduce((obj, apiUser) => {
+      obj[apiUser.id.toString()] = Object.assign({}, convertToStateUser(apiUser))
+      return obj
+    }, {})
+  })
   return {
-    type: 'INIT_CONTACTS',
+    type: 'REPLACE_CONTACTS',
     contacts
   }
 }

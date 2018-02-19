@@ -38,13 +38,31 @@ const stub = {
 }
 
 export default function invitations(state = stub, action) {
+  let newState
   switch (action.type) {
-    case 'INIT_INVITATIONS':
+    case 'REPLACE_INVITATIONS':
       return action.invitations
+    case 'ACCEPT_INVITATION':
+      if (action.response) {
+        newState = Object.assign({}, state)
+        delete newState[action.invitationId]
+        return newState
+      } else {
+        return state // subscribe error checker somewhere
+      }
+    case 'REJECT_INVITATION': {
+      if (action.response) {
+        newState = Object.assign({}, state)
+        delete newState[action.invitationId]
+        return newState
+      } else {
+        return state // subscribe error checker somewhere
+      }
+    }
     case 'ADD_INVITATION':
       return Object.assign({}, state, action.invitation)
     case 'DELETE_INVITATION':
-      let newState = Object.assign({}, state)
+      newState = Object.assign({}, state)
       delete newState[action.id]
       return newState
     default:

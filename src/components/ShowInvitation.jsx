@@ -6,15 +6,15 @@ import ActionDone from 'material-ui/svg-icons/action/done'
 import ContantClear from 'material-ui/svg-icons/content/clear'
 import {lightGreen400, red400, grey400} from 'material-ui/styles/colors'
 
-export default function ShowInvitation({apiUser, interlocutor, invitationId, onAccept, onReject}) {
+export default function ShowInvitation({apiUser, interlocutor, invitation, onAccept, onReject}) {
   return (
     <Card style={{width: 'calc(66% - 10px)'}}>
       <CardHeader title={interlocutor.name} subtitle={`User ${interlocutor.name} want to talk with you.`}
                   avatar={interlocutor.avatar}>
-        <IconButton tooltip="Accept" onClick={() => onAccept(apiUser, interlocutor, invitationId)}>
+        <IconButton tooltip="Accept" onClick={() => onAccept(apiUser, interlocutor, invitation)}>
           <ActionDone color={grey400} hoverColor={lightGreen400} />
         </IconButton>
-        <IconButton tooltip="Decline" onClick={() => onReject(apiUser, invitationId)}>
+        <IconButton tooltip="Decline" onClick={() => onReject(apiUser, invitation)}>
           <ContantClear color={grey400} hoverColor={red400} />
         </IconButton>
       </CardHeader>

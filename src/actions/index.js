@@ -5,10 +5,10 @@ export const setVisibilityFilter = filter => {
   }
 }
 
-export const setChatView = (view, id) => {
+export const setChatView = (view, interlocutor) => {
   return {
     type: 'SET_CHAT_VIEW',
     view,
-    id
+    interlocutor
   }
 }

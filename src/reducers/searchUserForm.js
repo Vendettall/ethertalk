@@ -8,40 +8,20 @@ const initialState = {
   }
 }
 
-// const stub = {
-//   isOpened: false,
-//   text: '',
-//   response: {
-//     stateUser: {
-//      id: 1,
-//      name: 'Egor',
-//      avatar: 'EgorsAvatar'
-//     },
-//     answer: 'You can invite this user.',
-//     apiUser: null
-//   },
-// }
-
 export default function searchUserForm(state = initialState, action) {
   switch (action.type) {
     case 'TOGGLE_FORM': 
       return Object.assign({}, state, {isOpened: !action.isOpened})
     case 'UPDATE_SEARCH_TEXT':
       return Object.assign({}, state, {text: action.text})
-    case 'RESPONSE_STATE_USER': {
-      let newResponse = Object.assign(state.response, {stateUser: action.stateUser})
-      return Object.assign({}, state, {response: newResponse})
+    case 'SEARCH_USER':
+      return Object.assign({}, state, {response: action.response})
+    case 'SEND_INVITATION': {
+      let newResponse = state.response
+      if (action.response) newResponse.answer = ('Invitation was sent.')
+      else newResponse.answer = ('An error occured.')
+      return Object.assign({}, state, {})
     }
-    case 'RESPONSE_API_USER': {
-      let newResponse = Object.assign(state.response, {apiUser: action.apiUser})
-      return Object.assign({}, state, {response: newResponse})
-    }
-    case 'RESPONSE_ANSWER': {
-      let newResponse = Object.assign(state.response, {answer: action.answer})
-      return Object.assign({}, state, {response: newResponse})
-    }
-    case 'WIPE_PREVIOUS_RESPONSE':
-      return Object.assign({}, state, {response: initialState.response})
     default:
       return state
   }

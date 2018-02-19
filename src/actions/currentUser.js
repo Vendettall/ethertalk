@@ -1,41 +1,32 @@
-export const initCurrentUser = user => {
+import convertToStateUser from '../utils/convertToStateUser'
+import imageFromHash from '../utils/imageFromHash'
+
+export const replaceCurrentUser = account => {
+  let user = {
+    ...convertToStateUser(account.user),
+    apiUser: account.user,
+    walletId: account.id
+  }
   return {
-    type: 'INIT_CURRENT_USER',
+    type: 'REPLACE_CURRENT_USER',
     user
   }
 }
 
-export const updateUserId = id => {
+export const registerCurrentUser = async (api, apiUser, name, avatarAsFile) => {
+  let avatar
+  let response = await api.Swarm.instance().upload(avatarAsFile).then(hash => {
+    console.log('Image hash', hash)
+    return imageFromHash(api, hash).then(image => {
+      avatar = image
+      return apiUser.setProfile(name, hash).then(result => {return result})
+    })
+  }) // change router path
+  response = response? true: false
   return {
-    type: 'UPDATE_USER_ID',
-    id
-  }
-}
-
-export const updateUserName = name => {
-  return {
-    type: 'UPDATE_USER_NAME',
-    name
-  }
-}
-
-export const updateUserAvatar = avatar => {
-  return {
-    type: 'UPDATE_USER_AVATAR',
-    avatar
-  }
-}
-
-export const updateApiUser = apiUser => {
-  return {
-    type: 'UPDATE_API_USER',
-    apiUser
-  }
-}
-
-export const updateUserWalletId = walletId => {
-  return {
-    type: 'UPDATE_USER_WALLET_ID',
-    walletId
+    type: 'REGISTER_CURRENT_USER',
+    avatar,
+    name,
+    response
   }
 }

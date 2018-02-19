@@ -9,7 +9,7 @@ export default function UserList({contactsList, onListItemClick}) {
         <ListItem
           primaryText={contact.name}
           leftAvatar={<Avatar src={contact.avatar} />}
-          onClick={() => onListItemClick(contact.id)}
+          onClick={() => onListItemClick(contact)}
           key={contact.id}
         />
       )}

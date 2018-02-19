@@ -18,7 +18,7 @@ const stub = {
 
 export default function contacts(state = stub, action) {
   switch (action.type) {
-    case 'INIT_CONTACTS': 
+    case 'REPLACE_CONTACTS': 
       return action.contacts
     case 'ADD_CONTACT':
       return Object.assign({}, state, action.contact)
@@ -26,6 +26,13 @@ export default function contacts(state = stub, action) {
       let newState = Object.assign({}, state)
       delete newState[action.id]
       return newState
+    }
+    case 'ACCEPT_INVITATION': {
+      if (action.response) {
+        return Object.assign({}, state, {[action.interlocutor.id]: action.interlocutor})
+      } else {
+        return state
+      }
     }
     default:
       return state

@@ -2,12 +2,12 @@ import { connect } from 'react-redux'
 import Chat from '../components/Chat'
 
 const mapStateToProps = state => {
-  let interlocutor, invitationId
+  let interlocutor, invitation
   switch(state.chatView.view) {
     case 'SHOW_INVITATION':
     case 'SHOW_PENDING_STATE':
       interlocutor = state.invitations[state.chatView.id.toString()].user
-      invitationId = state.invitations[state.chatView.id.toString()].id
+      invitation = state.invitations[state.chatView.id.toString()]
       break
     case 'CHAT_WITH_USER':
       interlocutor = state.contacts[state.chatView.id.toString()]
@@ -19,7 +19,7 @@ const mapStateToProps = state => {
   return {
     view: state.chatView.view,
     interlocutor: interlocutor,
-    invitationId: invitationId
+    invitation: invitation
   }
 }
 

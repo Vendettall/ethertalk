@@ -4,8 +4,7 @@ import ActionSearch from 'material-ui/svg-icons/action/search'
 import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
 
-export default function SerachUser({general, currentUser, invitations, contacts, text, answer,
-                                    onUpdateText, onSearch}) {
+export default function SerachUser({text, api, walletId, invitations, contacts, onUpdateText, onSearch}) {
   return (
     <div style={{position: 'relative'}}>
       <TextField 
@@ -15,7 +14,7 @@ export default function SerachUser({general, currentUser, invitations, contacts,
         style={{width: '100%', paddingRight: '24px'}}
       />
       <IconButton
-        onClick={() => onSearch(general, currentUser, invitations, contacts, text, answer)}
+        onClick={() => onSearch(text, api, walletId, invitations, contacts)}
         disabled={text.length !== 42}
         style={{position: 'absolute', right: '-12px', top: '0'}}
       >

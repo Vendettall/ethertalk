@@ -8,7 +8,8 @@ import messages from './messages'
 import currentUser from './currentUser'
 import general from './general'
 import pubKeys from './pubKeys'
-import { routerReducer } from 'react-router-redux'
+import routerReducer from './routerReducer'
+import registerUserForm from './registerUserForm'
 
 const chatApp = combineReducers({
   searchUserForm,
@@ -20,7 +21,8 @@ const chatApp = combineReducers({
   currentUser,
   general,
   pubKeys,
-  routerReducer
+  routerReducer,
+  registerUserForm
 })
 
 export default chatApp

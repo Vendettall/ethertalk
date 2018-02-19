@@ -4,7 +4,7 @@ import Divider from 'material-ui/Divider'
 import ChatWithUser from './ChatWithUser'
 import ProceedInvitationAnswer from '../containers/ProceedInvitationAnswer'
 
-export default function Chat({view, interlocutor, invitationId}) {
+export default function Chat({view, interlocutor, invitation}) {
   switch(view) {
     case 'CHAT_WITH_USER':
       return <ChatWithUser interlocutor={interlocutor} />
@@ -18,7 +18,7 @@ export default function Chat({view, interlocutor, invitationId}) {
       )
     }
     case 'SHOW_INVITATION': {
-      return <ProceedInvitationAnswer interlocutor={interlocutor} invitationId={invitationId} />
+      return <ProceedInvitationAnswer interlocutor={interlocutor} invitation={invitation} />
     }
     case 'FALL_BACK':
     default:

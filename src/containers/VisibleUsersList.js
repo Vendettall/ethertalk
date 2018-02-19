@@ -19,16 +19,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeFilter: filter => {
-      dispatch(setVisibilityFilter(filter))
-    },
+    changeFilter: filter => dispatch(setVisibilityFilter(filter)),
     chatWithUser: id => dispatch(setChatView("CHAT_WITH_USER", id)),
     proceedInvitation: (id, isMy) => {
-      if(isMy) {
-        dispatch(setChatView("SHOW_PENDING_STATE", id))
-      } else {
-        dispatch(setChatView("SHOW_INVITATION", id))
-      }
+      if(isMy) dispatch(setChatView("SHOW_PENDING_STATE", id))
+      else dispatch(setChatView("SHOW_INVITATION", id))
     }
   }
 }

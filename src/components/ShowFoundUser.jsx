@@ -2,13 +2,13 @@ import React from 'react'
 import FlatButton from 'material-ui/FlatButton'
 import {Card, CardActions, CardHeader} from 'material-ui/Card'
 
-export default function ShowFoundUser({general, stateUser, apiUser, answer, onInvite}) {
+export default function ShowFoundUser({currentApiUser, stateUser, apiUser, answer, onInvite}) {
   let buttons = null
   
   if (answer === 'You can invite this user.') {
     buttons = (
       <CardActions>
-        <FlatButton label="Invite" onClick={() => onInvite(general, apiUser)} />
+        <FlatButton label="Invite" onClick={() => onInvite(currentApiUser, apiUser)} />
       </CardActions>
     )
   }

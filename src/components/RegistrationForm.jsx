@@ -3,8 +3,8 @@ import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
-export default function RegistrationForm({general, apiUser, name, avatar, updateName, updateAvatar,
-                                          emitUploadClick, register}) {
+export default function RegistrationForm({api, apiUser, name, avatar, onUpdateName, onUpdateAvatar,
+                                          emitUploadClick, onRegister}) {
   return (
     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100vh'}}>
       <Card style={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'}}>
@@ -12,7 +12,7 @@ export default function RegistrationForm({general, apiUser, name, avatar, update
         <CardText>
           <TextField 
             hintText="Enter your name"
-            onChange={(e, text) => updateName(text)}
+            onChange={(e, text) => onUpdateName(text)}
             value={name} 
           />
           <br />
@@ -25,7 +25,7 @@ export default function RegistrationForm({general, apiUser, name, avatar, update
             id="upload_avatar"
             type="file"
             accept=".png, .jpg, .jpeg"
-            onChange={(e) => updateAvatar(e.target.files)}
+            onChange={(e) => onUpdateAvatar(e.target.files)}
             style={{display: 'none'}}
           />
         </CardText>
@@ -33,7 +33,7 @@ export default function RegistrationForm({general, apiUser, name, avatar, update
           <RaisedButton 
             label="Register Me"
             primary={true}
-            onClick={() => register(general, apiUser, name, avatar)}
+            onClick={() => onRegister(api, apiUser, name, avatar)}
             style={{marginLeft: '10px'}}
             disabled={!name || !avatar}
           />

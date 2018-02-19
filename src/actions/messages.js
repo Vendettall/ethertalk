@@ -1,21 +1,19 @@
-export const showMessageHistory = messages => {
-  return {
-    type: 'SHOW_MESSAGE_HISTORY',
-    messages
-  }
-}
+import Storage from '../utils/storage'
+import formatDate from '../utils/formatDate'
 
-export const updateApiInterlocutor = apiUser => {
-  return {
-    type: 'UPDATE_API_INTERLOCUTOR',
-    apiUser
+export const sendMessage = async (socket, apiInterlocutor, text) => {
+  let message = {
+    text: text,
+    isMy: true,
+    date: formatDate(new Date())
   }
-}
-
-export const addMessage = message => {
+  let response = socket.sendMessage(apiInterlocutor, text).then(result => {return result})
+  let messages = Storage.get(apiInterlocutor.id.toString()) || []
+  Storage.set(apiInterlocutor.id.toString(), [...messages, message])
   return {
-    type: 'ADD_MESSAGE',
-    message
+    type: 'SEND_MESSAGE',
+    message,
+    response
   }
 }
 
@@ -23,11 +21,5 @@ export const updateMessageText = text => {
   return {
     type: 'UPDATE_MESSAGE_TEXT',
     text
-  }
-}
-
-export const wipeMessageText = () => {
-  return {
-    type: 'WIPE_MESSAGE_TEXT'
   }
 }
