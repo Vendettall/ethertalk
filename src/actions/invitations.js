@@ -1,16 +1,11 @@
-import convertToStateUser from '../utils/convertToStateUser'
+import convertToStateInvitation from '../utils/convertToStateInvitation'
 
 export const replaceInvitations = async apiUser => {
   let sentInvitations = apiUser.getSentInvitations().then(invitations => {
     if (!invitations.length) return {}
     return invitations.reduce((obj, inv) => {
       return inv.getUser().then(user => {
-        obj[inv.id] = {
-          id: inv.id,
-          isMy: true,
-          apiInvitation: inv,
-          user: convertToStateUser(user)
-        }
+        obj[inv.id] = convertToStateInvitation(inv, user, true)
         return obj
       })
     }, {})
@@ -19,12 +14,7 @@ export const replaceInvitations = async apiUser => {
     if (!invitations.length) return {}
     return invitations.reduce((obj, inv) => {
       return inv.getUser().then(user => {
-        obj[inv.id] = {
-          id: inv.id,
-          isMy: false,
-          apiInvitation: inv,
-          user: convertToStateUser(inv.user)
-        }
+        obj[inv.id] = convertToStateInvitation(inv, user, false)
         return obj
       })
     }, {})
@@ -70,16 +60,36 @@ export const sendInvitation = async (currentApiUser, apiUser) => {
   }
 }
 
-export const addInvitation = invitation => {
+export const addInvitation = async (apiInvitation, isMy) => {
+  let invitation = await apiInvitation.getUser().then(user => {
+    return convertToStateInvitation(apiInvitation, user, isMy)
+  })
   return {
     type: 'ADD_INVITATION',
     invitation
   }
 }
 
-export const deleteInvitation = id => {
+export const updateInvitedUserProfile = invitation => {
+  let profile = invitation.apiUser.getProfile()
+  let invitationId = invitation.id
   return {
-    type: 'DELETE_INVITATION',
-    id
+    type: 'UPDATE_INVITED_USER_PROFILE',
+    profile,
+    invitationId
+  }
+}
+
+export const rejectInvitationByInterlocutor = invitation => {
+  return {
+    type: 'REJECT_INVITATION_BY_INTERLOCUTOR',
+    invitation
+  }
+}
+
+export const acceptInvitationByInterlocutor = invitation => {
+  return {
+    type: 'ACCEPT_INVITATION_BY_INTERLOCUTOR',
+    invitation
   }
 }

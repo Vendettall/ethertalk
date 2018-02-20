@@ -1,3 +1,9 @@
+import convertToStateUser from '../utils/convertToStateUser'
+import { push } from 'react-router-redux'
+import { replaceInvitations } from '../actions/invitations'
+import { replaceContacts } from '../actions/contacts'
+import { setSocket } from '../actions/general'
+
 const initialState = {
   id: null,
   name: '',
@@ -8,11 +14,31 @@ const initialState = {
 
 export default function currentUser(state = initialState, action) {
   switch (action.type) {
-    case 'REPLACE_CURRENT_USER':
-      return action.user
+    case 'CHOOSE_ACCOUNT':
+      if (action.hasUser) {
+        action.asyncDispatch(replaceInvitations(action.account.user))
+        action.asyncDispatch(replaceContacts(action.account.user))
+        action.asyncDispatch(setSocket(action.api, action.account.user))
+        return {
+          ...convertToStateUser(action.account.user),
+          apiUser: action.account.user,
+          walletId: action.account.id
+        }
+      } else {
+        action.asyncDispatch(push('/registration'))
+        return state
+      }
     case 'REGISTER_CURRENT_USER': {
       if (action.response) {
-        return Object.assign({}, state, {name: action.name, avatar: action.avatar})
+        action.asyncDispatch(setSocket(action.api, action.apiUser))
+        action.asyncDispatch(push('/'))
+        return {
+          id: action.apiUser.id,
+          name: action.name, 
+          avatar: action.avatar,
+          apiUser: action.apiUser,
+          walletId: action.walletId
+        }
       }
       return state
     }

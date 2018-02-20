@@ -6,7 +6,7 @@ import RegistrationForm from '../components/RegistrationForm'
 const mapStateToProps = state => {
   return {
     api: state.general.api,
-    apiUser: state.currentUser.apiUser,
+    account: state.accounts.active,
     avatar: state.registerUserForm.avatar,
     name: state.registerUserForm.name
   }
@@ -17,8 +17,8 @@ const mapDispatchToProps = dispatch => {
     onUpdateName: name => dispatch(updateRegistrationName(name)),
     onUpdateAvatar: avatar => dispatch(updateRegistrationAvatar(avatar)),
     emitUploadClick: () => document.getElementById('upload_avatar').click(),
-    onRegister: (api, apiUser, name, avatar) =>
-      dispatch(registerCurrentUser(api, apiUser, name, avatar))
+    onRegister: (api, account, name, avatar) =>
+      dispatch(registerCurrentUser(api, account, name, avatar))
   }
 }
 

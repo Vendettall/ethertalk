@@ -21,9 +21,19 @@ export const addContact = contact => {
   }
 }
 
-export const deleteContact = id => {
+export const updateContactProfile = apiContact => {
+  let profile = apiContact.getProfile()
+  let contactId = apiContact.id
+  return {
+    type: 'UPDATE_CONTACT_PROFILE',
+    profile,
+    contactId
+  }
+}
+
+export const deleteContact = contact => {
   return {
     type: 'DELETE_CONTACT',
-    id
+    contact
   }
 }

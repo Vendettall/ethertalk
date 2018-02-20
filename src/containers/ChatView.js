@@ -5,13 +5,15 @@ const mapStateToProps = state => {
   let interlocutor, invitation
   switch(state.chatView.view) {
     case 'SHOW_INVITATION':
-    case 'SHOW_PENDING_STATE':
+    case 'SHOW_PENDING_STATE': {
       interlocutor = state.invitations[state.chatView.id.toString()].user
       invitation = state.invitations[state.chatView.id.toString()]
       break
-    case 'CHAT_WITH_USER':
+    }
+    case 'CHAT_WITH_USER': {
       interlocutor = state.contacts[state.chatView.id.toString()]
       break;
+    }
     case 'SHOW_FALLBACK':
     default: 
       interlocutor = null

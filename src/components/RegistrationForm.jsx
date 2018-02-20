@@ -3,7 +3,7 @@ import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
-export default function RegistrationForm({api, apiUser, name, avatar, onUpdateName, onUpdateAvatar,
+export default function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAvatar,
                                           emitUploadClick, onRegister}) {
   return (
     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100vh'}}>
@@ -33,7 +33,7 @@ export default function RegistrationForm({api, apiUser, name, avatar, onUpdateNa
           <RaisedButton 
             label="Register Me"
             primary={true}
-            onClick={() => onRegister(api, apiUser, name, avatar)}
+            onClick={() => onRegister(api, account, name, avatar)}
             style={{marginLeft: '10px'}}
             disabled={!name || !avatar}
           />

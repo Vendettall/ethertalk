@@ -17,6 +17,25 @@ export const sendMessage = async (socket, apiInterlocutor, text) => {
   }
 }
 
+export const getMessage = (apiMessage, pubKeys, currentInterlocutorId) => {
+  let interlocutorId = pubKeys[apiMessage.from]
+  let isCurrentInterlocutor = false
+  let message = {
+    text: apiMessage.message,
+    isMy: false,
+    date: formatDate(apiMessage.sent)
+  }
+
+  Storage.set(interlocutorId, message)
+  if (currentInterlocutorId === interlocutorId)
+    isCurrentInterlocutor = true
+  
+  return {
+    type: 'GET_MESSAGE',
+    message, 
+    isCurrentInterlocutor
+  }
+}
 export const updateMessageText = text => {
   return {
     type: 'UPDATE_MESSAGE_TEXT',
