@@ -6,16 +6,20 @@ import IconButton from 'material-ui/IconButton'
 import ContentSend from 'material-ui/svg-icons/content/send'
 import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
+import PropTypes from 'prop-types'
 
 export default function Messages({socket, currentUserAvatar, interlocutor, text, messages, onUpdateText, onSend}) {
   let messageList = 'Type something ...'
-  
   if(messages.length) {
     messageList = (
       <List>
         {messages.map((message, index) =>
-          <ListItem leftAvatar={<Avatar src={message.isMy? currentUserAvatar: interlocutor.avatar} />}
-                    primaryText={message.text} secondaryText={message.date} key={index} />
+          <ListItem 
+            leftAvatar={<Avatar src={message.isMy? currentUserAvatar: interlocutor.avatar} />}
+            primaryText={message.text}
+            secondaryText={message.date}
+            key={index}
+          />
         )}
       </List> 
     )
@@ -26,13 +30,31 @@ export default function Messages({socket, currentUserAvatar, interlocutor, text,
         {messageList}
       </CardText>
       <CardActions style={{padding: '0 30px', position: 'relative'}}>
-        <TextField hintText="Write a message ..." onChange={(e, text) => onUpdateText(text)}
-                  value={text} style={{width: '100%', paddingRight: '24px'}} />
-        <IconButton tooltip="Send" onClick={() => onSend(socket, interlocutor.apiUser, text)}
-                    disabled={!text} style={{position: 'absolute', right: '10px', top: '0'}}>
+        <TextField
+          hintText="Write a message ..." 
+          onChange={(e, text) => onUpdateText(text)}
+          value={text}
+          style={{width: '100%', paddingRight: '24px'}}
+        />
+        <IconButton
+          tooltip="Send"
+          onClick={() => onSend(socket, interlocutor.apiUser, text)}
+          disabled={!text}
+          style={{position: 'absolute', right: '10px', top: '0'}}
+        >
           <ContentSend color={grey400} hoverColor={red800} />
         </IconButton>
       </CardActions>
     </div>
   )
+}
+
+Messages.propTypes = {
+  socket: PropTypes.object,
+  currentUserAvatar: PropTypes.string,
+  interlocutor: PropTypes.object,
+  text: PropTypes.string,
+  messages: PropTypes.array,
+  onUpdateText: PropTypes.func,
+  onSend: PropTypes.func
 }

@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
-import { registerCurrentUser } from '../actions/currentUser'
-import { updateRegistrationName, updateRegistrationAvatar } from '../actions/registerUser'
+import { registerCurrentUser, updateRegistrationName, updateRegistrationAvatar } from '../actions'
 import RegistrationForm from '../components/RegistrationForm'
 
 const mapStateToProps = state => {
   return {
     api: state.general.api,
     account: state.accounts.active,
-    avatar: state.registerUserForm.avatar,
-    name: state.registerUserForm.name
+    avatar: state.registerUser.avatar,
+    name: state.registerUser.name
   }
 }
 

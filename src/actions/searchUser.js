@@ -1,15 +1,16 @@
+import { TOGGLE_FORM, UPDATE_SEARCH_TEXT, SEARCH_USER } from '../constants'
 import convertToStateUser from '../utils/convertToStateUser'
 
 export const toggleForm = isOpened => {
   return {
-    type: 'TOGGLE_FORM',
+    type: TOGGLE_FORM,
     isOpened
   }
 }
 
 export const updateSearchText = text => {
   return {
-    type: 'UPDATE_SEARCH_TEXT',
+    type: UPDATE_SEARCH_TEXT,
     text
   }
 }
@@ -69,7 +70,7 @@ export const searchUser = async (text, api, walletId, invitations, contacts) => 
     })
   }
   return {
-    type: 'SEARCH_USER',
+    type: SEARCH_USER,
     response
   }
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { chooseAccount } from '../actions/accounts'
+import { chooseAccount } from '../actions'
 import AccountsList from '../components/AccountsList'
 
 const mapStateToProps = state => {

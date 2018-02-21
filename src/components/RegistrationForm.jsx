@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
+import PropTypes from 'prop-types'
 
 export default function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAvatar,
                                           emitUploadClick, onRegister}) {
@@ -41,4 +42,14 @@ export default function RegistrationForm({api, account, name, avatar, onUpdateNa
       </Card>
     </div>
   )
+}
+
+RegistrationForm.propTypes = {
+  api: PropTypes.object,
+  account: PropTypes.object,
+  avatar: PropTypes.array,
+  onUpdateName: PropTypes.func,
+  onUpdateAvatar: PropTypes.func,
+  emitUploadClick: PropTypes.func,
+  onRegister: PropTypes.func
 }

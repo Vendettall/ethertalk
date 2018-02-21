@@ -1,5 +1,5 @@
-import { updateInvitedUserProfile, acceptInvitationByInterlocutor,
-        rejectInvitationByInterlocutor } from '../actions/invitations'
+import { REPLACE_INVITATIONS, ADD_INVITATION, REJECT_INVITATION_BY_INTERLOCUTOR, ACCEPT_INVITATION_BY_INTERLOCUTOR } from '../constants'
+import { updateInvitedUserProfile, acceptInvitationByInterlocutor, rejectInvitationByInterlocutor } from '../actions'
 
 export const invitationsMiddleware = store => next => action => {
   const setupInvitationsHandler = invitation => {
@@ -32,7 +32,7 @@ export const invitationsMiddleware = store => next => action => {
   }
 
   switch (action.type) {
-    case 'REPLACE_INVITATIONS': {
+    case REPLACE_INVITATIONS: {
       let prevInvitations = store.getState().invitations
       if (Object.keys(prevInvitations).length) {
         Object.keys(prevInvitations).forEach(invitation => {
@@ -48,13 +48,13 @@ export const invitationsMiddleware = store => next => action => {
       })
       break
     } 
-    case 'ADD_INVITATION': {
+    case ADD_INVITATION: {
       setupInvitationsHandler(action.invitation)
       setupSentInvitationsHandler(action.invitation)
       break
     }
-    case 'REJECT_INVITATION_BY_INTERLOCUTOR':
-    case 'ACCEPT_INVITATION_BY_INTERLOCUTOR': {
+    case REJECT_INVITATION_BY_INTERLOCUTOR:
+    case ACCEPT_INVITATION_BY_INTERLOCUTOR: {
       removeSentInvitationsHandler(action.invitation)
       removeInvitationsHandler(action.invitation)
       break

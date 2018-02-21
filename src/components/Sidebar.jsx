@@ -2,6 +2,7 @@ import React from 'react'
 import UserPanel from './UserPanel'
 import VisibleUsersList from '../containers/VisibleUsersList'
 import Paper from 'material-ui/Paper'
+import PropTypes from 'prop-types'
 
 export default function Sidebar({user}) {
   return (
@@ -10,4 +11,8 @@ export default function Sidebar({user}) {
       <VisibleUsersList />
     </Paper>
   )
+}
+
+Sidebar.propTypes = {
+  user: PropTypes.object
 }

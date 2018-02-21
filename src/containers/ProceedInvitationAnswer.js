@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { acceptInvitation, rejectInvitation } from '../actions/invitations'
+import { acceptInvitation, rejectInvitation } from '../actions'
 import ShowInvitation from '../components/ShowInvitation'
 
 const mapStateToProps = (state, ownProps) => {

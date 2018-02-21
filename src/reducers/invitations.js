@@ -1,56 +1,20 @@
-// const stub = {
-//   1: {
-//     id: 1,
-//     isMy: true,
-//     user: {
-//       id: 1,
-//       name: 'Kirill',
-//       avatar: 'KirillsAvatar'
-//     }
-//   },
-//   2: {
-//     id: 2,
-//     isMy: false,
-//     user: {
-//       id: 20,
-//       name: 'Michael',
-//       avatar: 'MichaelsAvatar'
-//     }
-//   },
-//   3: {
-//     id: 3,
-//     isMy: true,
-//     user: {
-//       id: 50,
-//       name: 'Illya',
-//       avatar: 'IllyasAvatar'
-//     }
-//   },
-//   4: {
-//     id: 4,
-//     isMy: false,
-//     user: {
-//       id: 6,
-//       name: 'Mark',
-//       avatar: 'MarkssAvatar'
-//     }
-//   },
-// }
+import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ADD_INVITATION, ACCEPT_INVITATION_BY_INTERLOCUTOR,
+         REJECT_INVITATION_BY_INTERLOCUTOR, UPDATE_INVITED_USER_PROFILE } from '../constants'
 
 export default function invitations(state = {}, action) {
   let newState
   switch (action.type) {
-    case 'REPLACE_INVITATIONS':
+    case REPLACE_INVITATIONS:
       return action.invitations
-    case 'ACCEPT_INVITATION':
+    case ACCEPT_INVITATION:
       if (action.response) {
         newState = Object.assign({}, state)
-        delete newState[action.invitationId]
+        delete newState[action.invitation.id]
         return newState
       } else {
         return state // subscribe error checker somewhere
       }
-    case 'REJECT_INVITATION': {
+    case REJECT_INVITATION: {
       if (action.response) {
         newState = Object.assign({}, state)
         delete newState[action.invitationId]
@@ -59,14 +23,14 @@ export default function invitations(state = {}, action) {
         return state // subscribe error checker somewhere
       }
     }
-    case 'ADD_INVITATION':
+    case ADD_INVITATION:
       return Object.assign({}, state, action.invitation)
-    case 'ACCEPT_INVITATION_BY_INTERLOCUTOR':
-    case 'REJECT_INVITATION_BY_INTERLOCUTOR':
+    case ACCEPT_INVITATION_BY_INTERLOCUTOR:
+    case REJECT_INVITATION_BY_INTERLOCUTOR:
       newState = Object.assign({}, state)
       delete newState[action.invitation.id]
       return newState
-    case 'UPDATE_INVITED_USER_PROFILE':
+    case UPDATE_INVITED_USER_PROFILE:
       let invitationUser = Object.assign({}, state[action.invitationId].user)
       invitationUser.name = action.profile.name
       invitationUser.avatar = action.profile.avatar

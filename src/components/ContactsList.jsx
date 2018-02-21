@@ -1,8 +1,9 @@
 import React from 'react'
 import Avatar from 'material-ui/Avatar'
 import {List, ListItem} from 'material-ui/List'
+import PropTypes from 'prop-types'
 
-export default function UserList({contactsList, onListItemClick}) {
+export default function ContactsList({contactsList, onListItemClick}) {
   return (
     <List style={{height: 'calc(100vh - 152px)', overflowY: 'scroll'}}>
       {contactsList.map((contact) =>
@@ -15,4 +16,9 @@ export default function UserList({contactsList, onListItemClick}) {
       )}
     </List>
   )
+}
+
+ContactsList.propTypes = {
+  contactsList: PropTypes.array,
+  onListItemClick: PropTypes.func
 }

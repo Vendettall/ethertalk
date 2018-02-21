@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setVisibilityFilter, setChatView } from '../actions'
+import { chooseVisibilityFilter, chooseChatView } from '../actions'
 import UsersList from '../components/UsersList'
 
 function objectToArray(objectAsMap) {
@@ -13,17 +13,17 @@ const mapStateToProps = state => {
   return {
     contacts: objectToArray(state.contacts),
     invitations: objectToArray(state.invitations),
-    filter: state.visibilityFilter
+    filter: state.chatView.visibilityFilter
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeFilter: filter => dispatch(setVisibilityFilter(filter)),
-    chatWithUser: id => dispatch(setChatView("CHAT_WITH_USER", id)),
-    proceedInvitation: (id, isMy) => {
-      if(isMy) dispatch(setChatView("SHOW_PENDING_STATE", id))
-      else dispatch(setChatView("SHOW_INVITATION", id))
+    onChangeFilter: filter => dispatch(chooseVisibilityFilter(filter)),
+    onChatWithInterlocutor: contact => dispatch(chooseChatView("CHAT_WITH_USER", contact)),
+    onProceedInvitation: invitation => {
+      if(invitation.isMy) dispatch(chooseChatView("SHOW_PENDING_STATE", invitation))
+      else dispatch(chooseChatView("SHOW_INVITATION", invitation))
     }
   }
 }

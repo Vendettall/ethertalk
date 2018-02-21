@@ -1,4 +1,5 @@
-import { getMessage } from '../actions/messages'
+import { SET_SOCKET } from '../constants'
+import { getMessage } from '../actions'
 
 export const socketMiddleware = store => next => action => {
   const setupSocketHandler = socket => {
@@ -37,7 +38,7 @@ export const socketMiddleware = store => next => action => {
     })
   }
 
-  if (action.type === 'SET_SOCKET') {
+  if (action.type === SET_SOCKET) {
     let prevSocket = store.getState().general.socket
     if (prevSocket)
       removeSocketHandler(prevSocket)

@@ -1,8 +1,14 @@
-import { getAccounts } from '../actions/accounts'
+import { SET_API, SET_SOCKET } from '../constants'
+import { getAccounts } from '../actions'
 
-export default function general(state = {}, action) {
+const initialState = {
+  api: null,
+  socket: null
+}
+
+export default function general(state = initialState, action) {
   switch (action.type) {
-    case 'SET_API':  {
+    case SET_API:  {
       if (action.api) {
         action.asyncDispatch(getAccounts(action.api))
         return Object.assign({}, state, {api: action.api})
@@ -10,7 +16,7 @@ export default function general(state = {}, action) {
         return state
       }
     }
-    case 'SET_SOCKET':
+    case SET_SOCKET:
       let prevSocket = state.socket
       if (prevSocket)
         prevSocket.stop()

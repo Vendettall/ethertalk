@@ -1,6 +1,8 @@
+import { REPLACE_CONTACTS, ADD_PUB_KEY, UPDATE_PUB_KEY, DELETE_PUB_KEY } from '../constants'
+
 export default function pubKeys(state = {}, action) {
   switch (action.type) {
-    case 'REPLACE_CONTACTS': {
+    case REPLACE_CONTACTS: {
       let apiContacts = Object.keys(action.contacts).map(key => 
         action.contacts[key].apiUser)
       let pubKeysPromises = apiContacts.map(apiUser => 
@@ -14,16 +16,16 @@ export default function pubKeys(state = {}, action) {
         })
       return pubKeys
     }
-    case 'ADD_PUB_KEY':
+    case ADD_PUB_KEY:
       return Object.assign({}, state, {[action.pubKey]: action.user})
-    case 'UPDATE_PUB_KEY': {
+    case UPDATE_PUB_KEY: {
       let newState = Object.assign({}, state)
       Object.defineProperty(newState, action.newPubKey,
         Object.getOwnPropertyDescriptor(newState, action.oldPubKey))
       delete newState[action.oldPubKey]
       return newState
     }
-    case 'DELETE_PUB_KEY': {
+    case DELETE_PUB_KEY: {
       let newState = Object.assign({}, state)
       delete newState[action.pubKey]
       return newState

@@ -1,3 +1,5 @@
+import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE, SET_CHAT_VIEW } from '../constants'
+
 const initialState = {
   text: '',
   messages: [],
@@ -6,23 +8,23 @@ const initialState = {
 
 export default function messages(state = initialState, action) {
   switch (action.type) {
-    case 'UPDATE_MESSAGE_TEXT':
+    case UPDATE_MESSAGE_TEXT:
       return Object.assign({}, state, {text: action.text})
-    case 'GET_MESSAGE': {
+    case GET_MESSAGE: {
       if (action.isCurrentInterlocutor) {
         return Object.assign({}, state, { messages: [...state.messages, action.message]})
       } else {
         return state
       }
     }
-    case 'SEND_MESSAGE': {
+    case SEND_MESSAGE: {
       if (action.response) {
         return Object.assign({}, state, {text: '', messages: [...state.messages, action.message]})
       } else {
         return state
       }
     }
-    case 'SET_CHAT_VIEW':
+    case SET_CHAT_VIEW:
       if (action.view === 'CHAT_WITH_USER') {
         let messages = Storage.get(action.interlocutor.id.toString()) || []
         let apiInterlocutor = action.interlocutor.apiUser

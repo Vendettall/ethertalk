@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setApi } from '../actions/general'
+import { setApi } from '../actions'
 import App from '../App'
 
 const mapStateToProps = state => {

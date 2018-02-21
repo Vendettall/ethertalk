@@ -1,3 +1,4 @@
+import { SEND_MESSAGE, GET_MESSAGE, UPDATE_MESSAGE_TEXT } from '../constants'
 import Storage from '../utils/storage'
 import formatDate from '../utils/formatDate'
 
@@ -11,7 +12,7 @@ export const sendMessage = async (socket, apiInterlocutor, text) => {
   let messages = Storage.get(apiInterlocutor.id.toString()) || []
   Storage.set(apiInterlocutor.id.toString(), [...messages, message])
   return {
-    type: 'SEND_MESSAGE',
+    type: SEND_MESSAGE,
     message,
     response
   }
@@ -31,14 +32,14 @@ export const getMessage = (apiMessage, pubKeys, currentInterlocutorId) => {
     isCurrentInterlocutor = true
   
   return {
-    type: 'GET_MESSAGE',
+    type: GET_MESSAGE,
     message, 
     isCurrentInterlocutor
   }
 }
 export const updateMessageText = text => {
   return {
-    type: 'UPDATE_MESSAGE_TEXT',
+    type: UPDATE_MESSAGE_TEXT,
     text
   }
 }

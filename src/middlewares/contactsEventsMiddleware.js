@@ -1,5 +1,5 @@
-import { updateContactProfile, deleteContact } from '../actions/contacts'
-import { updatePubKey } from '../actions/pubKeys'
+import { REPLACE_CONTACTS, ACCEPT_INVITATION, ACCEPT_INVITATION_BY_INTERLOCUTOR, DELETE_CONTACT } from '../constants'
+import { updateContactProfile, deleteContact, updatePubKey } from '../actions'
 
 export const contactsMiddleware = store => next => action => {
   const setupContactHandler = contact => {
@@ -33,7 +33,7 @@ export const contactsMiddleware = store => next => action => {
   }
 
   switch (action.type) {
-    case 'REPLACE_CONTACTS': {
+    case REPLACE_CONTACTS: {
       let prevContacts = store.getState().contacts
       if (Object.keys(prevContacts).length) {
         Object.keys(prevContacts).forEach(contact => {
@@ -45,15 +45,15 @@ export const contactsMiddleware = store => next => action => {
       })
       break
     }
-    case 'ACCEPT_INVITATION': {
+    case ACCEPT_INVITATION: {
       setupContactHandler(action.interlocutor)
       break
     }
-    case 'ACCEPT_INVITATION_BY_INTERLOCUTOR': {
+    case ACCEPT_INVITATION_BY_INTERLOCUTOR: {
       setupContactHandler(action.invitation.user.apiUser)
       break
     }
-    case 'DELETE_CONTACT': {
+    case DELETE_CONTACT: {
       removeContactHandler(action.contact)
       break
     }

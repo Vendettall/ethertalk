@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
-import searchUserForm from './searchUserForm'
-import visibilityFilter from './visibilityFilter'
+import searchUser from './searchUser'
 import invitations from './invitations'
 import contacts from './contacts'
 import chatView from './chatView'
@@ -9,12 +8,11 @@ import currentUser from './currentUser'
 import general from './general'
 import pubKeys from './pubKeys'
 import { routerReducer } from 'react-router-redux'
-import registerUserForm from './registerUserForm'
+import registerUser from './registerUser'
 import accounts from './accounts'
 
 const chatApp = combineReducers({
-  searchUserForm,
-  visibilityFilter,
+  searchUser,
   invitations,
   contacts,
   chatView,
@@ -23,7 +21,7 @@ const chatApp = combineReducers({
   general,
   pubKeys,
   routerReducer,
-  registerUserForm,
+  registerUser,
   accounts
 })
 

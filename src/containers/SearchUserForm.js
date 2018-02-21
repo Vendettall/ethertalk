@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
-import { toggleForm, updateSearchText, searchUser} from '../actions/searchUser'
-import { sendInvitation } from '../actions/invitations'
-import InviteUser from '../components/InviteUser'
+import { toggleForm, updateSearchText, searchUser, sendInvitation } from '../actions'
+import SearchUserView from '../components/SearchUserView'
 
 const mapStateToProps = state => {
   return {
@@ -9,11 +8,11 @@ const mapStateToProps = state => {
     currentUser: state.currentUser,
     invitations: state.invitations,
     contacts: state.contacts,
-    isOpened: state.searchUserForm.isOpened,
-    text: state.searchUserForm.text,
-    stateUser: state.searchUserForm.response.stateUser,
-    apiUser: state.searchUserForm.response.apiUser,
-    answer: state.searchUserForm.response.answer
+    isOpened: state.searchUser.isOpened,
+    text: state.searchUser.text,
+    stateUser: state.searchUser.response.stateUser,
+    apiUser: state.searchUser.response.apiUser,
+    answer: state.searchUser.response.answer
   }
 }
 
@@ -30,6 +29,6 @@ const mapDispatchToProps = dispatch => {
 const SearchUserForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(InviteUser)
+)(SearchUserView)
 
 export default SearchUserForm

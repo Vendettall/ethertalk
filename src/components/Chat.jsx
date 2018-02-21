@@ -1,18 +1,22 @@
 import React from 'react'
 import {Card, CardHeader} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
-import ChatWithUser from './ChatWithUser'
+import ChatWithInterlocutor from './ChatWithInterlocutor'
 import ProceedInvitationAnswer from '../containers/ProceedInvitationAnswer'
+import PropTypes from 'prop-types'
 
 export default function Chat({view, interlocutor, invitation}) {
   switch(view) {
     case 'CHAT_WITH_USER':
-      return <ChatWithUser interlocutor={interlocutor} />
+      return <ChatWithInterlocutor interlocutor={interlocutor} />
     case 'SHOW_PENDING_STATE': {
       return (
         <Card style={{width: 'calc(66% - 10px)'}}>
-          <CardHeader title={interlocutor.name} subtitle="Wait until user accept invitation..."
-                      avatar={interlocutor.avatar} />
+          <CardHeader
+            title={interlocutor.name}
+            subtitle="Wait until user accept invitation..."
+            avatar={interlocutor.avatar}
+          />
           <Divider />
         </Card>
       )
@@ -24,4 +28,10 @@ export default function Chat({view, interlocutor, invitation}) {
     default:
       return <Card style={{width: 'calc(66% - 10px)'}} />
   }
+}
+
+Chat.propTypes = {
+  view: PropTypes.string,
+  interlocutor: PropTypes.object,
+  invitation: PropTypes.object
 }

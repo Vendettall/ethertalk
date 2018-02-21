@@ -1,14 +1,10 @@
-export const setVisibilityFilter = filter => {
-  return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-  }
-}
-
-export const setChatView = (view, interlocutor) => {
-  return {
-    type: 'SET_CHAT_VIEW',
-    view,
-    interlocutor
-  }
-}
+export * from './accounts'
+export * from './chatView'
+export * from './contacts'
+export * from './currentUser'
+export * from './general'
+export * from './invitations'
+export * from './messages'
+export * from './pubKeys'
+export * from './registerUser'
+export * from './searchUser'

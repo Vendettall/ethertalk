@@ -1,3 +1,4 @@
+import { REGISTER_CURRENT_USER } from '../constants'
 import imageFromHash from '../utils/imageFromHash'
 
 export const registerCurrentUser = async (api, account, name, avatarAsFile) => {
@@ -21,7 +22,7 @@ export const registerCurrentUser = async (api, account, name, avatarAsFile) => {
     response = response? true: false
   }
   return {
-    type: 'REGISTER_CURRENT_USER',
+    type: REGISTER_CURRENT_USER,
     api,
     avatar,
     name,

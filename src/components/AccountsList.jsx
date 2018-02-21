@@ -1,6 +1,7 @@
 import React from 'react'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem'
+import PropTypes from 'prop-types'
 
 export default function AccountsList({accounts, activeAccount, api, onChoose}) {
   return (
@@ -20,4 +21,11 @@ export default function AccountsList({accounts, activeAccount, api, onChoose}) {
       )}
     </DropDownMenu>
   )
+}
+
+AccountsList.propTypes = {
+  accounts: PropTypes.array,
+  activeAccount: PropTypes.object,
+  api: PropTypes.object,
+  onChoose: PropTypes.func
 }

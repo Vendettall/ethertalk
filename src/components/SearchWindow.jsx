@@ -3,6 +3,7 @@ import IconButton from 'material-ui/IconButton'
 import ActionSearch from 'material-ui/svg-icons/action/search'
 import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
+import PropTypes from 'prop-types'
 
 export default function SerachUser({text, api, walletId, invitations, contacts, onUpdateText, onSearch}) {
   return (
@@ -23,4 +24,13 @@ export default function SerachUser({text, api, walletId, invitations, contacts, 
     </div>
   )
 }
-  
+
+SerachUser.propTypes = {
+  text: PropTypes.string,
+  api: PropTypes.object,
+  walletId: PropTypes.string,
+  invitations: PropTypes.object,
+  contacts: PropTypes.object,
+  onUpdateText: PropTypes.func,
+  onSearch: PropTypes.func
+}

@@ -1,6 +1,8 @@
+import { ADD_PUB_KEY, UPDATE_PUB_KEY, DELETE_PUB_KEY } from '../constants'
+
 export const addPubKey = (pubKey, user) => {
   return {
-    type: 'ADD_PUB_KEY',
+    type: ADD_PUB_KEY,
     pubKey,
     user
   }
@@ -10,7 +12,7 @@ export const updatePubKey = async (userApi, pubKeys) => {
   let newPubKey = userApi.getPubKey()
   let oldPubKey = Object.keys(pubKeys).find(pubKey => userApi.id === pubKeys[pubKey].id)
   return {
-    type: 'UPDATE_PUB_KEY',
+    type: UPDATE_PUB_KEY,
     oldPubKey,
     newPubKey
   }
@@ -18,7 +20,7 @@ export const updatePubKey = async (userApi, pubKeys) => {
 
 export const deletePubKey = pubKey => {
   return {
-    type: 'DELETE_PUB_KEY',
+    type: DELETE_PUB_KEY,
     pubKey
   }
 }
