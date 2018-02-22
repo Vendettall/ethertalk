@@ -4,34 +4,37 @@ import Divider from 'material-ui/Divider'
 import ChatWithInterlocutor from './ChatWithInterlocutor'
 import ProceedInvitationAnswer from '../containers/ProceedInvitationAnswer'
 import PropTypes from 'prop-types'
+import { CHAT_VIEWS } from '../constants'
 
-export default function Chat({view, interlocutor, invitation}) {
+const interactorPanelStyle = {
+  width: 'calc(66% - 10px)'
+}
+
+export default function Chat({view, interactor, invitation}) {
   switch(view) {
-    case 'CHAT_WITH_USER':
-      return <ChatWithInterlocutor interlocutor={interlocutor} />
-    case 'SHOW_PENDING_STATE': {
+    case CHAT_VIEWS.CHAT_WITH_USER:
+      return <ChatWithInterlocutor interlocutor={interactor} />
+    case CHAT_VIEWS.SHOW_PENDING_STATE:
       return (
-        <Card style={{width: 'calc(66% - 10px)'}}>
+        <Card style={interactorPanelStyle}>
           <CardHeader
-            title={interlocutor.name}
+            title={interactor.name}
             subtitle="Wait until user accept invitation..."
-            avatar={interlocutor.avatar}
+            avatar={interactor.avatar}
           />
           <Divider />
         </Card>
       )
-    }
-    case 'SHOW_INVITATION': {
-      return <ProceedInvitationAnswer interlocutor={interlocutor} invitation={invitation} />
-    }
-    case 'FALL_BACK':
+    case CHAT_VIEWS.SHOW_INVITATION:
+      return <ProceedInvitationAnswer interactor={interactor} invitation={invitation} />
+    case CHAT_VIEWS.SHOW_FALLBACK:
     default:
-      return <Card style={{width: 'calc(66% - 10px)'}} />
+      return <Card style={interactorPanelStyle} />
   }
 }
 
 Chat.propTypes = {
   view: PropTypes.string,
-  interlocutor: PropTypes.object,
+  interactor: PropTypes.object,
   invitation: PropTypes.object
 }

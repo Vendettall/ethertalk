@@ -8,9 +8,9 @@ const initialState = {
 export default function registerUser(state = initialState, action) {
   switch (action.type) {
     case UPDATE_REGISTRATION_NAME: 
-      return Object.assign({}, state, {name: action.name})
+      return { ...state, name: action.name }
     case UPDATE_REGISTRATION_AVATAR:
-      return Object.assign({}, state, {avatar: action.avatar})
+      return { ...state, avatar: action.avatar }
     default:
       return state
   }

@@ -4,15 +4,15 @@ import ShowInvitation from '../components/ShowInvitation'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    apiUser: state.currentUser.apiUser,
-    interlocutor: ownProps.interlocutor,
+    apiUser: state.user.apiUser,
+    interactor: ownProps.interactor,
     invitation: ownProps.invitation
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAccept: (apiUser, interlocutor, invitation) => dispatch(acceptInvitation(invitation, apiUser, interlocutor)),
+    onAccept: (apiUser, interactor, invitation) => dispatch(acceptInvitation(invitation, apiUser, interactor)),
     onReject: (apiUser, invitation) => dispatch(rejectInvitation(invitation, apiUser))
   }
 }

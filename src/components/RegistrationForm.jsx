@@ -4,11 +4,34 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import PropTypes from 'prop-types'
 
+const containerStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100vh'
+}
+
+const wrapperStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '20px'
+}
+
+const uploadInputStyle = {
+  display: 'none'
+}
+
+const registrationButtonStyle = {
+  marginLeft: '10px'
+}
+
 export default function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAvatar,
                                           emitUploadClick, onRegister}) {
   return (
-    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100vh'}}>
-      <Card style={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'}}>
+    <div style={containerStyle}>
+      <Card style={wrapperStyle}>
         <CardTitle title="Registration form" />
         <CardText>
           <TextField 
@@ -20,14 +43,14 @@ export default function RegistrationForm({api, account, name, avatar, onUpdateNa
           <TextField 
             hintText="Upload your avatar"
             onClick={() => emitUploadClick()}
-            value={avatar? 'Your avatar': ''} 
+            value={avatar? avatar['0'].name: ''} 
           />
           <input 
             id="upload_avatar"
             type="file"
             accept=".png, .jpg, .jpeg"
             onChange={(e) => onUpdateAvatar(e.target.files)}
-            style={{display: 'none'}}
+            style={uploadInputStyle}
           />
         </CardText>
         <CardActions>
@@ -35,7 +58,7 @@ export default function RegistrationForm({api, account, name, avatar, onUpdateNa
             label="Register Me"
             primary={true}
             onClick={() => onRegister(api, account, name, avatar)}
-            style={{marginLeft: '10px'}}
+            style={registrationButtonStyle}
             disabled={!name || !avatar}
           />
         </CardActions>
@@ -47,7 +70,7 @@ export default function RegistrationForm({api, account, name, avatar, onUpdateNa
 RegistrationForm.propTypes = {
   api: PropTypes.object,
   account: PropTypes.object,
-  avatar: PropTypes.array,
+  avatar: PropTypes.object,
   onUpdateName: PropTypes.func,
   onUpdateAvatar: PropTypes.func,
   emitUploadClick: PropTypes.func,

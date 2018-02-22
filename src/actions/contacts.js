@@ -5,7 +5,7 @@ export const replaceContacts = async apiUser => {
   let contacts = await apiUser.getContacts().then(contacts => {
     if (!contacts.length) return {}
     return contacts.reduce((obj, apiUser) => {
-      obj[apiUser.id.toString()] = Object.assign({}, convertToStateUser(apiUser))
+      obj[apiUser.id.toString()] = convertToStateUser(apiUser)
       return obj
     }, {})
   })

@@ -4,12 +4,20 @@ import Divider from 'material-ui/Divider'
 import ShowMessages from '../containers/ShowMessages'
 import PropTypes from 'prop-types'
 
+const chatContainerStyle = {
+  width: 'calc(66% - 10px)'
+}
+
+const messagesTitleStyle = {
+  textAlign: 'center'
+}
+
 export default function ChatWithInterlocutor({ interlocutor }) {
   return  (     
-    <Card style={{width: 'calc(66% - 10px)'}}>
+    <Card style={chatContainerStyle}>
       <CardHeader title={interlocutor.name} avatar={interlocutor.avatar} />
       <Divider />
-      <CardTitle title="Last messages" style={{textAlign: 'center'}}/>
+      <CardTitle title="Last messages" style={messagesTitleStyle}/>
       <ShowMessages interlocutor={interlocutor} />
     </Card>
   )

@@ -12,8 +12,8 @@ export const setApi = async () => {
   }
 }
 
-export const setSocket = (api, apiUser) => {
-  let socket = new api.Whisper(apiUser)
+export const setSocket = (api, user) => {
+  let socket = new api.Whisper(user)
   socket.start()
   return {
     type: SET_SOCKET,

@@ -2,10 +2,14 @@ import React from 'react'
 import Sidebar from './components/Sidebar'
 import ChatView from './containers/ChatView'
 
-import './assets/css/oswald.css'
-import './assets/css/open-sans.css'
-import './assets/css/pure-min.css'
-import './App.css'
+import './assets/css/App.css'
+
+const appContainerStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '20px',
+  height: '100vh'
+}
 
 export default class App extends React.Component {
   componentWillMount () {
@@ -13,7 +17,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <div style={{display: 'flex', justifyContent: 'space-between', padding: '20px', height: '100vh', boxSizing: 'border-box'}}>
+      <div style={appContainerStyle}>
         <Sidebar user={this.props.user} />
         <ChatView />
       </div>

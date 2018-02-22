@@ -5,7 +5,7 @@ import SearchUserView from '../components/SearchUserView'
 const mapStateToProps = state => {
   return {
     api: state.general.api,
-    currentUser: state.currentUser,
+    user: state.user,
     invitations: state.invitations,
     contacts: state.contacts,
     isOpened: state.searchUser.isOpened,

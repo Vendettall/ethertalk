@@ -4,9 +4,13 @@ import VisibleUsersList from '../containers/VisibleUsersList'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
 
+const sidebarStyle = {
+  width: '33%'
+}
+
 export default function Sidebar({user}) {
   return (
-    <Paper style={{width: '33%'}}>
+    <Paper style={sidebarStyle}>
       <UserPanel name={user.name} avatar={user.avatar} />
       <VisibleUsersList />
     </Paper>

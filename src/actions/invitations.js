@@ -3,23 +3,21 @@ import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ACCEPT_INVIT
 import convertToStateInvitation from '../utils/convertToStateInvitation'
 
 export const replaceInvitations = async apiUser => {
-  let sentInvitations = apiUser.getSentInvitations().then(invitations => {
+  const getInvitations = (invitations, isMy) => {
     if (!invitations.length) return {}
     return invitations.reduce((obj, inv) => {
       return inv.getUser().then(user => {
-        obj[inv.id] = convertToStateInvitation(inv, user, true)
+        obj[inv.id] = convertToStateInvitation(inv, user, isMy)
         return obj
       })
     }, {})
+  }
+
+  let sentInvitations = apiUser.getSentInvitations().then(invitations => {
+    return getInvitations(invitations, true)
   })
   let inboxInvitations = apiUser.getInboxInvitations().then(invitations => {
-    if (!invitations.length) return {}
-    return invitations.reduce((obj, inv) => {
-      return inv.getUser().then(user => {
-        obj[inv.id] = convertToStateInvitation(inv, user, false)
-        return obj
-      })
-    }, {})
+    return getInvitations(invitations, false)
   })
   let invitations = await Promise.all([sentInvitations, inboxInvitations]).then(invitations => {
     return Object.assign({}, invitations[0], invitations[1])
@@ -30,13 +28,12 @@ export const replaceInvitations = async apiUser => {
   }
 }
 
-export const acceptInvitation = async (invitation, apiUser, interlocutor) => {
+export const acceptInvitation = async (invitation, apiUser, interactor) => {
   let response = await apiUser.acceptInvitation(invitation.apiInvitation).then(result => {return result})
-  response = response? true: false 
   return {
     type: ACCEPT_INVITATION,
     invitation,
-    interlocutor,
+    interactor,
     response
   }
 }
@@ -44,7 +41,6 @@ export const acceptInvitation = async (invitation, apiUser, interlocutor) => {
 export const rejectInvitation = async (invitation, apiUser) => {
   let invitationId = invitation.id
   let response = await apiUser.rejectInvitation(invitation.apiInvitation).then(result => {return result})
-  response = response? true: false  
   return { 
     type: REJECT_INVITATION,
     invitationId,
@@ -66,9 +62,8 @@ export const rejectInvitationByInterlocutor = invitation => {
   }
 }
 
-export const sendInvitation = async (currentApiUser, apiUser) => {
-  let response = currentApiUser.invite(apiUser).then(response => {return response})
-  response = response? true: false
+export const sendInvitation = async (apiUser, apiInteractor) => {
+  let response = await apiUser.invite(apiInteractor).then(response => {return response})
   return {
     type: SEND_INVITATION,
     response

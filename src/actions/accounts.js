@@ -11,11 +11,9 @@ export const getAccounts = async api => {
 }
 
 export const chooseAccount = (account, api) => {
-  let hasUser = account.user? true: false
   return {
     type: CHOOSE_ACCOUNT,
     api,
-    account, 
-    hasUser
+    account
   }
 }

@@ -5,7 +5,7 @@ import Messages from '../components/Messages'
 const mapStateToProps = (state, ownProps) => {
   return {
     socket: state.general.socket,
-    currentUserAvatar: state.currentUser.avatar,
+    userAvatar: state.user.avatar,
     interlocutor: ownProps.interlocutor,
     text: state.messages.text,
     messages: state.messages.messages

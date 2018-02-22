@@ -1,7 +1,6 @@
 export * from './accounts'
 export * from './chatView'
 export * from './contacts'
-export * from './currentUser'
 export * from './general'
 export * from './invitations'
 export * from './messages'

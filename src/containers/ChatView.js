@@ -1,26 +1,27 @@
 import { connect } from 'react-redux'
 import Chat from '../components/Chat'
+import { CHAT_VIEWS } from '../constants'
 
 const mapStateToProps = state => {
-  let interlocutor = null
+  let interactor = null
   let invitation = null
   let view = state.chatView.view
   switch (view) {
-    case 'CHAT_WITH_USER': {
-      interlocutor = state.chatView.interlocutor
+    case CHAT_VIEWS.CHAT_WITH_USER: {
+      interactor = state.chatView.interactor
       break
     }
-    case 'SHOW_PENDING_STATE':
-    case 'SHOW_INVITATION': {
-      interlocutor = state.chatView.interlocutor.user
-      invitation = state.chatView.interlocutor
+    case CHAT_VIEWS.SHOW_PENDING_STATE:
+    case CHAT_VIEWS.SHOW_INVITATION: {
+      interactor = state.chatView.interactor.user
+      invitation = state.chatView.interactor
       break
     }
     default:
   }
   return {
     view: state.chatView.view,
-    interlocutor: interlocutor,
+    interactor: interactor,
     invitation: invitation
   }
 }

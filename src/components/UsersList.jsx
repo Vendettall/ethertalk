@@ -3,18 +3,19 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import ContactsList from './ContactsList'
 import InvitationsList from './InvitationsList'
 import PropTypes from 'prop-types'
+import { VISIBILITY_FILTERS } from '../constants'
 
 export default function UsersList({filter, pubKeys, contacts, invitations, onChangeFilter, onChatWithInterlocutor, onProceedInvitation}) {
 	return (
 		<Tabs value={filter} onChange={onChangeFilter}>
-			<Tab label="Contacts" value="SHOW_CONTACTS">
+			<Tab label="Contacts" value={VISIBILITY_FILTERS.SHOW_CONTACTS}>
 				<ContactsList 
 					contactsList={contacts}
 					onListItemClick={onChatWithInterlocutor}
 					pubKeys={pubKeys}
 				/>
 			</Tab>
-			<Tab label="Ivitations" value="SHOW_INVITED">
+			<Tab label="Ivitations" value={VISIBILITY_FILTERS.SHOW_INVITED}>
 				<InvitationsList invitationsList={invitations} onListItemClick={onProceedInvitation} />
 			</Tab>
 		</Tabs>

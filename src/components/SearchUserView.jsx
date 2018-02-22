@@ -7,20 +7,25 @@ import SearchWindow from './SearchWindow'
 import ShowFoundUser from './ShowFoundUser'
 import PropTypes from 'prop-types'
 
-export default function SearchUserView({api, currentUser, invitations, contacts, isOpened, text, stateUser,
+const fromAnswerStyle = {
+  textAlign: 'center',
+  marginTop: '40px'
+}
+
+export default function SearchUserView({api, user, invitations, contacts, isOpened, text, stateUser,
                                     apiUser, answer, onToggle, onUpdateText, onSearch, onInvite}) {
   let formAnswer = null
   if(stateUser) {
     formAnswer =
       <ShowFoundUser
-        currentApiUser={currentUser.apiUser}
+        currentApiUser={user.apiUser}
         stateUser={stateUser} 
         apiUser={apiUser}
         answer={answer}
         onInvite={onInvite}
       />
   } else if (answer) {
-    formAnswer = <div style={{textAlign: 'center', marginTop: '40px'}}>{answer}</div>
+    formAnswer = <div style={fromAnswerStyle}>{answer}</div>
   }
 
   return (
@@ -37,7 +42,7 @@ export default function SearchUserView({api, currentUser, invitations, contacts,
       >
         <SearchWindow
           api={api} 
-          walletId={currentUser.walletId}
+          walletId={user.walletId}
           invitations={invitations}
           contacts={contacts}
           text={text}
@@ -52,7 +57,7 @@ export default function SearchUserView({api, currentUser, invitations, contacts,
 
 SearchUserView.propTypes = {
   api: PropTypes.object,
-  currentUser: PropTypes.object,
+  user: PropTypes.object,
   invitations: PropTypes.object,
   contacts: PropTypes.object,
   isOpened: PropTypes.bool,

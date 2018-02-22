@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { registerCurrentUser, updateRegistrationName, updateRegistrationAvatar } from '../actions'
+import { registerUser, updateRegistrationName, updateRegistrationAvatar } from '../actions'
 import RegistrationForm from '../components/RegistrationForm'
 
 const mapStateToProps = state => {
@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => {
     onUpdateAvatar: avatar => dispatch(updateRegistrationAvatar(avatar)),
     emitUploadClick: () => document.getElementById('upload_avatar').click(),
     onRegister: (api, account, name, avatar) =>
-      dispatch(registerCurrentUser(api, account, name, avatar))
+      dispatch(registerUser(api, account, name, avatar))
   }
 }
 

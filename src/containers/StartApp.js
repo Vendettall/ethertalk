@@ -4,7 +4,7 @@ import App from '../App'
 
 const mapStateToProps = state => {
   return {
-    user: state.currentUser
+    user: state.user
   }
 }
 

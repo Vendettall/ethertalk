@@ -7,10 +7,10 @@ export const chooseVisibilityFilter = filter => {
   }
 }
 
-export const chooseChatView = (view, interlocutor) => {
+export const chooseChatView = (view, interactor) => {
   return {
     type: CHOOSE_CHAT_VIEW,
     view,
-    interlocutor
+    interactor
   }
 }

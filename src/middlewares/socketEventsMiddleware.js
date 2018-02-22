@@ -2,6 +2,7 @@ import { SET_SOCKET } from '../constants'
 import { getMessage } from '../actions'
 
 export const socketMiddleware = store => next => action => {
+  // setup handlers
   const setupSocketHandler = socket => {
     socket.on('started', () => {
       console.log('Socket opened')
@@ -19,7 +20,7 @@ export const socketMiddleware = store => next => action => {
       store.dispatch(getMessage(apiMessage, pubKeys, currentInterlocutorId))
     })
   }
-
+  // remove handlers
   const removeSocketHandler = socket => {
     socket.removeListener('started', () => {
       console.log('Socket opened')
@@ -37,7 +38,7 @@ export const socketMiddleware = store => next => action => {
       store.dispatch(getMessage(apiMessage, pubKeys, currentInterlocutorId))
     })
   }
-
+  //
   if (action.type === SET_SOCKET) {
     let prevSocket = store.getState().general.socket
     if (prevSocket)

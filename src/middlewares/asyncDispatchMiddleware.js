@@ -10,9 +10,8 @@ export const asyncDispatchMiddleware = store => next => action => {
   function asyncDispatch(asyncAction) {
     actionQueue = actionQueue.concat([asyncAction])
 
-    if (syncActivityFinished) {
+    if (syncActivityFinished)
       flushQueue()
-    }
   }
 
   const actionWithAsyncDispatch =

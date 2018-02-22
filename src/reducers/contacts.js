@@ -1,4 +1,4 @@
-import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, ACCEPT_INVITATION, ACCEPT_INVITATION_BY_INTERLOCUTOR,
+import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, ACCEPT_INVITATION, ACCEPT_INVITATION_BY_INTERACTOR,
          UPDATE_CONTACT_PROFILE } from '../constants'
 
 export default function contacts(state = {}, action) {
@@ -6,28 +6,29 @@ export default function contacts(state = {}, action) {
     case REPLACE_CONTACTS: 
       return action.contacts
     case ADD_CONTACT:
-      return Object.assign({}, state, {[action.contact.id]: action.contact})
+      return { ...state, [action.contact.id]: action.contact }
     case DELETE_CONTACT: {
-      let newState = Object.assign({}, state)
+      let newState = { ...state }
       delete newState[action.contact.id]
       return newState
     }
     case ACCEPT_INVITATION: {
-      if (action.response) {
-        return Object.assign({}, state, {[action.interlocutor.id]: action.interlocutor})
-      } else {
-        return state
+      if (action.response)
+        return { ...state, [action.interactor.id]: action.interactor }
+      return state
+    }
+    case ACCEPT_INVITATION_BY_INTERACTOR: {
+      return { ...state, [action.invitation.user.id]: action.invitation.user }
+    }
+    case UPDATE_CONTACT_PROFILE:
+      return {
+        ...state,
+        [action.contactId]: {
+          ...state[action.contactId],
+          name: action.profile.name,
+          avatar: action.profile.avatar
+        }
       }
-    }
-    case ACCEPT_INVITATION_BY_INTERLOCUTOR: {
-      return Object.assign({}, state, {[action.invitation.user.id]: action.invitation.user})
-    }
-    case UPDATE_CONTACT_PROFILE: {
-      let contact = Object.assign({}, state[action.contactId])
-      contact.name = action.profile.name
-      contact.avatar = action.profile.avatar
-      return Object.assign({}, state, {[action.contactId]: contact})
-    }
     default:
       return state
   }

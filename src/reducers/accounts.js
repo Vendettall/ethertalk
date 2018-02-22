@@ -8,14 +8,13 @@ const initialState = {
 export default function accounts(state = initialState, action) {
   switch (action.type) {
     case GET_ACCOUNTS: {
-      if (action.accounts) {
-        return Object.assign({}, state, {accounts: action.accounts})
-      } else {
-        return state
-      }
+      if (action.accounts)
+        return { ...state, accounts: action.accounts}
+      console.log('Error. Accounts weren\'t got.')
+      return state
     }
     case CHOOSE_ACCOUNT: 
-      return Object.assign({}, state, {active: action.account})
+      return { ...state, active: action.account }
     default:
       return state
   }

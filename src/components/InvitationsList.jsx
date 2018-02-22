@@ -4,9 +4,14 @@ import {List, ListItem} from 'material-ui/List'
 import {green100, green500, orange100, orange500} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 
+const listContainerStyle = {
+  height: 'calc(100vh - 152px)',
+  overflowY: 'scroll'
+}
+
 export default function InvitationsList({invitationsList, onListItemClick}) {
   return (
-    <List style={{height: 'calc(100vh - 152px)', overflowY: 'scroll'}}>
+    <List style={listContainerStyle}>
       {invitationsList.map((invitation) =>
         <ListItem
           primaryText={invitation.user.name}

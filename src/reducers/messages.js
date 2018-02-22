@@ -1,4 +1,4 @@
-import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE, SET_CHAT_VIEW } from '../constants'
+import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE, CHOOSE_CHAT_VIEW, CHAT_VIEWS } from '../constants'
 
 const initialState = {
   text: '',
@@ -9,29 +9,42 @@ const initialState = {
 export default function messages(state = initialState, action) {
   switch (action.type) {
     case UPDATE_MESSAGE_TEXT:
-      return Object.assign({}, state, {text: action.text})
+      return { ...state, text: action.text }
     case GET_MESSAGE: {
-      if (action.isCurrentInterlocutor) {
-        return Object.assign({}, state, { messages: [...state.messages, action.message]})
-      } else {
-        return state
+      if (action.isCurrentInterlocutor)
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          action.message
+        ]
       }
+      return state
     }
     case SEND_MESSAGE: {
-      if (action.response) {
-        return Object.assign({}, state, {text: '', messages: [...state.messages, action.message]})
-      } else {
-        return state
-      }
+      if (action.response)
+        return {
+          ...state,
+          text: '',
+          messages: [
+            ...state.messages,
+            action.message
+          ]
+        }
+      return state
     }
-    case SET_CHAT_VIEW:
-      if (action.view === 'CHAT_WITH_USER') {
+    case CHOOSE_CHAT_VIEW: {
+      if (action.view === CHAT_VIEWS.CHAT_WITH_USER) {
         let messages = Storage.get(action.interlocutor.id.toString()) || []
-        let apiInterlocutor = action.interlocutor.apiUser
-        return Object.assign({}, state, {text: '', messages: messages, apiInterlocutor: apiInterlocutor})
-      } else {
-        return state
+        return {
+          ...state,
+          text: '',
+          messages: messages,
+          apiInterlocutor: action.interlocutor.apiUser
+        }
       }
+      return state
+    }
     default:
       return state
   }
