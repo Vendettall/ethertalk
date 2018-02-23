@@ -17,10 +17,10 @@ export default function AccountsList({accounts, activeAccount, api, onChoose}) {
       style={accountsListStyle}>
       {accounts.map((account) => 
         <MenuItem 
-          value={account} 
-          primaryText={(account.user && (account.user.getProfile().name || 'Anonymus')) || account.id} 
-          onClick={() => onChoose(account, activeAccount, api)}
-          key={account.id}
+          value={account.apiAccount} 
+          primaryText={(account.apiAccount.user && (account.userName || 'Anonymus')) || account.apiAccount.id} 
+          onClick={() => onChoose(account.apiAccount, activeAccount, api)}
+          key={account.apiAccount.id}
         />
       )}
     </DropDownMenu>

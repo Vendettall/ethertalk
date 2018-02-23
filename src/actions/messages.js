@@ -9,8 +9,8 @@ export const sendMessage = async (socket, apiInterlocutor, text) => {
     date: formatDate(new Date())
   }
   let response = socket.sendMessage(apiInterlocutor, text).then(result => {return result})
-  let messages = Storage.get(apiInterlocutor.id.toString()) || []
-  Storage.set(apiInterlocutor.id.toString(), [...messages, message])
+  let messages = Storage.get(apiInterlocutor.id) || []
+  Storage.set(apiInterlocutor.id, [...messages, message])
   return {
     type: SEND_MESSAGE,
     message,
@@ -28,7 +28,7 @@ export const getMessage = (apiMessage, pubKeys, currentInterlocutorId) => {
   }
 
   Storage.set(interlocutorId, message)
-  if (currentInterlocutorId === interlocutorId)
+  if (currentInterlocutorId && currentInterlocutorId === interlocutorId)
     isCurrentInterlocutor = true
   
   return {

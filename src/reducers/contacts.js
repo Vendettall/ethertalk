@@ -25,8 +25,8 @@ export default function contacts(state = {}, action) {
         ...state,
         [action.contactId]: {
           ...state[action.contactId],
-          name: action.profile.name,
-          avatar: action.profile.avatar
+          name: action.profile[0],
+          avatar: action.profile[1]
         }
       }
     default:

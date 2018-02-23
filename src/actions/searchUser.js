@@ -17,9 +17,10 @@ export const updateSearchText = text => {
 
 export const searchUser = async (text, api, walletId, invitations, contacts) => {
   const proceedInInvitations = (invitations, userId) => {
-    let response = {}
+    let response = null
     Object.keys(invitations).forEach(invKey => {
       if (invitations[invKey].user.id === userId) {
+        response = {}
         if (invitations[invKey].isMy === true)
           response.answer = 'You have already invited this user.'
         else
@@ -32,10 +33,12 @@ export const searchUser = async (text, api, walletId, invitations, contacts) => 
   }
   
   const poceedInContacts = (contacts, userId) => {
-    let response = {}
+    let response = null
     if (contacts.hasOwnProperty(userId)) {
-      response.answer = 'This user has already in your contacts.'
-      response.stateUser = contacts[userId]
+      response = {
+        answer: 'This user has already in your contacts.',
+        stateUser: contacts[userId]
+      }
     }
     return response
   }
@@ -53,11 +56,13 @@ export const searchUser = async (text, api, walletId, invitations, contacts) => 
       let inContacts = poceedInContacts(contacts, user.id)
       if (inContacts)
         return inContacts
-      return {
-        answer: 'You can invite this user.',
-        stateUser: convertToStateUser(user),
-        apiUser: user
-      }
+      return convertToStateUser(user).then(stateUser => {
+        return {
+          answer: 'You can invite this user.',
+          stateUser: stateUser,
+          apiUser: user
+        }
+      })
     })
   return {
     type: SEARCH_USER,

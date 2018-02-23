@@ -35,7 +35,7 @@ export default function messages(state = initialState, action) {
     }
     case CHOOSE_CHAT_VIEW: {
       if (action.view === CHAT_VIEWS.CHAT_WITH_USER) {
-        let messages = Storage.get(action.interlocutor.id.toString()) || []
+        let messages = Storage.get(action.interlocutor.id) || []
         return {
           ...state,
           text: '',

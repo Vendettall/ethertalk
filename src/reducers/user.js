@@ -1,5 +1,4 @@
 import { CHOOSE_ACCOUNT, REGISTER_USER } from '../constants'
-import convertToStateUser from '../utils/convertToStateUser'
 import { push } from 'react-router-redux'
 import { replaceInvitations, replaceContacts, setSocket } from '../actions'
 
@@ -14,16 +13,11 @@ const initialState = {
 export default function user(state = initialState, action) {
   switch (action.type) {
     case CHOOSE_ACCOUNT: {
-      let user = action.account.user
-      if (user) {
-        action.asyncDispatch(replaceInvitations(user))
-        action.asyncDispatch(replaceContacts(user))
-        action.asyncDispatch(setSocket(action.api, user))
-        return {
-          ...convertToStateUser(user),
-          apiUser: user,
-          walletId: action.account.id
-        }
+      if (action.user) {
+        action.asyncDispatch(replaceInvitations(action.user.apiUser))
+        action.asyncDispatch(replaceContacts(action.user.apiUser))
+        action.asyncDispatch(setSocket(action.api, action.user.apiUser))
+        return action.user
       }
       action.asyncDispatch(push('/registration'))
       return state

@@ -39,8 +39,8 @@ export default function invitations(state = {}, action) {
           ...state[action.invitationId],
           user: {
             ...state[action.invitationId].user,
-            name: action.profile.name,
-            avatar: action.profile.avatar
+            name: action.profile[0],
+            avatar: action.profile[1]
           }
         }
       }

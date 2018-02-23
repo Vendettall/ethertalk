@@ -16,7 +16,9 @@ export const socketMiddleware = store => next => action => {
     socket.on('message', apiMessage => {
       let state = store.getState()
       let pubKeys = state.pubKeys
-      let currentInterlocutorId = state.messages.apiInterlocutor.id
+      let currentInterlocutorId = null
+      if (state.messages.apiInterlocutor)
+        currentInterlocutorId = state.messages.apiInterlocutor.id
       store.dispatch(getMessage(apiMessage, pubKeys, currentInterlocutorId))
     })
   }

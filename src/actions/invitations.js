@@ -4,13 +4,18 @@ import convertToStateInvitation from '../utils/convertToStateInvitation'
 
 export const replaceInvitations = async apiUser => {
   const getInvitations = (invitations, isMy) => {
-    if (!invitations.length) return {}
-    return invitations.reduce((obj, inv) => {
+    let getInvitationsPromises = invitations.map(inv => {
       return inv.getUser().then(user => {
-        obj[inv.id] = convertToStateInvitation(inv, user, isMy)
-        return obj
+        return convertToStateInvitation(inv, user, isMy).then(result => {return result})
       })
-    }, {})
+    })
+    return Promise.all(getInvitationsPromises).then(invitations => {
+      if (!invitations.length) return {}
+      return invitations.reduce((obj, inv) => {
+        obj[inv.id] = inv
+        return obj
+      }, {})
+    })
   }
 
   let sentInvitations = apiUser.getSentInvitations().then(invitations => {
@@ -72,7 +77,7 @@ export const sendInvitation = async (apiUser, apiInteractor) => {
 
 export const addInvitation = async (apiInvitation, isMy) => {
   let invitation = await apiInvitation.getUser().then(user => {
-    return convertToStateInvitation(apiInvitation, user, isMy)
+    return convertToStateInvitation(apiInvitation, user, isMy).then(result => {return result})
   })
   return {
     type: ADD_INVITATION,
@@ -80,8 +85,8 @@ export const addInvitation = async (apiInvitation, isMy) => {
   }
 }
 
-export const updateInvitedUserProfile = invitation => {
-  let profile = invitation.apiUser.getProfile()
+export const updateInvitedUserProfile = async invitation => {
+  let profile = await invitation.apiUser.getProfile().then(result => {return result})
   let invitationId = invitation.id
   return {
     type: UPDATE_INVITED_USER_PROFILE,
