@@ -1,5 +1,6 @@
 import { UPDATE_REGISTRATION_NAME, UPDATE_REGISTRATION_AVATAR, REGISTER_USER } from '../constants'
 import imageFromHash from '../utils/imageFromHash'
+import imageToHash from '../utils/imageToHash'
 
 export const updateRegistrationName = name => {
   return {
@@ -24,7 +25,7 @@ export const registerUser = async (api, account, name, avatarAsFile) => {
   })
 
   if (apiUser)
-    response = await api.Swarm.instance().upload(avatarAsFile).then(hash => {
+    response = await imageToHash(api, avatarAsFile).then(hash => {
       console.log('Image hash', hash)
       return imageFromHash(api, hash).then(image => {
         avatar = image

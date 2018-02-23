@@ -17,7 +17,7 @@ export default function accounts(state = initialState, action) {
       return { ...state, active: action.account }
     case REGISTER_USER: {
       let newState = { ...state }
-      let accountIndex =  state.accounts.findIndex(account => account.apiAccount.id === action.walletId)
+      let accountIndex = state.accounts.findIndex(account => account.apiAccount.id === action.walletId)
       newState.accounts[accountIndex].userName = action.name
       return newState
     }

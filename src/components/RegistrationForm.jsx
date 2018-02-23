@@ -57,7 +57,7 @@ export default function RegistrationForm({api, account, name, avatar, onUpdateNa
           <RaisedButton 
             label="Register Me"
             primary={true}
-            onClick={() => onRegister(api, account, name, avatar)}
+            onClick={() => onRegister(api, account, name, avatar['0'])}
             style={registrationButtonStyle}
             disabled={!name || !avatar}
           />
