@@ -29,6 +29,7 @@ const registrationButtonStyle = {
 
 export default function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAvatar,
                                           emitUploadClick, onRegister}) {
+  let uploadAvatarRef = null
   return (
     <div style={containerStyle}>
       <Card style={wrapperStyle}>
@@ -42,11 +43,11 @@ export default function RegistrationForm({api, account, name, avatar, onUpdateNa
           <br />
           <TextField 
             hintText="Upload your avatar"
-            onClick={() => emitUploadClick()}
+            onClick={() => emitUploadClick(uploadAvatarRef)}
             value={avatar? avatar['0'].name: ''} 
           />
           <input 
-            id="upload_avatar"
+            ref={ref => uploadAvatarRef = ref}
             type="file"
             accept=".png, .jpg, .jpeg"
             onChange={(e) => onUpdateAvatar(e.target.files)}

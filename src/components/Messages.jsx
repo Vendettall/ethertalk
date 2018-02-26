@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import {List, ListItem} from 'material-ui/List'
 import {CardActions, CardText} from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
@@ -29,45 +30,69 @@ const sendButtonStyle = {
   top: '0'
 }
 
-export default function Messages({socket, userAvatar, interlocutor, text, messages, onUpdateText, onSend}) {
-  let messageList = 'Type something ...'
-  if(messages.length) {
-    messageList = (
-      <List>
-        {messages.map((message, index) =>
-          <ListItem 
-            leftAvatar={<Avatar src={message.isMy? userAvatar: interlocutor.avatar} />}
-            primaryText={message.text}
-            secondaryText={message.date}
-            key={index}
+export default class Messages extends React.Component {
+  constructor(props) {
+    super(props)
+    this.messageList = 'Type something ...'
+    this.messageBoxRef = null
+  }
+  componentDidMount() {
+    if (this.props.messages)
+      this.scrollToBottom()
+  }
+  componentWillUpdate(nextProps) {
+    if (nextProps.messages && nextProps.messages !== this.props.messages)
+      this.scrollToBottom()
+  }
+  scrollToBottom = () => {
+    let currentScroll = false
+    this.messageBoxRef.onscroll = () => currentScroll = true
+    if (currentScroll) return
+    
+    const scrollHeight = this.messageBoxRef.scrollHeight
+    const height = this.messageBoxRef.clientHeight
+    const maxScrollTop = scrollHeight - height
+    this.messageBoxRef.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0
+  }
+  render() {
+    if (this.props.messages.length)
+      this.messageList = (
+        <List>
+          {this.props.messages.map((message, index) =>
+            <ListItem 
+              leftAvatar={<Avatar src={message.isMy? this.props.userAvatar: this.props.interlocutor.avatar} />}
+              primaryText={message.text}
+              secondaryText={message.date}
+              key={index}
+            />
+          )}
+        </List> 
+      )
+
+    return (
+      <div>
+        <CardText style={messageBoxStyle} ref={ref => this.messageBoxRef = ReactDOM.findDOMNode(ref)}>
+          {this.messageList}
+        </CardText>
+        <CardActions style={messageInputWrapperStyle}>
+          <TextField
+            hintText="Write a message ..." 
+            onChange={(e, text) => this.props.onUpdateText(text)}
+            value={this.props.text}
+            style={messageInputStyle}
           />
-        )}
-      </List> 
+          <IconButton
+            tooltip="Send"
+            onClick={() => this.props.onSend(this.props.socket, this.props.interlocutor.apiUser, this.props.text)}
+            disabled={!this.props.text}
+            style={sendButtonStyle}
+          >
+            <ContentSend color={grey400} hoverColor={red800} />
+          </IconButton>
+        </CardActions>
+      </div>
     )
   }
-  return (
-    <div>
-      <CardText style={messageBoxStyle}>
-        {messageList}
-      </CardText>
-      <CardActions style={messageInputWrapperStyle}>
-        <TextField
-          hintText="Write a message ..." 
-          onChange={(e, text) => onUpdateText(text)}
-          value={text}
-          style={messageInputStyle}
-        />
-        <IconButton
-          tooltip="Send"
-          onClick={() => onSend(socket, interlocutor.apiUser, text)}
-          disabled={!text}
-          style={sendButtonStyle}
-        >
-          <ContentSend color={grey400} hoverColor={red800} />
-        </IconButton>
-      </CardActions>
-    </div>
-  )
 }
 
 Messages.propTypes = {

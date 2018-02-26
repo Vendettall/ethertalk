@@ -15,6 +15,7 @@ export const replaceContacts = async apiUser => {
       return obj
     }, {})
   })
+
   return {
     type: REPLACE_CONTACTS,
     contacts

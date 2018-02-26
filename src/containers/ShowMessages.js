@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
     userAvatar: state.user.avatar,
     interlocutor: ownProps.interlocutor,
     text: state.messages.text,
-    messages: state.messages.messages
+    messages: state.messages.messages,
+    messageWrapperRef: state.messages.messageWrapperRef
   }
 }
 

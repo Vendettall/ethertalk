@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onUpdateName: name => dispatch(updateRegistrationName(name)),
     onUpdateAvatar: avatar => dispatch(updateRegistrationAvatar(avatar)),
-    emitUploadClick: () => document.getElementById('upload_avatar').click(),
+    emitUploadClick: uploadAvatarRef => uploadAvatarRef.click(),
     onRegister: (api, account, name, avatar) =>
       dispatch(registerUser(api, account, name, avatar))
   }
