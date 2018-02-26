@@ -1,10 +1,13 @@
 import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, ACCEPT_INVITATION, ACCEPT_INVITATION_BY_INTERACTOR,
          UPDATE_CONTACT_PROFILE } from '../constants'
+import { replacePubKeys } from '../actions'
 
 export default function contacts(state = {}, action) {
   switch (action.type) {
-    case REPLACE_CONTACTS: 
+    case REPLACE_CONTACTS: {
+      action.asyncDispatch(replacePubKeys(action.contacts))
       return action.contacts
+    }
     case ADD_CONTACT:
       return { ...state, [action.contact.id]: action.contact }
     case DELETE_CONTACT: {

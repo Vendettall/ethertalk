@@ -19,15 +19,15 @@ export const sendMessage = async (socket, apiInterlocutor, text) => {
 }
 
 export const getMessage = (apiMessage, pubKeys, currentInterlocutorId) => {
-  let interlocutorId = pubKeys[apiMessage.from]
+  let interlocutorId = pubKeys[apiMessage.from].id
   let isCurrentInterlocutor = false
   let message = {
     text: apiMessage.message,
     isMy: false,
     date: formatDate(apiMessage.sent)
   }
-
-  Storage.set(interlocutorId, message)
+  let messages = Storage.get(interlocutorId) || []
+  Storage.set(interlocutorId, [...messages, message])
   if (currentInterlocutorId && currentInterlocutorId === interlocutorId)
     isCurrentInterlocutor = true
   

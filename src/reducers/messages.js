@@ -1,4 +1,5 @@
 import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE, CHOOSE_CHAT_VIEW, CHAT_VIEWS } from '../constants'
+import Storage from '../utils/storage'
 
 const initialState = {
   text: '',
@@ -35,12 +36,12 @@ export default function messages(state = initialState, action) {
     }
     case CHOOSE_CHAT_VIEW: {
       if (action.view === CHAT_VIEWS.CHAT_WITH_USER) {
-        let messages = Storage.get(action.interlocutor.id) || []
+        let messages = Storage.get(action.interactor.id) || []
         return {
           ...state,
           text: '',
           messages: messages,
-          apiInterlocutor: action.interlocutor.apiUser
+          apiInterlocutor: action.interactor.apiUser
         }
       }
       return state
