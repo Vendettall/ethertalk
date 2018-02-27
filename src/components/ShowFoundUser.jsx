@@ -3,11 +3,13 @@ import FlatButton from 'material-ui/FlatButton'
 import {Card, CardActions, CardHeader} from 'material-ui/Card'
 import PropTypes from 'prop-types'
 
-const foundUserContainerStyle = {
-  marginTop: '40px'
+const styles = {
+  foundUserContainer: {
+    marginTop: '40px'
+  }
 }
 
-export default function ShowFoundUser({currentApiUser, stateUser, apiUser, answer, onInvite}) {
+function ShowFoundUser({currentApiUser, stateUser, apiUser, answer, onInvite}) {
   let buttons = null
   
   if (answer === 'You can invite this user.') {
@@ -22,7 +24,7 @@ export default function ShowFoundUser({currentApiUser, stateUser, apiUser, answe
   }
 
   return (
-    <Card style={foundUserContainerStyle}>
+    <Card style={styles.foundUserContainer}>
       <CardHeader
         title={stateUser.name}
         subtitle={answer}
@@ -40,3 +42,5 @@ ShowFoundUser.propTypes = {
   answer: PropTypes.string,
   onInvite: PropTypes.func
 }
+
+export default ShowFoundUser

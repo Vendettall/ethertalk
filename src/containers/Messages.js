@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
+import { sendMessage, updateMessageText } from '../actions'
 import {List, ListItem} from 'material-ui/List'
 import {CardActions, CardText} from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
@@ -9,28 +11,31 @@ import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 
-const messageBoxStyle = {
-  height: 'calc(100vh - 248px)',
-  overflowY: 'scroll'
+const styles = {
+  messageBox: {
+    height: 'calc(100vh - 248px)',
+    overflowY: 'scroll'
+  },
+  messageInput: {
+    width: '100%',
+    paddingRight: '24px'
+  },
+  messageInputWrapper: {
+    padding: '0 30px',
+    position: 'relative'
+  },
+  sendButton: {
+    position: 'absolute',
+    right: '10px',
+    top: '0'
+  },
+  sendIcon: {
+    color: grey400,
+    hoverColor: red800
+  }
 }
 
-const messageInputStyle = {
-  width: '100%',
-  paddingRight: '24px'
-}
-
-const messageInputWrapperStyle = {
-  padding: '0 30px',
-  position: 'relative'
-}
-
-const sendButtonStyle = {
-  position: 'absolute',
-  right: '10px',
-  top: '0'
-}
-
-export default class Messages extends React.Component {
+class MessagesView extends React.Component {
   constructor(props) {
     super(props)
     this.messageList = 'Type something ...'
@@ -71,23 +76,23 @@ export default class Messages extends React.Component {
 
     return (
       <div>
-        <CardText style={messageBoxStyle} ref={ref => this.messageBoxRef = ReactDOM.findDOMNode(ref)}>
+        <CardText style={styles.messageBox} ref={ref => this.messageBoxRef = ReactDOM.findDOMNode(ref)}>
           {this.messageList}
         </CardText>
-        <CardActions style={messageInputWrapperStyle}>
+        <CardActions style={styles.messageInputWrapper}>
           <TextField
             hintText="Write a message ..." 
             onChange={(e, text) => this.props.onUpdateText(text)}
             value={this.props.text}
-            style={messageInputStyle}
+            style={styles.messageInput}
           />
           <IconButton
             tooltip="Send"
             onClick={() => this.props.onSend(this.props.socket, this.props.interlocutor.apiUser, this.props.text)}
             disabled={!this.props.text}
-            style={sendButtonStyle}
+            style={styles.sendButton}
           >
-            <ContentSend color={grey400} hoverColor={red800} />
+            <ContentSend color={styles.sendIcon.color} hoverColor={styles.sendIcon.hoverColor} />
           </IconButton>
         </CardActions>
       </div>
@@ -95,7 +100,7 @@ export default class Messages extends React.Component {
   }
 }
 
-Messages.propTypes = {
+MessagesView.propTypes = {
   socket: PropTypes.object,
   userAvatar: PropTypes.string,
   interlocutor: PropTypes.object,
@@ -104,3 +109,29 @@ Messages.propTypes = {
   onUpdateText: PropTypes.func,
   onSend: PropTypes.func
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    socket: state.general.socket,
+    userAvatar: state.user.avatar,
+    interlocutor: ownProps.interlocutor,
+    text: state.messages.text,
+    messages: state.messages.messages,
+    messageWrapperRef: state.messages.messageWrapperRef
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateText: text => dispatch(updateMessageText(text)),
+    onSend: (socket, apiInterlocutor, text) => 
+      dispatch(sendMessage(socket, apiInterlocutor, text))
+  }
+}
+
+const Messages = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessagesView)
+
+export default Messages

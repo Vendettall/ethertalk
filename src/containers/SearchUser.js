@@ -1,19 +1,23 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { toggleForm, updateSearchText, searchUser, sendInvitation } from '../actions'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import SearchWindow from './SearchWindow'
-import ShowFoundUser from './ShowFoundUser'
+import SearchForm from '../components/SearchForm'
+import ShowFoundUser from '../components/ShowFoundUser'
 import PropTypes from 'prop-types'
 
-const fromAnswerStyle = {
-  textAlign: 'center',
-  marginTop: '40px'
+const styles = {
+  fromAnswer: {
+    textAlign: 'center',
+    marginTop: '40px'
+  }
 }
 
-export default function SearchUserView({api, user, invitations, contacts, isOpened, text, stateUser,
-                                    apiUser, answer, onToggle, onUpdateText, onSearch, onInvite}) {
+function SearchUserView({api, user, invitations, contacts, isOpened, text, stateUser, apiUser,
+                         answer, onToggle, onUpdateText, onSearch, onInvite}) {
   let formAnswer = null
   if(stateUser) {
     formAnswer =
@@ -25,7 +29,7 @@ export default function SearchUserView({api, user, invitations, contacts, isOpen
         onInvite={onInvite}
       />
   } else if (answer) {
-    formAnswer = <div style={fromAnswerStyle}>{answer}</div>
+    formAnswer = <div style={styles.fromAnswer}>{answer}</div>
   }
 
   return (
@@ -40,7 +44,7 @@ export default function SearchUserView({api, user, invitations, contacts, isOpen
         open={isOpened}
         onRequestClose={() => onToggle(isOpened)}
       >
-        <SearchWindow
+        <SearchForm
           api={api} 
           walletId={user.walletId}
           invitations={invitations}
@@ -70,3 +74,34 @@ SearchUserView.propTypes = {
   onSearch: PropTypes.func,
   onInvite: PropTypes.func
 }
+
+const mapStateToProps = state => {
+  return {
+    api: state.general.api,
+    user: state.user,
+    invitations: state.invitations,
+    contacts: state.contacts,
+    isOpened: state.searchUser.isOpened,
+    text: state.searchUser.text,
+    stateUser: state.searchUser.response.stateUser,
+    apiUser: state.searchUser.response.apiUser,
+    answer: state.searchUser.response.answer
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onToggle: isOpened => dispatch(toggleForm(isOpened)),
+    onUpdateText: text => dispatch(updateSearchText(text)),
+    onSearch: (text, api, walletId, invitations, contacts) =>
+      dispatch(searchUser(text, api, walletId, invitations, contacts)),
+    onInvite: (currentApiUser, apiUser) => dispatch(sendInvitation(currentApiUser, apiUser))
+  }
+}
+
+const SearchUser = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchUserView)
+
+export default SearchUser

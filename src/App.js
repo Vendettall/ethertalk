@@ -1,26 +1,35 @@
 import React from 'react'
-import Sidebar from './components/Sidebar'
-import ChatView from './containers/ChatView'
+import { connect } from 'react-redux'
+import { setApi } from './actions'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { Route, withRouter } from 'react-router'
+import Registration from './containers/Registration'
+import MainPage from './components/MainPage'
 
 import './assets/css/App.css'
 
-const appContainerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: '20px',
-  height: '100vh'
-}
-
-export default class App extends React.Component {
+class AppView extends React.Component {
   componentWillMount () {
     this.props.onLoad()
   }
   render() {
     return (
-      <div style={appContainerStyle}>
-        <Sidebar user={this.props.user} />
-        <ChatView />
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <Route exact path="/" component={MainPage} />
+          <Route path="/registration" component={Registration} />
+        </div>
+      </MuiThemeProvider>
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoad: () => dispatch(setApi())
+  }
+}
+
+const App = withRouter(connect(null, mapDispatchToProps)(AppView))
+
+export default App

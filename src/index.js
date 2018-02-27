@@ -4,11 +4,8 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import createHistory from 'history/createBrowserHistory'
 import chatApp from './reducers'
-import { Route } from 'react-router'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
-import StartApp from './containers/StartApp'
-import RegisterNewUser from './containers/RegisterNewUser'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import App from './App'
 import promiseMiddleware from 'redux-promise'
 import { asyncDispatchMiddleware } from './middlewares/asyncDispatchMiddleware'
 import { socketMiddleware } from './middlewares/socketEventsMiddleware'
@@ -26,7 +23,8 @@ const middleware = routerMiddleware(history)
 // Also apply our middleware for navigating
 let store = createStore(
   chatApp,
-  applyMiddleware(middleware,
+  applyMiddleware(
+    middleware,
     promiseMiddleware,
     asyncDispatchMiddleware,
     socketMiddleware,
@@ -39,12 +37,7 @@ let store = createStore(
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <MuiThemeProvider>
-        <div> 
-          <Route exact path="/" component={StartApp} />
-          <Route path="/registration" component={RegisterNewUser} />
-        </div>
-      </MuiThemeProvider>
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')

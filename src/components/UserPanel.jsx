@@ -1,21 +1,23 @@
 import React from 'react'
 import Avatar from 'material-ui/Avatar'
 import AppBar from 'material-ui/AppBar'
-import SearchUserForm from '../containers/SearchUserForm'
-import ShowAccounts from '../containers/ShowAccounts'
+import SearchUser from '../containers/SearchUser'
+import Accounts from '../containers/Accounts'
 import PropTypes from 'prop-types'
 
-const userPanelStyle = {
-  boxShadow: 'none'
+const styles = {
+  userPanel: {
+    boxShadow: 'none'
+  }
 }
 
-export default function UserPanel({name, avatar}) {
+function UserPanel({name, avatar}) {
   return (
     <AppBar
-      title={<ShowAccounts />}
-      iconElementRight={<SearchUserForm />}
+      title={<Accounts isOpenByClick />}
+      iconElementRight={<SearchUser />}
       iconElementLeft={<Avatar src={avatar} />}
-      style={userPanelStyle}
+      style={styles.userPanel}
     />
   )
 }
@@ -24,3 +26,5 @@ UserPanel.propTypes = {
   name: PropTypes.string,
   avatar: PropTypes.string
 }
+
+export default UserPanel

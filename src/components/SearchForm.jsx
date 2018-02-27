@@ -5,42 +5,46 @@ import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 
-const searchWrapperStyle = {
-  position: 'relative'
+const styles = {
+  searchWrapper: {
+    position: 'relative'
+  },
+  searchField: {
+    width: '100%',
+    paddingRight: '24px'
+  },
+  searchButton: {
+    position: 'absolute',
+    right: '-12px',
+    top: '0'
+  },
+  searchIcon: {
+    color: grey400,
+    hoverColor: red800
+  }
 }
 
-const searchFieldStyle = {
-  width: '100%',
-  paddingRight: '24px'
-}
-
-const searchButtonStyle = {
-  position: 'absolute',
-  right: '-12px',
-  top: '0'
-}
-
-export default function SerachUser({text, api, walletId, invitations, contacts, onUpdateText, onSearch}) {
+function SearchForm({text, api, walletId, invitations, contacts, onUpdateText, onSearch}) {
   return (
-    <div style={searchWrapperStyle}>
+    <div style={styles.searchWrapper}>
       <TextField 
         hintText="Search user ..."
         onChange={(e, text) => onUpdateText(text)}
         value={text}
-        style={searchFieldStyle}
+        style={styles.searchField}
       />
       <IconButton
         onClick={() => onSearch(text, api, walletId, invitations, contacts)}
         disabled={text.length !== 42}
-        style={searchButtonStyle}
+        style={styles.searchButton}
       >
-        <ActionSearch color={grey400} hoverColor={red800} />
+        <ActionSearch color={styles.searchIcon.color} hoverColor={styles.searchIcon.hoverColor} />
       </IconButton>
     </div>
   )
 }
 
-SerachUser.propTypes = {
+SearchForm.propTypes = {
   text: PropTypes.string,
   api: PropTypes.object,
   walletId: PropTypes.string,
@@ -49,3 +53,5 @@ SerachUser.propTypes = {
   onUpdateText: PropTypes.func,
   onSearch: PropTypes.func
 }
+
+export default SearchForm
