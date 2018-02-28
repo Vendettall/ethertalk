@@ -60,7 +60,7 @@ function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAva
           <RaisedButton 
             label="Register Me"
             primary={true}
-            onClick={() => onRegister(api, account, name, avatar['0'])}
+            onClick={() => onRegister(api, account.apiAccount, name, avatar['0'])}
             style={styles.registrationButton}
             disabled={!name || !avatar}
           />

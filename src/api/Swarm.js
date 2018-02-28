@@ -26,12 +26,14 @@ class Swarm {
 
   download(hash) {
     return (this._emulated ? this._bzz.download(hash) : promisify(this._bzz, 'download')(hash))
-      .then(folderOrData => {
+      .then(folderOrData => { 
         // console.log("Folder or Data", folderOrData)
         if (typeof folderOrData.length !== 'undefined')
-          return { data: folderOrData, type: 'application/octet-stream' }
+          return { data: folderOrData, type: 'application/octet-steam' }
         
-        const fileInfo = folderOrData.entities[0]
+        if (!folderOrData.hasOwnProperty('entries')) return null // if got empty object
+        
+        const fileInfo = folderOrData.entries[0]
         return this.download(fileInfo.hash)
           .then(data => { return { type: fileInfo.contentType, data: data.data } })
       })
