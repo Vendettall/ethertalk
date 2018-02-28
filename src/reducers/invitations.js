@@ -1,5 +1,6 @@
 import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ADD_INVITATION, ACCEPT_INVITATION_BY_INTERACTOR,
          REJECT_INVITATION_BY_INTERACTOR, UPDATE_INVITED_USER_PROFILE } from '../constants'
+import { addNotification } from '../actions'
 
 export default function invitations(state = {}, action) {
   let newState
@@ -12,7 +13,9 @@ export default function invitations(state = {}, action) {
         delete newState[action.invitation.id]
         return newState
       }
-      console.log('Error. Invitation wasn\'t accepted.')
+      let errorText = 'Error. Invitation wasn\'t accepted.'
+      action.asyncDispatch(addNotification(errorText))
+      console.log(errorText)
       return state
     }
     case REJECT_INVITATION: {
@@ -21,7 +24,9 @@ export default function invitations(state = {}, action) {
         delete newState[action.invitationId]
         return newState
       }
-      console.log('Error. Invitation wasn\'t rejected.')
+      let errorText = 'Error. Invitation wasn\'t rejected.'
+      action.asyncDispatch(addNotification(errorText))
+      console.log(errorText)
       return state
     }
     case ADD_INVITATION:

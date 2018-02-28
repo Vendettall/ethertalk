@@ -1,5 +1,6 @@
 import { GET_ACCOUNTS, CHANGE_ACCOUNT, PICK_ACCOUNT, REGISTER_USER, TOGGLE_ACCOUNT_FORM } from '../constants'
 import { push } from 'react-router-redux'
+import { addNotification } from '../actions'
 
 const initialState = {
   accounts: [],
@@ -25,7 +26,9 @@ export default function accounts(state = initialState, action) {
         }
         return { ...state, accounts: action.accounts, isOpened: true}
       }
-      console.log('Error. Accounts weren\'t got.')
+      let errorText = 'Error. Accounts weren\'t got.'
+      action.asyncDispatch(addNotification(errorText))
+      console.log(errorText)
       return state
     }
     case CHANGE_ACCOUNT:

@@ -1,6 +1,6 @@
 import { GET_ACCOUNTS, CHANGE_ACCOUNT, REGISTER_USER } from '../constants'
 import { push } from 'react-router-redux'
-import { replaceInvitations, replaceContacts, setSocket } from '../actions'
+import { replaceInvitations, replaceContacts, setSocket, addNotification } from '../actions'
 
 const initialState = {
   id: null,
@@ -37,10 +37,14 @@ export default function user(state = initialState, action) {
             walletId: action.walletId
           }
         }
-        console.log('Error. Profile wasn\'t set up, but user was registered')
+        let errorText = 'Error. Profile wasn\'t set up, but user was registered'
+        action.asyncDispatch(addNotification(errorText))
+        console.log(errorText)
         return state
       }
-      console.log('Error. User wasn\'t registered.')
+      let errorText = 'Error. User wasn\'t registered.'
+      action.asyncDispatch(addNotification(errorText))
+      console.log(errorText)
       return state
     }
     default:

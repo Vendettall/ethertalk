@@ -10,6 +10,7 @@ import pubKeys from './pubKeys'
 import { routerReducer } from 'react-router-redux'
 import registerUser from './registerUser'
 import accounts from './accounts'
+import notifications from './notifications'
 
 const chatApp = combineReducers({
   searchUser,
@@ -22,7 +23,8 @@ const chatApp = combineReducers({
   pubKeys,
   routerReducer,
   registerUser,
-  accounts
+  accounts,
+  notifications
 })
 
 export default chatApp

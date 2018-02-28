@@ -7,6 +7,7 @@ import InvitationsList from '../components/InvitationsList'
 import PropTypes from 'prop-types'
 import { VISIBILITY_FILTERS } from '../constants'
 import { CHAT_VIEWS } from '../constants'
+import objectToArray from '../utils/objectToArray'
 
 function UsersListView({filter, pubKeys, contacts, invitations, onChangeFilter, onChatWithInterlocutor, onProceedInvitation}) {
 	return (
@@ -36,13 +37,6 @@ UsersListView.propTypes = {
 	onChangeFilter: PropTypes.func,
 	onChatWithInterlocutor: PropTypes.func,
 	onProceedInvitation: PropTypes.func
-}
-
-function objectToArray(objectAsMap) {
-  return  Object.keys(objectAsMap).reduce((arr, key) => {
-    arr.push(objectAsMap[key])
-    return arr
-  }, [])
 }
 
 const mapStateToProps = state => {

@@ -1,5 +1,5 @@
 import { SET_API, SET_SOCKET } from '../constants'
-import { getAccounts } from '../actions'
+import { getAccounts, addNotification } from '../actions'
 
 const initialState = {
   api: null,
@@ -13,7 +13,9 @@ export default function general(state = initialState, action) {
         action.asyncDispatch(getAccounts(action.api))
         return { ...state, api: action.api }
       }
-      console.log('Error. API wasn\'t set up.')
+      let errorText = addNotification
+      action.asyncDispatch(addNotification(errorText))
+      console.log(errorText)
       return state
     }
     case SET_SOCKET: {

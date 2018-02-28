@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { Route, withRouter } from 'react-router'
 import Registration from './containers/Registration'
 import MainPage from './components/MainPage'
+import Notifications from './containers/Notifications'
 
 import './assets/css/App.css'
 
@@ -18,6 +19,7 @@ class AppView extends React.Component {
         <div>
           <Route exact path="/" component={MainPage} />
           <Route path="/registration" component={Registration} />
+          <Notifications />
         </div>
       </MuiThemeProvider>
     )
