@@ -1,7 +1,7 @@
 import convertToStateUser from './convertToStateUser'
 
-export default function convertToStateInvitation(apiInvitation, user, isMy) {
-  return convertToStateUser(user)
+const convertToStateInvitation = (api, apiInvitation, user, isMy) => {
+  return convertToStateUser(api, user)
     .then(user => {
       return {
         id: apiInvitation.id,
@@ -11,3 +11,5 @@ export default function convertToStateInvitation(apiInvitation, user, isMy) {
       }
     })
 }
+
+export default convertToStateInvitation 

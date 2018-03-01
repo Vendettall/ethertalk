@@ -17,8 +17,8 @@ export default function user(state = initialState, action) {
       let user = action.user
 
       if (user) {
-        action.asyncDispatch(replaceInvitations(user.apiUser))
-        action.asyncDispatch(replaceContacts(user.apiUser))
+        action.asyncDispatch(replaceInvitations(action.api, user.apiUser))
+        action.asyncDispatch(replaceContacts(action.api, user.apiUser))
         action.asyncDispatch(setSocket(action.api, user.apiUser))
         return user
       }

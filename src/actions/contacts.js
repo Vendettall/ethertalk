@@ -1,11 +1,12 @@
 import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT_PROFILE } from '../constants'
 import convertToStateUser from '../utils/convertToStateUser'
 
-export const replaceContacts = async apiUser => {
+export const replaceContacts = async (api, apiUser) => {
   let contactsPromises = await apiUser.getContacts()
     .then(contacts => {
-      return contacts.map(apiUser => 
-        convertToStateUser(apiUser).then(result => {return result})
+      return contacts.map(user => 
+        convertToStateUser(api, user)
+          .then(result => {return result})
       )
     })
 

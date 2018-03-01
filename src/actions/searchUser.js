@@ -59,7 +59,7 @@ export const searchUser = async (text, api, walletId, invitations, contacts) => 
         // check if user in our contacts and return response if yes
         if (inContacts)
           return inContacts
-        return convertToStateUser(user)
+        return convertToStateUser(api, user)
           .then(stateUser => {
             return {
               answer: 'You can invite this user.',

@@ -1,19 +1,14 @@
 import { GET_ACCOUNTS, CHANGE_ACCOUNT, TOGGLE_ACCOUNT_FORM, PICK_ACCOUNT } from '../constants'
 import convertToStateUser from '../utils/convertToStateUser'
-import imageFromHash from '../utils/imageFromHash'
 
 const getStateUser = (api, apiAccount) => {
-  return convertToStateUser(apiAccount.user)
+  return convertToStateUser(api, apiAccount.user)
     .then(stateUser => { 
-      return imageFromHash(api, stateUser.avatar)
-        .then(base64Avatar => {
-          stateUser.avatar = base64Avatar
-          return {
-            ...stateUser,
-            apiUser: apiAccount.user,
-            walletId: apiAccount.id
-          }
-        })
+        return {
+          ...stateUser,
+          apiUser: apiAccount.user,
+          walletId: apiAccount.id
+        }
     })
 }
 

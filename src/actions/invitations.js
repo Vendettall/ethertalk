@@ -2,12 +2,12 @@ import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ACCEPT_INVIT
          REJECT_INVITATION_BY_INTERLOCUTOR, SEND_INVITATION, ADD_INVITATION, UPDATE_INVITED_USER_PROFILE } from '../constants'
 import convertToStateInvitation from '../utils/convertToStateInvitation'
 
-export const replaceInvitations = async apiUser => {
+export const replaceInvitations = async (api, apiUser) => {
   const getInvitations = (invitations, isMy) => {
     let getInvitationsPromises = invitations.map(inv => {
       return inv.getUser()
         .then(user => {
-          return convertToStateInvitation(inv, user, isMy)
+          return convertToStateInvitation(api, inv, user, isMy)
             .then(result => {return result})
         })
     })
@@ -88,10 +88,10 @@ export const sendInvitation = async (apiUser, apiInteractor) => {
   }
 }
 
-export const addInvitation = async (apiInvitation, isMy) => {
+export const addInvitation = async (api, apiInvitation, isMy) => {
   let invitation = await apiInvitation.getUser()
     .then(user => {
-      return convertToStateInvitation(apiInvitation, user, isMy)
+      return convertToStateInvitation(api, apiInvitation, user, isMy)
         .then(result => {return result})
     })
 

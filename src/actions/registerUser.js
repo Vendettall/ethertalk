@@ -27,7 +27,7 @@ export const registerUser = async (api, account, name, avatarAsFile) => {
 
   if (apiUser)
     response = await imageToHash(api, avatarAsFile) 
-    // set hash as avatar in api profile, but get it as 64 base image for state
+    // set hash as avatar in api profile, but get it as bas64 image for state
       .then(hash => {
         return imageFromHash(api, hash)
           .then(image => {

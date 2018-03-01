@@ -1,4 +1,4 @@
-export default function imageToHash(api, imageAsFile) {
+const imageToHash = (api, imageAsFile) => {
   return new Promise((res, rej) => {
     let reader = new FileReader()
 
@@ -11,3 +11,5 @@ export default function imageToHash(api, imageAsFile) {
     reader.readAsArrayBuffer(imageAsFile)
   })
 }
+
+export default imageToHash

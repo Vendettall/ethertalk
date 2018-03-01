@@ -1,4 +1,8 @@
-export default function formatDate(date) {
+const toDoubleFormat = value => {
+  return value < 10 ? '0' + value : value
+}
+
+const formatDate = date => {
   return `${toDoubleFormat(date.getDate())}.`+
          `${toDoubleFormat(date.getMonth() + 1)}.`+
          `${date.getFullYear().toString()} `+
@@ -6,6 +10,4 @@ export default function formatDate(date) {
          `${toDoubleFormat(date.getMinutes())}`
 }
 
-function toDoubleFormat(value) {
-  return value < 10 ? '0' + value : value
-}
+export default formatDate

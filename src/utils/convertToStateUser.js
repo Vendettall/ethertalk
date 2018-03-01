@@ -1,11 +1,26 @@
-export default function convertToStateUser(apiUser) {
+import imageFromHash from './imageFromHash'
+import base64images from '../assets/images/base64images'
+
+const stateUser = (apiUser, name, avatar) => {
+  return {
+    id: apiUser.id,
+    name: name? name: 'Anonymus',
+    avatar: avatar,
+    apiUser: apiUser
+  }
+}
+
+const convertToStateUser = (api, apiUser) => {
   return apiUser.getProfile()
     .then(profile => {
-      return {
-        id: apiUser.id,
-        name: profile[0]? profile[0]: 'Anonymus',
-        avatar: profile[1]? profile[1]: 'Anonymus',
-        apiUser: apiUser
-      }
+      if (profile[1])
+        return imageFromHash(api, profile[1])
+          .then(base64Avatar => {
+            return stateUser(apiUser, profile[0], base64Avatar)
+          })
+
+      return stateUser(apiUser, profile[0], base64images.no_avatar)
     })
 }
+
+export default convertToStateUser

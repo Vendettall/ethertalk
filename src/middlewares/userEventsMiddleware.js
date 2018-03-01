@@ -5,13 +5,15 @@ export const userMiddleware = store => next => action => {
   // setup handlers
   const setupUserHandler = user => {
     user.on('invitationReceived', apiInvitation => {
-      store.dispatch(addInvitation(apiInvitation, false))
+      let api = store.getState().general.api
+      store.dispatch(addInvitation(api, apiInvitation, false))
     })
   }
   // remove handlers
   const removeUserHandler = user => {
     user.removeListener('invitationReceived', apiInvitation => {
-      store.dispatch(addInvitation(apiInvitation, false))
+      let api = store.getState().general.api
+      store.dispatch(addInvitation(api, apiInvitation, false))
     })
   }
   //
