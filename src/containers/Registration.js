@@ -29,7 +29,8 @@ const styles = {
   }
 }
 
-function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAvatar, emitUploadClick, onRegister}) {
+function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAvatar,
+                           emitUploadClick, onRegister}) {
   let uploadAvatarRef = null
   return (
     <div style={styles.container}>
@@ -46,9 +47,10 @@ function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAva
           <TextField 
             hintText="Upload your avatar"
             onClick={() => emitUploadClick(uploadAvatarRef)}
+            // emit click on input below, just for better view
             value={avatar? avatar['0'].name: ''} 
           />
-          <input 
+          <input // input which get our avatars
             ref={ref => uploadAvatarRef = ref}
             type="file"
             accept=".png, .jpg, .jpeg"

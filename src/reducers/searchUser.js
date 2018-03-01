@@ -20,8 +20,12 @@ export default function searchUser(state = initialState, action) {
       return { ...state, response: action.response }
     case SEND_INVITATION: {
       let newResponse = state.response
-      if (action.response) newResponse.answer = 'Invitation was sent.'
-      else newResponse.answer = 'An error occured.'
+      
+      if (action.response) 
+        newResponse.answer = 'Invitation was sent.'
+      else
+        newResponse.answer = 'An error occured.'
+
       return { ...state, response: newResponse }
     }
     default:

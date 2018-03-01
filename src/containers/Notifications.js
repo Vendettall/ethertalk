@@ -23,7 +23,7 @@ const styles = {
 function NotificationsView({notifications}) {
   let view = null
 
-  if (notifications.length)
+  if (notifications.length) // if active notifications exist - let show them
     view = (
       <div style={styles.container}>
         <Paper style={styles.paper} zDepth={1}>
@@ -31,6 +31,7 @@ function NotificationsView({notifications}) {
         </Paper>
       </div>
     )
+
   return view
 }
 
@@ -43,6 +44,7 @@ const mapStateToProps = state => {
     notifications: objectToArray(state.notifications)
   }
 }
+
 const Notifications = connect(mapStateToProps)(NotificationsView)
 
 export default Notifications

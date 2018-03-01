@@ -24,11 +24,13 @@ export default function chatView(state = fallback, action) {
           view: CHAT_VIEWS.CHAT_WITH_USER,
           interactor: action.invitation
         }
+        
       return state
     }
     case REJECT_INVITATION: {
       if (action.response)
         return fallback
+
       return state
     }
     default:

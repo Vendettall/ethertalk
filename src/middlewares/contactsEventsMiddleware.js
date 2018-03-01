@@ -30,34 +30,26 @@ export const contactsMiddleware = store => next => action => {
         store.dispatch(deleteContact(contact.id))
     })
   }
-  //
-  switch (action.type) {
-    case REPLACE_CONTACTS: {
-      let prevContacts = store.getState().contacts
-      if (Object.keys(prevContacts).length) {
-        Object.keys(prevContacts).forEach(contact => {
-          removeContactHandler(prevContacts[contact].apiUser)
-        })
-      }
-      Object.keys(action.contacts).forEach(contact => {
-        setupContactHandler(action.contacts[contact].apiUser)
+  // proceed add/remove contacts and then do the same with listeners for them
+  if (action.type === REPLACE_CONTACTS) {
+    let prevContacts = store.getState().contacts
+
+    if (Object.keys(prevContacts).length) {
+      Object.keys(prevContacts).forEach(contact => {
+        removeContactHandler(prevContacts[contact].apiUser)
       })
-      break
     }
-    case ACCEPT_INVITATION: {
-      setupContactHandler(action.interactor)
-      break
-    }
-    case ACCEPT_INVITATION_BY_INTERACTOR: {
-      setupContactHandler(action.invitation.user.apiUser)
-      break
-    }
-    case DELETE_CONTACT: {
-      removeContactHandler(action.contact)
-      break
-    }
-    default:
-  }
+
+    Object.keys(action.contacts).forEach(contact => {
+      setupContactHandler(action.contacts[contact].apiUser)
+    })
+  } 
+  else if (action.type === ACCEPT_INVITATION)
+    setupContactHandler(action.interactor)
+  else if (action.type === ACCEPT_INVITATION_BY_INTERACTOR)
+    setupContactHandler(action.invitation.user.apiUser)
+  else if (action.type === DELETE_CONTACT)
+    removeContactHandler(action.contact)
 
   return next(action)
 }

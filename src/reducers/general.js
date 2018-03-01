@@ -13,15 +13,19 @@ export default function general(state = initialState, action) {
         action.asyncDispatch(getAccounts(action.api))
         return { ...state, api: action.api }
       }
+      
       let errorText = addNotification
       action.asyncDispatch(addNotification(errorText))
       console.log(errorText)
+
       return state
     }
     case SET_SOCKET: {
       let prevSocket = state.socket
+
       if (prevSocket)
         prevSocket.stop()
+
       return { ...state, socket: action.socket }
     }
     default:

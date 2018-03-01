@@ -50,10 +50,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onChangeFilter: filter => dispatch(chooseVisibilityFilter(filter)),
-    onChatWithInterlocutor: contact => dispatch(chooseChatView(CHAT_VIEWS.CHAT_WITH_USER, contact)),
+    onChatWithInterlocutor: contact =>
+      dispatch(chooseChatView(CHAT_VIEWS.CHAT_WITH_USER, contact)),
     onProceedInvitation: invitation => {
-      if(invitation.isMy) dispatch(chooseChatView(CHAT_VIEWS.SHOW_PENDING_STATE, invitation))
-      else dispatch(chooseChatView(CHAT_VIEWS.SHOW_INVITATION, invitation))
+      if (invitation.isMy)
+        dispatch(chooseChatView(CHAT_VIEWS.SHOW_PENDING_STATE, invitation))
+      else
+        dispatch(chooseChatView(CHAT_VIEWS.SHOW_INVITATION, invitation))
     }
   }
 }

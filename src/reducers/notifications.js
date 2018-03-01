@@ -7,6 +7,7 @@ export default function notifications(state = {}, action) {
       setTimeout (() => 
         action.asyncDispatch(removeNotification(action.id))
       , 5000)
+
       return {
         ...state,
         [action.id]: {
@@ -18,6 +19,7 @@ export default function notifications(state = {}, action) {
     case REMOVE_NOTIFICATION: {
       let newState = { ...state }
       delete newState[action.id]
+      
       return newState
     }
     default:

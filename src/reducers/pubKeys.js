@@ -8,14 +8,18 @@ export default function pubKeys(state = {}, action) {
       return { ...state, [action.pubKey]: action.user }
     case UPDATE_PUB_KEY: {
       let newState = { ...state }
+
       Object.defineProperty(newState, action.newPubKey,
         Object.getOwnPropertyDescriptor(newState, action.oldPubKey))
+
       delete newState[action.oldPubKey]
+
       return newState
     }
     case DELETE_PUB_KEY: {
       let newState = { ...state }
       delete newState[action.pubKey]
+
       return newState
     }
     default:

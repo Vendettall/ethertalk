@@ -15,9 +15,11 @@ const styles = {
   }
 }
 
-function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, api, isOpened, onChoose, onPick, onToggle}) {
+function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, api, isOpened,
+                       onChoose, onPick, onToggle}) {
   let conjureUpButton = null
-  if (isOpenByClick) {
+
+  if (isOpenByClick) { // if we only need dialog window this parameter should be false
     conjureUpButton = (
       <FlatButton 
         label={activeAccount? activeAccount.userName: '   '}
@@ -61,6 +63,7 @@ function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, a
             <RadioButton
               value={account} 
               label={(account.apiAccount.user && (account.userName || 'Anonymus')) || account.apiAccount.id}
+              // if account has user then show his name or Anonymus, else show account id
               style={styles.radioButton}
               key={account.apiAccount.id}
             />

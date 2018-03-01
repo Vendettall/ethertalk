@@ -67,8 +67,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAccept: (apiUser, interactor, invitation) => dispatch(acceptInvitation(invitation, apiUser, interactor)),
-    onReject: (apiUser, invitation) => dispatch(rejectInvitation(invitation, apiUser))
+    onAccept: (apiUser, interactor, invitation) => 
+      dispatch(acceptInvitation(invitation, apiUser, interactor)),
+    onReject: (apiUser, invitation) =>
+      dispatch(rejectInvitation(invitation, apiUser))
   }
 }
 

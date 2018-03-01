@@ -7,11 +7,8 @@ import chatApp from './reducers'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import App from './App'
 import promiseMiddleware from 'redux-promise'
-import { asyncDispatchMiddleware } from './middlewares/asyncDispatchMiddleware'
-import { socketMiddleware } from './middlewares/socketEventsMiddleware'
-import { userMiddleware } from './middlewares/userEventsMiddleware'
-import { contactsMiddleware } from './middlewares/contactsEventsMiddleware'
-import { invitationsMiddleware } from './middlewares/invitationsEventsMiddleware'
+import { asyncDispatchMiddleware, socketMiddleware, userMiddleware, contactsMiddleware,
+         invitationsMiddleware } from './middlewares'
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()

@@ -2,19 +2,21 @@ import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT_PROFILE }
 import convertToStateUser from '../utils/convertToStateUser'
 
 export const replaceContacts = async apiUser => {
-  let contactsPromises = await apiUser.getContacts().then(contacts => {
-    return contacts.map(apiUser => 
-      convertToStateUser(apiUser).then(result => {return result})
-    )
-  })
+  let contactsPromises = await apiUser.getContacts()
+    .then(contacts => {
+      return contacts.map(apiUser => 
+        convertToStateUser(apiUser).then(result => {return result})
+      )
+    })
 
-  let contacts = await Promise.all(contactsPromises).then(contacts => {
-    if (!contacts.length) return {}
-    return contacts.reduce((obj, contact) => {
-      obj[contact.id] = contact
-      return obj
-    }, {})
-  })
+  let contacts = await Promise.all(contactsPromises)
+    .then(contacts => {
+      if (!contacts.length) return {}
+      return contacts.reduce((obj, contact) => {
+        obj[contact.id] = contact
+        return obj
+      }, {})
+    })
 
   return {
     type: REPLACE_CONTACTS,
@@ -37,8 +39,10 @@ export const deleteContact = contact => {
 }
 
 export const updateContactProfile = async apiContact => {
-  let profile = await apiContact.getProfile().then(result => {return result})
+  let profile = await apiContact.getProfile()
+    .then(result => {return result})   
   let contactId = apiContact.id
+  
   return {
     type: UPDATE_CONTACT_PROFILE,
     profile,

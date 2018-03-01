@@ -6,6 +6,7 @@ export default function contacts(state = {}, action) {
   switch (action.type) {
     case REPLACE_CONTACTS: {
       action.asyncDispatch(replacePubKeys(action.contacts))
+      
       return action.contacts
     }
     case ADD_CONTACT:
@@ -13,11 +14,13 @@ export default function contacts(state = {}, action) {
     case DELETE_CONTACT: {
       let newState = { ...state }
       delete newState[action.contact.id]
+
       return newState
     }
     case ACCEPT_INVITATION: {
       if (action.response)
         return { ...state, [action.interactor.id]: action.interactor }
+
       return state
     }
     case ACCEPT_INVITATION_BY_INTERACTOR: {

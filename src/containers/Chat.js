@@ -15,9 +15,9 @@ const styles = {
 
 function ChatView({view, interactor, invitation}) {
   switch(view) {
-    case CHAT_VIEWS.CHAT_WITH_USER:
+    case CHAT_VIEWS.CHAT_WITH_USER: // after click on contact
       return <ChatWithInterlocutor interlocutor={interactor} />
-    case CHAT_VIEWS.SHOW_PENDING_STATE:
+    case CHAT_VIEWS.SHOW_PENDING_STATE: // after click on send invitation
       return (
         <Card style={styles.interactorPanel}>
           <CardHeader
@@ -28,9 +28,9 @@ function ChatView({view, interactor, invitation}) {
           <Divider />
         </Card>
       )
-    case CHAT_VIEWS.SHOW_INVITATION:
+    case CHAT_VIEWS.SHOW_INVITATION: // after click on inboc invitation
       return <Invitation interactor={interactor} invitation={invitation} />
-    case CHAT_VIEWS.SHOW_FALLBACK:
+    case CHAT_VIEWS.SHOW_FALLBACK: // in all other cases
     default:
       return <Card style={styles.interactorPanel} />
   }
@@ -46,6 +46,7 @@ const mapStateToProps = state => {
   let interactor = null
   let invitation = null
   let view = state.chatView.view
+
   switch (view) {
     case CHAT_VIEWS.CHAT_WITH_USER: {
       interactor = state.chatView.interactor
@@ -59,6 +60,7 @@ const mapStateToProps = state => {
     }
     default:
   }
+
   return {
     view: state.chatView.view,
     interactor: interactor,
@@ -66,6 +68,6 @@ const mapStateToProps = state => {
   }
 }
 
-const Chat =  connect(mapStateToProps)(ChatView)
+const Chat = connect(mapStateToProps)(ChatView)
 
 export default Chat

@@ -13,9 +13,11 @@ export default function invitations(state = {}, action) {
         delete newState[action.invitation.id]
         return newState
       }
+
       let errorText = 'Error. Invitation wasn\'t accepted.'
       action.asyncDispatch(addNotification(errorText))
       console.log(errorText)
+      
       return state
     }
     case REJECT_INVITATION: {
@@ -24,9 +26,11 @@ export default function invitations(state = {}, action) {
         delete newState[action.invitationId]
         return newState
       }
+
       let errorText = 'Error. Invitation wasn\'t rejected.'
       action.asyncDispatch(addNotification(errorText))
       console.log(errorText)
+
       return state
     }
     case ADD_INVITATION:

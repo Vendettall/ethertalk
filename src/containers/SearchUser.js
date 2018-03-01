@@ -19,7 +19,8 @@ const styles = {
 function SearchUserView({api, user, invitations, contacts, isOpened, text, stateUser, apiUser,
                          answer, onToggle, onUpdateText, onSearch, onInvite}) {
   let formAnswer = null
-  if(stateUser) {
+
+  if (stateUser) // if we got user in response
     formAnswer =
       <ShowFoundUser
         currentApiUser={user.apiUser}
@@ -28,9 +29,9 @@ function SearchUserView({api, user, invitations, contacts, isOpened, text, state
         answer={answer}
         onInvite={onInvite}
       />
-  } else if (answer) {
-    formAnswer = <div style={styles.fromAnswer}>{answer}</div>
-  }
+  else if (answer) // if we got answer in response
+    formAnswer = 
+      <div style={styles.fromAnswer}>{answer}</div>
 
   return (
     <div>

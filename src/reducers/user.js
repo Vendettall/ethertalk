@@ -15,13 +15,16 @@ export default function user(state = initialState, action) {
     case GET_ACCOUNTS:
     case CHANGE_ACCOUNT: {
       let user = action.user
+
       if (user) {
         action.asyncDispatch(replaceInvitations(user.apiUser))
         action.asyncDispatch(replaceContacts(user.apiUser))
         action.asyncDispatch(setSocket(action.api, user.apiUser))
         return user
       }
+
       action.asyncDispatch(push('/registration'))
+
       return state
     }
     case REGISTER_USER: {
@@ -37,14 +40,18 @@ export default function user(state = initialState, action) {
             walletId: action.walletId
           }
         }
+
         let errorText = 'Error. Profile wasn\'t set up, but user was registered'
         action.asyncDispatch(addNotification(errorText))
         console.log(errorText)
+
         return state
       }
+
       let errorText = 'Error. User wasn\'t registered.'
       action.asyncDispatch(addNotification(errorText))
       console.log(errorText)
+      
       return state
     }
     default:

@@ -24,11 +24,14 @@ export default function accounts(state = initialState, action) {
             isOpened: false
           }
         }
+
         return { ...state, accounts: action.accounts, isOpened: true}
       }
+
       let errorText = 'Error. Accounts weren\'t got.'
       action.asyncDispatch(addNotification(errorText))
       console.log(errorText)
+      
       return state
     }
     case CHANGE_ACCOUNT:
@@ -43,6 +46,7 @@ export default function accounts(state = initialState, action) {
       let newState = { ...state }
       let accountIndex = state.accounts.findIndex(account => account.apiAccount.id === action.walletId)
       newState.accounts[accountIndex].userName = action.name
+
       return newState
     }
     default:

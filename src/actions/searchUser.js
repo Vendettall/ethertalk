@@ -44,26 +44,30 @@ export const searchUser = async (text, api, walletId, invitations, contacts) => 
   }
 
   let response = {}
-  if (text === walletId)
+  if (text === walletId) // check if search adress isn't users one
     response.answer = 'It is you.'
   else
-    response = await api.UserRegistry.instance().getUser(text).then(user => {
-      if (!user)
-        return { answer: 'User not found.' }
-      let inInvitations = proceedInInvitations(invitations, user.id)
-      if (inInvitations)
-        return inInvitations
-      let inContacts = poceedInContacts(contacts, user.id)
-      if (inContacts)
-        return inContacts
-      return convertToStateUser(user).then(stateUser => {
-        return {
-          answer: 'You can invite this user.',
-          stateUser: stateUser,
-          apiUser: user
-        }
+    response = await api.UserRegistry.instance().getUser(text)
+      .then(user => {
+        if (!user) // check if user exist
+          return { answer: 'User not found.' }
+        let inInvitations = proceedInInvitations(invitations, user.id) 
+        // check if user in our invitations and return response if yes
+        if (inInvitations)
+          return inInvitations
+        let inContacts = poceedInContacts(contacts, user.id)
+        // check if user in our contacts and return response if yes
+        if (inContacts)
+          return inContacts
+        return convertToStateUser(user)
+          .then(stateUser => {
+            return {
+              answer: 'You can invite this user.',
+              stateUser: stateUser,
+              apiUser: user
+            }
+          })
       })
-    })
   return {
     type: SEARCH_USER,
     response

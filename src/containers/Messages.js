@@ -42,16 +42,19 @@ class MessagesView extends React.Component {
     this.messageBoxRef = null
   }
   componentDidMount() {
+    // if user opened chat and there exists few messages, we will scroll history to last one
     if (this.props.messages)
       this.scrollToBottom()
   }
   componentWillUpdate(nextProps) {
+    // if interlocutor sent message, we will scroll history to it
     if (nextProps.messages && nextProps.messages !== this.props.messages)
       this.scrollToBottom()
   }
   scrollToBottom = () => {
     let currentScroll = false
     this.messageBoxRef.onscroll = () => currentScroll = true
+    // if user is scrolling message history we won't disturb him
     if (currentScroll) return
     
     const scrollHeight = this.messageBoxRef.scrollHeight

@@ -19,19 +19,24 @@ export const updateRegistrationAvatar = avatar => {
 export const registerUser = async (api, account, name, avatarAsFile) => {
   let apiUser, avatar, response, walletId = account.id
 
-  apiUser = await api.UserRegistry.instance().register().then(user => {
-    account.user = user
-    return user
-  })
+  apiUser = await api.UserRegistry.instance().register() // register user by api
+    .then(user => {
+      account.user = user
+      return user
+    })
 
   if (apiUser)
-    response = await imageToHash(api, avatarAsFile).then(hash => {
-      console.log('Image hash', hash)
-      return imageFromHash(api, hash).then(image => {
-        avatar = image
-        return apiUser.setProfile(name, hash).then(result => {return result})
+    response = await imageToHash(api, avatarAsFile) 
+    // set hash as avatar in api profile, but get it as 64 base image for state
+      .then(hash => {
+        return imageFromHash(api, hash)
+          .then(image => {
+            avatar = image
+            return apiUser.setProfile(name, hash)
+              .then(result => {return result})
+          })
       })
-    })
+
   return {
     type: REGISTER_USER,
     api,

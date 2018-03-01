@@ -13,13 +13,14 @@ export default function messages(state = initialState, action) {
       return { ...state, text: action.text }
     case GET_MESSAGE: {
       if (action.isCurrentInterlocutor)
-      return {
-        ...state,
-        messages: [
-          ...state.messages,
-          action.message
-        ]
-      }
+        return {
+          ...state,
+          messages: [
+            ...state.messages,
+            action.message
+          ]
+        }
+
       return state
     }
     case SEND_MESSAGE: {
@@ -32,6 +33,7 @@ export default function messages(state = initialState, action) {
             action.message
           ]
         }
+
       return state
     }
     case CHOOSE_CHAT_VIEW: {
@@ -44,6 +46,7 @@ export default function messages(state = initialState, action) {
           apiInterlocutor: action.interactor.apiUser
         }
       }
+
       return state
     }
     default:

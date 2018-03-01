@@ -30,36 +30,30 @@ export const invitationsMiddleware = store => next => action => {
       store.dispatch(rejectInvitationByInteractor(invitation))
     })
   }
-  //
-  switch (action.type) {
-    case REPLACE_INVITATIONS: {
-      let prevInvitations = store.getState().invitations
-      if (Object.keys(prevInvitations).length) {
-        Object.keys(prevInvitations).forEach(invitation => {
-          if (invitation.isMy)
-            removeSentInvitationsHandler(prevInvitations[invitation])
-          removeInvitationsHandler(prevInvitations[invitation])
-        })
-      }
-      Object.keys(action.invitations).forEach(invitation => {
+  // proceed accept/decline invitations and then do the same with listeners for them and for their users
+  if (action.type === REPLACE_INVITATIONS) {
+    let prevInvitations = store.getState().invitations
+
+    if (Object.keys(prevInvitations).length) {
+      Object.keys(prevInvitations).forEach(invitation => {
         if (invitation.isMy)
-          setupSentInvitationsHandler(action.invitations[invitation])
-        setupInvitationsHandler(action.invitations[invitation])
+          removeSentInvitationsHandler(prevInvitations[invitation])
+        removeInvitationsHandler(prevInvitations[invitation])
       })
-      break
-    } 
-    case ADD_INVITATION: {
+    }
+
+    Object.keys(action.invitations).forEach(invitation => {
+      if (invitation.isMy)
+        setupSentInvitationsHandler(action.invitations[invitation])
+      setupInvitationsHandler(action.invitations[invitation])
+    })
+  } else if (action.type === ADD_INVITATION) {
       setupInvitationsHandler(action.invitation)
       setupSentInvitationsHandler(action.invitation)
-      break
-    }
-    case REJECT_INVITATION_BY_INTERACTOR:
-    case ACCEPT_INVITATION_BY_INTERACTOR: {
+  } else if (action.type === REJECT_INVITATION_BY_INTERACTOR ||
+             action.type === ACCEPT_INVITATION_BY_INTERACTOR) {
       removeSentInvitationsHandler(action.invitation)
       removeInvitationsHandler(action.invitation)
-      break
-    }
-    default:
   }
 
   return next(action)

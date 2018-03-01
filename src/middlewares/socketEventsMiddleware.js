@@ -43,6 +43,7 @@ export const socketMiddleware = store => next => action => {
   //
   if (action.type === SET_SOCKET) {
     let prevSocket = store.getState().general.socket
+
     if (prevSocket)
       removeSocketHandler(prevSocket)
     setupSocketHandler(action.socket)
