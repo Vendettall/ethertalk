@@ -10,18 +10,18 @@ const initialState = {
   }
 }
 
-export default function searchUser(state = initialState, action) {
-  switch (action.type) {
+export default function searchUser(state = initialState, {type, payload}) {
+  switch (type) {
     case TOGGLE_FORM: 
-      return { ...state, isOpened: !action.isOpened }
+      return { ...state, isOpened: !payload.isOpened }
     case UPDATE_SEARCH_TEXT:
-      return { ...state, text: action.text }
+      return { ...state, text: payload.text }
     case SEARCH_USER:
-      return { ...state, response: action.response }
+      return { ...state, response: payload.response }
     case SEND_INVITATION: {
       let newResponse = state.response
       
-      if (action.response) 
+      if (payload.response) 
         newResponse.answer = 'Invitation was sent.'
       else
         newResponse.answer = 'An error occured.'

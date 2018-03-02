@@ -41,12 +41,14 @@ export const socketMiddleware = store => next => action => {
     })
   }
   //
-  if (action.type === SET_SOCKET) {
+  let {type, payload} = action
+
+  if (type === SET_SOCKET) {
     let prevSocket = store.getState().general.socket
 
     if (prevSocket)
       removeSocketHandler(prevSocket)
-    setupSocketHandler(action.socket)
+    setupSocketHandler(payload.socket)
   }
 
   return next(action)

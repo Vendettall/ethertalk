@@ -8,7 +8,9 @@ export const setApi = async () => {
 
   return {
     type: SET_API,
-    api
+    payload: {
+      api: api
+    }
   }
 }
 
@@ -18,6 +20,8 @@ export const setSocket = (api, user) => {
   
   return {
     type: SET_SOCKET,
-    socket
+    payload: {
+      socket: socket
+    }
   }
 }

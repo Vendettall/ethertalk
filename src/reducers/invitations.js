@@ -2,54 +2,54 @@ import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ADD_INVITATI
          REJECT_INVITATION_BY_INTERACTOR, UPDATE_INVITED_USER_PROFILE } from '../constants'
 import { addNotification } from '../actions'
 
-export default function invitations(state = {}, action) {
+export default function invitations(state = {}, {type, payload}) {
   let newState
-  switch (action.type) {
+  switch (type) {
     case REPLACE_INVITATIONS:
-      return action.invitations
+      return payload.invitations
     case ACCEPT_INVITATION: {
-      if (action.response) {
+      if (payload.response) {
         newState = { ...state }
-        delete newState[action.invitation.id]
+        delete newState[payload.invitation.id]
         return newState
       }
 
       let errorText = 'Error. Invitation wasn\'t accepted.'
-      action.asyncDispatch(addNotification(errorText))
+      payload.asyncDispatch(addNotification(errorText))
       console.log(errorText)
       
       return state
     }
     case REJECT_INVITATION: {
-      if (action.response) {
+      if (payload.response) {
         newState = { ...state }
-        delete newState[action.invitationId]
+        delete newState[payload.invitationId]
         return newState
       }
 
       let errorText = 'Error. Invitation wasn\'t rejected.'
-      action.asyncDispatch(addNotification(errorText))
+      payload.asyncDispatch(addNotification(errorText))
       console.log(errorText)
 
       return state
     }
     case ADD_INVITATION:
-      return { ...state, [action.invitation.id]: action.invitation }
+      return { ...state, [payload.invitation.id]: payload.invitation }
     case ACCEPT_INVITATION_BY_INTERACTOR:
     case REJECT_INVITATION_BY_INTERACTOR: {
       newState = { ...state }
-      delete newState[action.invitation.id]
+      delete newState[payload.invitation.id]
       return newState
     }
     case UPDATE_INVITED_USER_PROFILE:
       return { 
         ...state,
-        [action.invitation]: {
-          ...state[action.invitationId],
+        [payload.invitation]: {
+          ...state[payload.invitationId],
           user: {
-            ...state[action.invitationId].user,
-            name: action.profile[0],
-            avatar: action.profile[1]
+            ...state[payload.invitationId].user,
+            name: payload.profile[0],
+            avatar: payload.profile[1]
           }
         }
       }

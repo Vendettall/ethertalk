@@ -21,21 +21,27 @@ export const replaceContacts = async (api, apiUser) => {
 
   return {
     type: REPLACE_CONTACTS,
-    contacts
+    payload: {
+      contacts: contacts
+    }
   }
 }
 
 export const addContact = contact => {
   return {
     type: ADD_CONTACT,
-    contact
+    payload: {
+      contact: contact
+    }
   }
 }
 
 export const deleteContact = contact => {
   return {
     type: DELETE_CONTACT,
-    contact
+    payload: {
+      contact: contact
+    }
   }
 }
 
@@ -46,7 +52,9 @@ export const updateContactProfile = async apiContact => {
   
   return {
     type: UPDATE_CONTACT_PROFILE,
-    profile,
-    contactId
+    payload: {
+      profile: profile,
+      contactId: contactId
+    }
   }
 }

@@ -17,8 +17,10 @@ export const sendMessage = async (socket, apiInterlocutor, text) => {
 
   return {
     type: SEND_MESSAGE,
-    message,
-    response
+    payload: {
+      message: message,
+      response: response
+    }
   }
 }
 
@@ -40,13 +42,17 @@ export const getMessage = (apiMessage, pubKeys, currentInterlocutorId) => {
   
   return {
     type: GET_MESSAGE,
-    message, 
-    isCurrentInterlocutor
+    payload: {
+      message: message,
+      isCurrentInterlocutor: isCurrentInterlocutor
+    }
   }
 }
 export const updateMessageText = text => {
   return {
     type: UPDATE_MESSAGE_TEXT,
-    text
+    payload: {
+      text: text
+    }
   }
 }

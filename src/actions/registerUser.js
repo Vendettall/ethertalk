@@ -5,14 +5,18 @@ import imageToHash from '../utils/imageToHash'
 export const updateRegistrationName = name => {
   return {
     type: UPDATE_REGISTRATION_NAME,
-    name
+    payload: {
+      name: name
+    }
   }
 }
 
 export const updateRegistrationAvatar = avatar => {
   return {
     type: UPDATE_REGISTRATION_AVATAR,
-    avatar
+    payload: {
+      avatar: avatar
+    }
   }
 }
 
@@ -39,11 +43,13 @@ export const registerUser = async (api, account, name, avatarAsFile) => {
 
   return {
     type: REGISTER_USER,
-    api,
-    avatar,
-    name,
-    apiUser,
-    walletId,
-    response
+    payload: {
+      api: api,
+      avatar: avatar,
+      name: name,
+      apiUser: apiUser,
+      walletId: walletId,
+      response: response
+    }
   }
 }

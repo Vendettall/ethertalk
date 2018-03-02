@@ -31,6 +31,8 @@ export const invitationsMiddleware = store => next => action => {
     })
   }
   // proceed accept/decline invitations and then do the same with listeners for them and for their users
+  let {type, payload} = action
+  
   if (action.type === REPLACE_INVITATIONS) {
     let prevInvitations = store.getState().invitations
 
@@ -42,18 +44,18 @@ export const invitationsMiddleware = store => next => action => {
       })
     }
 
-    Object.keys(action.invitations).forEach(invitation => {
+    Object.keys(payload.invitations).forEach(invitation => {
       if (invitation.isMy)
-        setupSentInvitationsHandler(action.invitations[invitation])
-      setupInvitationsHandler(action.invitations[invitation])
+        setupSentInvitationsHandler(payload.invitations[invitation])
+      setupInvitationsHandler(payload.invitations[invitation])
     })
-  } else if (action.type === ADD_INVITATION) {
-      setupInvitationsHandler(action.invitation)
-      setupSentInvitationsHandler(action.invitation)
-  } else if (action.type === REJECT_INVITATION_BY_INTERACTOR ||
-             action.type === ACCEPT_INVITATION_BY_INTERACTOR) {
-      removeSentInvitationsHandler(action.invitation)
-      removeInvitationsHandler(action.invitation)
+  } else if (type === ADD_INVITATION) {
+      setupInvitationsHandler(payload.invitation)
+      setupSentInvitationsHandler(payload.invitation)
+  } else if (type === REJECT_INVITATION_BY_INTERACTOR ||
+             type === ACCEPT_INVITATION_BY_INTERACTOR) {
+      removeSentInvitationsHandler(payload.invitation)
+      removeInvitationsHandler(payload.invitation)
   }
 
   return next(action)

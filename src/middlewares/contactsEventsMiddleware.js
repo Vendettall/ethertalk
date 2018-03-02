@@ -31,6 +31,8 @@ export const contactsMiddleware = store => next => action => {
     })
   }
   // proceed add/remove contacts and then do the same with listeners for them
+  let {type, payload} = action
+
   if (action.type === REPLACE_CONTACTS) {
     let prevContacts = store.getState().contacts
 
@@ -40,16 +42,16 @@ export const contactsMiddleware = store => next => action => {
       })
     }
 
-    Object.keys(action.contacts).forEach(contact => {
-      setupContactHandler(action.contacts[contact].apiUser)
+    Object.keys(payload.contacts).forEach(contact => {
+      setupContactHandler(payload.contacts[contact].apiUser)
     })
   } 
-  else if (action.type === ACCEPT_INVITATION)
-    setupContactHandler(action.interactor)
-  else if (action.type === ACCEPT_INVITATION_BY_INTERACTOR)
-    setupContactHandler(action.invitation.user.apiUser)
-  else if (action.type === DELETE_CONTACT)
-    removeContactHandler(action.contact)
+  else if (type === ACCEPT_INVITATION)
+    setupContactHandler(payload.interactor)
+  else if (type === ACCEPT_INVITATION_BY_INTERACTOR)
+    setupContactHandler(payload.invitation.user.apiUser)
+  else if (type === DELETE_CONTACT)
+    removeContactHandler(payload.contact)
 
   return next(action)
 }

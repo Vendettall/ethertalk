@@ -2,37 +2,37 @@ import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, ACCEPT_INVITATION, ACCEP
          UPDATE_CONTACT_PROFILE } from '../constants'
 import { replacePubKeys } from '../actions'
 
-export default function contacts(state = {}, action) {
-  switch (action.type) {
+export default function contacts(state = {}, {type, payload}) {
+  switch (type) {
     case REPLACE_CONTACTS: {
-      action.asyncDispatch(replacePubKeys(action.contacts))
+      payload.asyncDispatch(replacePubKeys(payload.contacts))
       
-      return action.contacts
+      return payload.contacts
     }
     case ADD_CONTACT:
-      return { ...state, [action.contact.id]: action.contact }
+      return { ...state, [payload.contact.id]: payload.contact }
     case DELETE_CONTACT: {
       let newState = { ...state }
-      delete newState[action.contact.id]
+      delete newState[payload.contact.id]
 
       return newState
     }
     case ACCEPT_INVITATION: {
-      if (action.response)
-        return { ...state, [action.interactor.id]: action.interactor }
+      if (payload.response)
+        return { ...state, [payload.interactor.id]: payload.interactor }
 
       return state
     }
     case ACCEPT_INVITATION_BY_INTERACTOR: {
-      return { ...state, [action.invitation.user.id]: action.invitation.user }
+      return { ...state, [payload.invitation.user.id]: payload.invitation.user }
     }
     case UPDATE_CONTACT_PROFILE:
       return {
         ...state,
-        [action.contactId]: {
-          ...state[action.contactId],
-          name: action.profile[0],
-          avatar: action.profile[1]
+        [payload.contactId]: {
+          ...state[payload.contactId],
+          name: payload.profile[0],
+          avatar: payload.profile[1]
         }
       }
     default:

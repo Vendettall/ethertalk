@@ -14,7 +14,7 @@ export const asyncDispatchMiddleware = store => next => action => {
       flushQueue()
   }
 
-  const actionWithAsyncDispatch = Object.assign({}, action, { asyncDispatch })
+  const actionWithAsyncDispatch = { ...action, payload: { ...action.payload, asyncDispatch }}
 
   next(actionWithAsyncDispatch)
   syncActivityFinished = true

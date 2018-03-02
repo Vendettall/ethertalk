@@ -6,16 +6,16 @@ const initialState = {
   socket: null
 }
 
-export default function general(state = initialState, action) {
-  switch (action.type) {
+export default function general(state = initialState, {type, payload}) {
+  switch (type) {
     case SET_API:  {
-      if (action.api) {
-        action.asyncDispatch(getAccounts(action.api))
-        return { ...state, api: action.api }
+      if (payload.api) {
+        payload.asyncDispatch(getAccounts(payload.api))
+        return { ...state, api: payload.api }
       }
       
       let errorText = addNotification
-      action.asyncDispatch(addNotification(errorText))
+      payload.asyncDispatch(addNotification(errorText))
       console.log(errorText)
 
       return state
@@ -26,7 +26,7 @@ export default function general(state = initialState, action) {
       if (prevSocket)
         prevSocket.stop()
 
-      return { ...state, socket: action.socket }
+      return { ...state, socket: payload.socket }
     }
     default:
       return state

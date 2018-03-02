@@ -5,12 +5,12 @@ const initialState = {
   avatar: null
 }
 
-export default function registerUser(state = initialState, action) {
-  switch (action.type) {
+export default function registerUser(state = initialState, {type, payload}) {
+  switch (type) {
     case UPDATE_REGISTRATION_NAME: 
-      return { ...state, name: action.name }
+      return { ...state, name: payload.name }
     case UPDATE_REGISTRATION_AVATAR:
-      return { ...state, avatar: action.avatar }
+      return { ...state, avatar: payload.avatar }
     default:
       return state
   }

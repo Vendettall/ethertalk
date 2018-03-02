@@ -36,7 +36,9 @@ export const replaceInvitations = async (api, apiUser) => {
 
   return {
     type: REPLACE_INVITATIONS,
-    invitations
+    payload: {
+      invitations: invitations
+    }
   }
 }
 
@@ -46,9 +48,11 @@ export const acceptInvitation = async (invitation, apiUser, interactor) => { // 
 
   return {
     type: ACCEPT_INVITATION,
-    invitation,
-    interactor,
-    response
+    payload: {
+      invitation: invitation,
+      interactor: interactor,
+      response: response
+    }
   }
 }
 
@@ -59,22 +63,28 @@ export const rejectInvitation = async (invitation, apiUser) => { // if user reje
 
   return { 
     type: REJECT_INVITATION,
-    invitationId,
-    response
+    payload: {
+      invitationId: invitationId,
+      response: response
+    }
   }
 }
 
 export const acceptInvitationByInterlocutor = invitation => { // if users invitation accepted
   return {
     type: ACCEPT_INVITATION_BY_INTERLOCUTOR,
-    invitation
+    payload: {
+      invitation: invitation
+    }
   }
 }
 
 export const rejectInvitationByInterlocutor = invitation => { // if users invitation rejected
   return {
     type: REJECT_INVITATION_BY_INTERLOCUTOR,
-    invitation
+    payload: {
+      invitation: invitation
+    }
   }
 }
 
@@ -84,7 +94,9 @@ export const sendInvitation = async (apiUser, apiInteractor) => {
 
   return {
     type: SEND_INVITATION,
-    response
+    payload: {
+      response: response
+    }
   }
 }
 
@@ -97,7 +109,9 @@ export const addInvitation = async (api, apiInvitation, isMy) => {
 
   return {
     type: ADD_INVITATION,
-    invitation
+    payload: {
+      invitation: invitation
+    }
   }
 }
 
@@ -108,7 +122,9 @@ export const updateInvitedUserProfile = async invitation => {
   
   return {
     type: UPDATE_INVITED_USER_PROFILE,
-    profile,
-    invitationId
+    payload: {
+      profile: profile,
+      invitationId: invitationId
+    }
   }
 }

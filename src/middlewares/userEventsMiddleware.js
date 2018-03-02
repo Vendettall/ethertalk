@@ -17,6 +17,8 @@ export const userMiddleware = store => next => action => {
     })
   }
   //
+  let {type, payload} = action
+
   const onChangeUser = user => {
     let prevUser = store.getState().user.apiUser
     if (prevUser)
@@ -24,12 +26,12 @@ export const userMiddleware = store => next => action => {
     setupUserHandler(user)
   } 
 
-  if (action.type === REGISTER_USER)
-    onChangeUser(action.apiUser)
-  else if (action.type === CHANGE_ACCOUNT && action.account.apiAccount.user)
-    onChangeUser(action.account.apiAccount.user)
-  else if (action.type === GET_ACCOUNTS && action.startedAccount)
-    onChangeUser(action.startedAccount.apiAccount.user)
+  if (type === REGISTER_USER)
+    onChangeUser(payload.apiUser)
+  else if (type === CHANGE_ACCOUNT && payload.account.apiAccount.user)
+    onChangeUser(payload.account.apiAccount.user)
+  else if (type === GET_ACCOUNTS && payload.startedAccount)
+    onChangeUser(payload.startedAccount.apiAccount.user)
 
   return next(action)
 }

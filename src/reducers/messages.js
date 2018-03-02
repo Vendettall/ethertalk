@@ -7,43 +7,43 @@ const initialState = {
   apiInterlocutor: null
 }
 
-export default function messages(state = initialState, action) {
-  switch (action.type) {
+export default function messages(state = initialState, {type, payload}) {
+  switch (type) {
     case UPDATE_MESSAGE_TEXT:
-      return { ...state, text: action.text }
+      return { ...state, text: payload.text }
     case GET_MESSAGE: {
-      if (action.isCurrentInterlocutor)
+      if (payload.isCurrentInterlocutor)
         return {
           ...state,
           messages: [
             ...state.messages,
-            action.message
+            payload.message
           ]
         }
 
       return state
     }
     case SEND_MESSAGE: {
-      if (action.response)
+      if (payload.response)
         return {
           ...state,
           text: '',
           messages: [
             ...state.messages,
-            action.message
+            payload.message
           ]
         }
 
       return state
     }
     case CHOOSE_CHAT_VIEW: {
-      if (action.view === CHAT_VIEWS.CHAT_WITH_USER) {
-        let messages = Storage.get(action.interactor.id) || []
+      if (payload.view === CHAT_VIEWS.CHAT_WITH_USER) {
+        let messages = Storage.get(payload.interactor.id) || []
         return {
           ...state,
           text: '',
           messages: messages,
-          apiInterlocutor: action.interactor.apiUser
+          apiInterlocutor: payload.interactor.apiUser
         }
       }
 

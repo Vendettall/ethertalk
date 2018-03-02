@@ -46,17 +46,21 @@ export const getAccounts = async api => {
 
   return {
     type: GET_ACCOUNTS,
-    api,
-    accounts,
-    startedAccount,
-    user
+    payload: {
+      api: api,
+      accounts: accounts,
+      startedAccount: startedAccount,
+      user: user
+    }
   }
 }
 
 export const pickAccount = account => { // it's just to control selected radiobutton
   return {
     type: PICK_ACCOUNT,
-    account
+    payload: {
+      account: account
+    }
   }
 }
 
@@ -68,15 +72,19 @@ export const changeAccount = async (account, api) => {
 
   return {
     type: CHANGE_ACCOUNT,
-    api,
-    account,
-    user
+    payload: {
+      api: api,
+      account: account,
+      user: user
+    }
   }
 }
 
 export const toggleAccountForm = isOpened => {
   return {
     type: TOGGLE_ACCOUNT_FORM,
-    isOpened
+    payload: {
+      isOpened: isOpened
+    }
   }
 }

@@ -7,28 +7,28 @@ const fallback = {
   interactor: null
 }
 
-export default function chatView(state = fallback, action) {
-  switch (action.type) {
+export default function chatView(state = fallback, {type, payload}) {
+  switch (type) {
     case CHOOSE_CHAT_VIEW:
       return {
         ...state, 
-        view: action.view,
-        interactor: action.interactor
+        view: payload.view,
+        interactor: payload.interactor
       }
     case CHOOSE_VISIBILITY_FILTER:
-      return { ...state, filter: action.filter }
+      return { ...state, filter: payload.filter }
     case ACCEPT_INVITATION: {
-      if (action.response)
+      if (payload.response)
         return {
           ...state,
           view: CHAT_VIEWS.CHAT_WITH_USER,
-          interactor: action.invitation
+          interactor: payload.invitation
         }
         
       return state
     }
     case REJECT_INVITATION: {
-      if (action.response)
+      if (payload.response)
         return fallback
 
       return state

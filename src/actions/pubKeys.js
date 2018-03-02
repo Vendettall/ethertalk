@@ -15,17 +15,22 @@ export const replacePubKeys = async contacts => {
         return obj
       }, {})
     })
+    
   return {
     type: REPLACE_PUBKEYS,
-    pubKeys
+    payload: {
+      pubKeys: pubKeys
+    }
   }
 }
 
 export const addPubKey = (pubKey, user) => {
   return {
     type: ADD_PUB_KEY,
-    pubKey,
-    user
+    payload: {
+      pubKey: pubKey,
+      user: user
+    }
   }
 }
 
@@ -36,14 +41,18 @@ export const updatePubKey = async (userApi, pubKeys) => {
   
   return {
     type: UPDATE_PUB_KEY,
-    oldPubKey,
-    newPubKey
+    payload: {
+      oldPubKey: oldPubKey,
+      newPubKey: newPubKey
+    }
   }
 }
 
 export const deletePubKey = pubKey => {
   return {
     type: DELETE_PUB_KEY,
-    pubKey
+    payload: {
+      pubKey: pubKey
+    }
   }
 }

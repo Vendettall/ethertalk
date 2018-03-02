@@ -9,27 +9,27 @@ const initialState = {
   isOpened: false
 }
 
-export default function accounts(state = initialState, action) {
-  switch (action.type) {
+export default function accounts(state = initialState, {type, payload}) {
+  switch (type) {
     case TOGGLE_ACCOUNT_FORM:
-      return { ...state, isOpened: !action.isOpened}
+      return { ...state, isOpened: !payload.isOpened}
     case GET_ACCOUNTS: {
-      if (action.accounts) {
-        if (action.startedAccount) {
-          action.asyncDispatch(push('/'))
+      if (payload.accounts) {
+        if (payload.startedAccount) {
+          payload.asyncDispatch(push('/'))
           return {
-            accounts: action.accounts,
-            active: action.startedAccount,
-            choosen: action.startedAccount,
+            accounts: payload.accounts,
+            active: payload.startedAccount,
+            choosen: payload.startedAccount,
             isOpened: false
           }
         }
 
-        return { ...state, accounts: action.accounts, isOpened: true}
+        return { ...state, accounts: payload.accounts, isOpened: true}
       }
 
       let errorText = 'Error. Accounts weren\'t got.'
-      action.asyncDispatch(addNotification(errorText))
+      payload.asyncDispatch(addNotification(errorText))
       console.log(errorText)
       
       return state
@@ -37,15 +37,16 @@ export default function accounts(state = initialState, action) {
     case CHANGE_ACCOUNT:
       return {
         ...state,
-        active: action.account,
+        active: payload.account,
         isOpened: !state.isOpened
       }
     case PICK_ACCOUNT: 
-      return { ...state, choosen: action.account }
+      return { ...state, choosen: payload.account }
     case REGISTER_USER: {
       let newState = { ...state }
-      let accountIndex = state.accounts.findIndex(account => account.apiAccount.id === action.walletId)
-      newState.accounts[accountIndex].userName = action.name
+      let accountIndex = state.accounts
+        .findIndex(account => account.apiAccount.id === payload.walletId)
+      newState.accounts[accountIndex].userName = payload.name
 
       return newState
     }

@@ -4,14 +4,18 @@ import convertToStateUser from '../utils/convertToStateUser'
 export const toggleForm = isOpened => {
   return {
     type: TOGGLE_FORM,
-    isOpened
+    payload: {
+      isOpened: isOpened
+    }
   }
 }
 
 export const updateSearchText = text => {
   return {
     type: UPDATE_SEARCH_TEXT,
-    text
+    payload: {
+      text: text
+    }
   }
 }
 
@@ -70,6 +74,8 @@ export const searchUser = async (text, api, walletId, invitations, contacts) => 
       })
   return {
     type: SEARCH_USER,
-    response
+    payload: {
+      response: response
+    }
   }
 }
