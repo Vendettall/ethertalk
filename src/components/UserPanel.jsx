@@ -5,6 +5,7 @@ import SearchUser from '../containers/SearchUser'
 import Accounts from '../containers/Accounts'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   userPanel: {
     boxShadow: 'none'
@@ -26,5 +27,6 @@ UserPanel.propTypes = {
   name: PropTypes.string,
   avatar: PropTypes.string
 }
+
 
 export default UserPanel

@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebar from '../containers/Sidebar'
 import Chat from '../containers/Chat'
 
+
 const styles = {
   container : {
     display: 'flex',
@@ -19,5 +20,6 @@ function MainPage () {
     </div>
   )
 }
+
 
 export default MainPage

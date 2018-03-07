@@ -3,6 +3,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {Card, CardActions, CardHeader} from 'material-ui/Card'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   foundUserContainer: {
     marginTop: '40px'
@@ -41,5 +42,6 @@ ShowFoundUser.propTypes = {
   answer: PropTypes.string,
   onInvite: PropTypes.func
 }
+
 
 export default ShowFoundUser

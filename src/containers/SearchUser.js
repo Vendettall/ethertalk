@@ -9,6 +9,7 @@ import SearchForm from '../components/SearchForm'
 import ShowFoundUser from '../components/ShowFoundUser'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   fromAnswer: {
     textAlign: 'center',
@@ -89,5 +90,6 @@ const SearchUser = connect(
   mapStateToProps,
   mapDispatchToProps
 )(SearchUserView)
+
 
 export default SearchUser

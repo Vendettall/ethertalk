@@ -4,6 +4,7 @@ import {List, ListItem} from 'material-ui/List'
 import {green100, green500, orange100, orange500} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   listContainer: {
     height: 'calc(100vh - 152px)',
@@ -44,5 +45,6 @@ InvitationsList.propTypes = {
   invitationsList: PropTypes.array,
   onListItemClick: PropTypes.func
 }
+
 
 export default InvitationsList

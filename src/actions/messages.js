@@ -1,6 +1,7 @@
 import { SEND_MESSAGE_REQUEST, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_ERROR,
   GET_API_MESSAGE, GET_MESSAGE, UPDATE_MESSAGE_TEXT } from '../constants'
 
+
 export const sendMessageRequest = (socket, apiInterlocutor, text) => {
   return {
     type: SEND_MESSAGE_REQUEST,

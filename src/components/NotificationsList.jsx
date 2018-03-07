@@ -2,6 +2,7 @@ import React from 'react'
 import {List, ListItem} from 'material-ui/List'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   list: {
     width: '100%',
@@ -25,5 +26,6 @@ function NotificationList({notifications}) {
 NotificationList.propTypes = {
   notifications: PropTypes.array
 }
+
 
 export default NotificationList

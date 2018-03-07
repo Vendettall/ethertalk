@@ -51,4 +51,5 @@ function* userEventsSaga() {
   yield takeEvery(REGISTER_USER_SUCCESS, proceedRegisterUser)
 }
 
+
 export default userEventsSaga

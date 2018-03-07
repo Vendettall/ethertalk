@@ -1,6 +1,7 @@
 import { UPDATE_USER_CHANNEL, ADD_CONTACT_CHANNEL, REMOVE_CONTACTS_CHANNELS, DELETE_CONTACT,
   ADD_INVITATION_CHANNEL, REMOVE_INVITATION, REMOVE_INVITATIONS_CHANNELS } from '../constants'
 
+  
 const initialState = {
   userChannel: null,
   contactsChannels: {},

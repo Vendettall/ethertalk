@@ -1,6 +1,7 @@
 import { FETCH_INVITATIONS_SUCCESS, ACCEPT_INVITATION_SUCCESS, REJECT_INVITATION_SUCCESS, ADD_INVITATION_SUCCESS, 
   REMOVE_INVITATION, UPDATE_INVITEE_PROFILE } from '../constants'
 
+  
 export default function invitations(state = {}, { type, payload }) {
   let newState
   switch (type) {

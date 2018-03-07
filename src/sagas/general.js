@@ -5,6 +5,7 @@ import { FETCH_API_REQUEST, SET_SOCKET_REQUEST } from '../constants'
 import { addNotification, fetchAccountsRequest, fetchApiSuccess, fetchApiError,
   setSocketSuccess } from '../actions'
 
+
 // -> FETCH API
 function getApi () {
   return getWeb3
@@ -47,5 +48,6 @@ function* generalSaga() {
   yield takeEvery(FETCH_API_REQUEST, fetchApi)
   yield takeEvery(SET_SOCKET_REQUEST, setSocket)
 }
+
 
 export default generalSaga

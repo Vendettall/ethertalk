@@ -10,6 +10,7 @@ import { Spinner } from 'react-redux-spinner'
 
 import './assets/css/App.css'
 
+
 class AppView extends React.Component {
   componentWillMount () {
     this.props.onLoad()
@@ -35,5 +36,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 const App = withRouter(connect(null, mapDispatchToProps)(AppView))
+
 
 export default App

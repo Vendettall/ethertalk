@@ -1,5 +1,6 @@
 import convertToStateUser from './convertToStateUser'
 
+
 const convertToStateInvitation = (api, apiInvitation, user, isMy) => {
   return convertToStateUser(api, user)
     .then(user => {
@@ -11,5 +12,6 @@ const convertToStateInvitation = (api, apiInvitation, user, isMy) => {
       }
     })
 }
+
 
 export default convertToStateInvitation 

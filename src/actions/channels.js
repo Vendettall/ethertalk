@@ -1,6 +1,7 @@
 import { UPDATE_USER_CHANNEL, ADD_CONTACT_CHANNEL, REMOVE_CONTACTS_CHANNELS,
   ADD_INVITATION_CHANNEL, REMOVE_INVITATIONS_CHANNELS } from '../constants'
 
+
 export const updateUserChannel = userChannel => {
   return {
     type: UPDATE_USER_CHANNEL,

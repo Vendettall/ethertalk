@@ -1,5 +1,6 @@
 import base64images from '../assets/images/base64images'
 
+
 const imageFromHash = (api, hash) => {
   return api.Swarm.instance().download(hash)
     .then(obj => {
@@ -12,5 +13,6 @@ const imageFromHash = (api, hash) => {
       return base64String
     })
 }
+
 
 export default imageFromHash

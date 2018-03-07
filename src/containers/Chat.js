@@ -7,6 +7,7 @@ import Invitation from './Invitation'
 import PropTypes from 'prop-types'
 import { CHAT_VIEWS } from '../constants'
 
+
 const styles = {
   interactorPanel: {
     width: 'calc(66% - 10px)'
@@ -69,5 +70,6 @@ const mapStateToProps = state => {
 }
 
 const Chat = connect(mapStateToProps)(ChatView)
+
 
 export default Chat

@@ -1,6 +1,7 @@
 import { FETCH_PUBKEYS_REQUEST, FETCH_PUBKEYS_SUCCESS, UPDATE_PUBKEY_REQUEST, UPDATE_PUBKEY_SUCCESS, 
   UPDATE_PUBKEY_ERROR, ADD_PUB_KEY, DELETE_PUB_KEY } from '../constants'
 
+
 export const fetchPubKeysRequest = contacts => {
   return {
     type: FETCH_PUBKEYS_REQUEST,

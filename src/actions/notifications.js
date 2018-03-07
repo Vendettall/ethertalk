@@ -1,5 +1,6 @@
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants'
 
+
 let id = 0 
 
 export const addNotification = text => {

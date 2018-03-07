@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   searchWrapper: {
     position: 'relative'
@@ -57,5 +58,6 @@ SearchForm.propTypes = {
   onUpdateText: PropTypes.func,
   onSearch: PropTypes.func
 }
+
 
 export default SearchForm

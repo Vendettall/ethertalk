@@ -4,6 +4,7 @@ import Divider from 'material-ui/Divider'
 import Messages from '../containers/Messages'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   chatContainer: {
     width: 'calc(66% - 10px)'
@@ -27,5 +28,6 @@ function ChatWithInterlocutor({ interlocutor }) {
 ChatWithInterlocutor.propTypes = {
   interlocutor: PropTypes.object
 }
+
 
 export default ChatWithInterlocutor

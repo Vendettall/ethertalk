@@ -1,6 +1,7 @@
 import { UPDATE_REGISTRATION_NAME, UPDATE_REGISTRATION_AVATAR,
   REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR } from '../constants'
 
+
 export const updateRegistrationName = name => {
   return {
     type: UPDATE_REGISTRATION_NAME,

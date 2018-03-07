@@ -8,6 +8,7 @@ import imageFromHash from '../utils/imageFromHash'
 import imageToHash from '../utils/imageToHash'
 import convertToStateUser from '../utils/convertToStateUser'
 
+
 // -> FETCH USER
 function getStateUser (api, apiAccount) {
   return convertToStateUser(api, apiAccount.user)
@@ -27,7 +28,11 @@ function* fetchUser ({ payload }) {
   let { api, account } = payload
 
   if (account) {
-    yield put(push('/'))   
+    let { routerReducer } = yield select()
+
+    if (routerReducer.location.pathname !== '/')
+      yield put(push('/'))
+
     let { stateUser, error } = yield call(getStateUser, api, account.apiAccount)
 
     if (stateUser) {
@@ -81,7 +86,7 @@ function* registerUser ({ payload }) {
     if (success) {
       let walletId = account.id
       yield put(registerUserSuccess(apiUser, name, avatar, walletId))
-      yield put(setSocketRequest(api, apiUser))
+      yield put(setSocketRequest(apiUser))
       yield put(push('/'))
     } else {
       console.log(`Users profile wasn't set. ${error}`)
@@ -97,7 +102,6 @@ function* registerUser ({ payload }) {
 // <- REGISTER USER
 
 // -> SEARCH USER
-
 function getUser (api, text) {
   return api.UserRegistry.instance().getUser(text)
     .then(user => ({ user }))
@@ -179,5 +183,6 @@ function* userSaga() {
   yield takeEvery(REGISTER_USER_REQUEST, registerUser)
   yield takeEvery(SEARCH_USER_REQUEST, searchUser)
 }
+
 
 export default userSaga

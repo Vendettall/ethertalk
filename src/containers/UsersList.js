@@ -9,7 +9,9 @@ import { VISIBILITY_FILTERS } from '../constants'
 import { CHAT_VIEWS } from '../constants'
 import objectToArray from '../utils/objectToArray'
 
-function UsersListView({filter, pubKeys, contacts, invitations, onChangeFilter, onChatWithInterlocutor, onProceedInvitation}) {
+
+function UsersListView({filter, pubKeys, contacts, invitations, onChangeFilter,
+                        onChatWithInterlocutor, onProceedInvitation}) {
 	return (
 		<Tabs value={filter} onChange={onChangeFilter}>
 			<Tab label="Contacts" value={VISIBILITY_FILTERS.SHOW_CONTACTS}>
@@ -65,5 +67,6 @@ const UsersList = connect(
   mapStateToProps,
   mapDispatchToProps
 )(UsersListView)
+
 
 export default UsersList

@@ -14,6 +14,7 @@ import notifications from './notifications'
 import channels from './channels'
 import { configurablePendingTasksReducer } from 'react-redux-spinner'
 
+
 const pendingTasksReducer = configurablePendingTasksReducer({ actionKeyPath: [ 'meta' ] })
 
 const chatApp = combineReducers({
@@ -32,5 +33,6 @@ const chatApp = combineReducers({
   channels,
   pendingTasks: pendingTasksReducer
 })
+
 
 export default chatApp

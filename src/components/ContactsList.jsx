@@ -3,6 +3,7 @@ import Avatar from 'material-ui/Avatar'
 import {List, ListItem} from 'material-ui/List'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   listContainer: {
     height: 'calc(100vh - 152px)',
@@ -29,5 +30,6 @@ ContactsList.propTypes = {
   contactsList: PropTypes.array,
   onListItemClick: PropTypes.func
 }
+
 
 export default ContactsList

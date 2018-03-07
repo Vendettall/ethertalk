@@ -4,8 +4,9 @@ import { addNotification, getMessage, sendMessageSuccess, sendMessageError } fro
 import Storage from '../utils/storage'
 import formatDate from '../utils/formatDate'
 
+
 // -> SEND MESSAGE
-const resolveSendMessage = (socket, apiInterlocutor, text) => {
+function resolveSendMessage (socket, apiInterlocutor, text) {
   return socket.sendMessage(apiInterlocutor, text)
     .then(success => ({ success}))
     .catch(error => ({ error }))
@@ -59,5 +60,6 @@ function* messagesSaga() {
   yield takeEvery(SEND_MESSAGE_REQUEST, sendMessage)
   yield takeEvery(GET_API_MESSAGE, getApiMessage)
 }
+
 
 export default messagesSaga

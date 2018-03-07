@@ -1,6 +1,7 @@
 import { FETCH_API_REQUEST, FETCH_API_SUCCESS, FETCH_API_ERROR,
   SET_SOCKET_REQUEST, SET_SOCKET_SUCCESS } from '../constants'
 
+
 export const fetchApiRequest = () => {
   return {
     type: FETCH_API_REQUEST

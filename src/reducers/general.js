@@ -1,5 +1,6 @@
 import { FETCH_API_SUCCESS, SET_SOCKET_SUCCESS } from '../constants'
 
+
 const initialState = {
   api: null,
   socket: null

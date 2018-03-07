@@ -1,5 +1,6 @@
 import { FETCH_USER_SUCCESS, REGISTER_USER_SUCCESS } from '../constants'
 
+
 const initialState = {
   id: null,
   name: '',

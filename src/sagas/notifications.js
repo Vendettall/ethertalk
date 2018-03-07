@@ -3,6 +3,7 @@ import { put, takeEvery } from 'redux-saga/effects'
 import { ADD_NOTIFICATION } from '../constants'
 import { removeNotification } from '../actions'
 
+
 // -> REMOVE NOTIFICATION
 function* proceedNotification ({ payload }) {
   let { id } = payload
@@ -14,5 +15,6 @@ function* proceedNotification ({ payload }) {
 function* notificationsSaga() {
   yield takeEvery(ADD_NOTIFICATION, proceedNotification)
 }
+
 
 export default notificationsSaga

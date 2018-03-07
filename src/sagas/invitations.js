@@ -6,6 +6,7 @@ import { addNotification, addContact, fetchInvitationsSuccess, fetchInvitationsE
   sendInvitationSuccess, sendInvitationError, addInvitationError } from '../actions'
 import convertToStateInvitation from '../utils/convertToStateInvitation'
 
+
 // -> FETCH INVITATIONS
 function getSentInvitations (api, apiUser) {
   return apiUser.getSentInvitations()
@@ -238,5 +239,6 @@ function* invitationsSaga() {
   yield takeEvery(ADD_INVITATION_REQUEST, addInvitation)
   yield takeEvery(UPDATE_INVITEE_PROFILE_EVENT, updateInviteeProfile)
 }
+
 
 export default invitationsSaga

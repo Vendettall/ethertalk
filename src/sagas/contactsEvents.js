@@ -75,4 +75,5 @@ function* contactsEventsSaga() {
   yield takeEvery(ADD_CONTACT, proceedAddContact)
 }
 
+
 export default contactsEventsSaga

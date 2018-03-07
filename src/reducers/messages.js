@@ -1,6 +1,7 @@
 import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE_SUCCESS, CHOOSE_CHAT_VIEW, CHAT_VIEWS } from '../constants'
 import Storage from '../utils/storage'
 
+
 const initialState = {
   text: '',
   messages: [],

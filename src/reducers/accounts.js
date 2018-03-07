@@ -1,5 +1,6 @@
 import { FETCH_ACCOUNTS_SUCCESS, SET_ACCOUNT, PICK_ACCOUNT, REGISTER_USER, TOGGLE_ACCOUNT_FORM } from '../constants'
 
+
 const initialState = {
   accounts: [],
   active: null,

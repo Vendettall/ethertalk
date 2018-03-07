@@ -1,5 +1,6 @@
 import { FETCH_CONTACTS_SUCCESS, ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT_PROFILE } from '../constants'
 
+
 export default function contacts(state = {}, { type, payload }) {
   switch (type) {
     case FETCH_CONTACTS_SUCCESS:

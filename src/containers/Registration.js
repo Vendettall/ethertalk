@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { registerUser, updateRegistrationName, updateRegistrationAvatar } from '../actions'
+import { registerUserRequest, updateRegistrationName, updateRegistrationAvatar } from '../actions'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import Accounts from './Accounts'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import PropTypes from 'prop-types'
+
 
 const styles = {
   container: {
@@ -98,7 +99,7 @@ const mapDispatchToProps = dispatch => {
     onUpdateAvatar: avatar => dispatch(updateRegistrationAvatar(avatar)),
     emitUploadClick: uploadAvatarRef => uploadAvatarRef.click(),
     onRegister: (api, account, name, avatar) =>
-      dispatch(registerUser(api, account, name, avatar))
+      dispatch(registerUserRequest(api, account, name, avatar))
   }
 }
 
@@ -106,5 +107,6 @@ const Registration = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RegistrationForm)
+
 
 export default Registration

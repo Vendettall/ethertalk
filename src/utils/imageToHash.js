@@ -12,4 +12,5 @@ const imageToHash = (api, imageAsFile) => {
   })
 }
 
+
 export default imageToHash

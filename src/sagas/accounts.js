@@ -3,6 +3,7 @@ import { FETCH_ACCOUNTS_REQUEST, CHANGE_ACCOUNT } from '../constants'
 import { addNotification, fetchAccountsSuccess, fetchAccountsError, setAccount,
   fetchUserRequest } from '../actions'
 
+
 // -> FETCH ACCOUNTS
 function getApiAccounts (api) {
   return api.Accounts.instance().getAccounts()
@@ -85,5 +86,6 @@ function* accountsSaga () {
   yield takeEvery(FETCH_ACCOUNTS_REQUEST, fetchAccounts)
   yield takeEvery(CHANGE_ACCOUNT, changeAccount)
 }
+
 
 export default accountsSaga

@@ -9,6 +9,7 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import {lightGreen400, red400, grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 
+
 const styles = {
   interactorPanel: {
     width: 'calc(66% - 10px)'
@@ -74,5 +75,6 @@ const Invitation = connect(
   mapStateToProps,
   mapDispatchToProps
 )(InvitationView)
+
 
 export default Invitation

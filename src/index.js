@@ -9,6 +9,7 @@ import App from './App'
 import createSagaMiddleware from 'redux-saga'
 import saga from './sagas'
 
+
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
 

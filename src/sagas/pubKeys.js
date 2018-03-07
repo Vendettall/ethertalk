@@ -2,6 +2,7 @@ import { call, put, all, select, takeEvery } from 'redux-saga/effects'
 import { FETCH_PUBKEYS_REQUEST, UPDATE_PUBKEY_REQUEST } from '../constants'
 import { addNotification, fetchPubKeysSuccess, updatePubKeySuccess, updatePubKeyError } from '../actions'
 
+
 // -> FETCH PUBKEYS
 function getApiContacts (contacts) {
   return Object.keys(contacts).map(key => {
@@ -71,5 +72,6 @@ function* messagesSaga() {
   yield takeEvery(FETCH_PUBKEYS_REQUEST, fetchPubKeys)
   yield takeEvery(UPDATE_PUBKEY_REQUEST, updatePubKey)
 }
+
 
 export default messagesSaga

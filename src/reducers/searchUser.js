@@ -1,5 +1,6 @@
 import { TOGGLE_FORM, UPDATE_SEARCH_TEXT, SEARCH_USER_SUCCESS, SEND_INVITATION_SUCCESS } from '../constants'
 
+
 const initialState = {
   isOpened: false,
   text: '',

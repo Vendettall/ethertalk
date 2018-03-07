@@ -8,6 +8,7 @@ import { red100 } from 'material-ui/styles/colors'
 import objectToArray from '../utils/objectToArray'
 import scrollToBottom from '../utils/scrollToBottom'
 
+
 const styles = {
   container: {
     position: 'fixed',
@@ -54,5 +55,6 @@ const mapStateToProps = state => {
 }
 
 const Notifications = connect(mapStateToProps)(NotificationsView)
+
 
 export default Notifications

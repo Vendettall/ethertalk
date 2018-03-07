@@ -1,6 +1,7 @@
 import { FETCH_ACCOUNTS_REQUEST, FETCH_ACCOUNTS_SUCCESS, FETCH_ACCOUNTS_ERROR,
   CHANGE_ACCOUNT, SET_ACCOUNT, TOGGLE_ACCOUNT_FORM, PICK_ACCOUNT } from '../constants'
 
+
 export const fetchAccountsRequest = api => {
   return {
     type: FETCH_ACCOUNTS_REQUEST,

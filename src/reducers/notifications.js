@@ -1,5 +1,6 @@
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants'
 
+
 export default function notifications(state = {}, { type, payload }) {
   switch (type) {
     case ADD_NOTIFICATION: {

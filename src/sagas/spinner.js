@@ -1,6 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects'
 import { addPendingTask, removePendingTask } from '../actions'
 
+
 function* addTask () {
   yield put(addPendingTask())
 }
@@ -14,5 +15,6 @@ function* spinnerSaga() {
   yield takeEvery(action => /_SUCCESS$/.test(action.type), removeTask)
   yield takeEvery(action => /_ERROR$/.test(action.type), removeTask)
 }
+
 
 export default spinnerSaga

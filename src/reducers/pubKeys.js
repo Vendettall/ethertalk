@@ -1,5 +1,6 @@
 import { FETCH_PUBKEYS_SUCCESS, UPDATE_PUBKEY_SUCCESS, ADD_PUB_KEY, DELETE_PUB_KEY } from '../constants'
 
+
 export default function pubKeys(state = {}, { type, payload }) {
   switch (type) {
     case FETCH_PUBKEYS_SUCCESS:

@@ -10,4 +10,5 @@ const formatDate = date => {
          `${toDoubleFormat(date.getMinutes())}`
 }
 
+
 export default formatDate

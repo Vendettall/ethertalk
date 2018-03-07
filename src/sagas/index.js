@@ -13,6 +13,7 @@ import invitationsEventsSaga from './invitationsEvents'
 import notificationsSaga from './notifications'
 import spinnerSaga from './spinner'
 
+
 const sagas = [
   spinnerSaga, // must be first for catching request before results
   generalSaga,
@@ -32,5 +33,6 @@ const sagas = [
 function* saga() {
   yield sagas.map(saga => fork(saga))
 }
+
 
 export default saga

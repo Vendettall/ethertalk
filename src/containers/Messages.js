@@ -12,6 +12,7 @@ import {red800, grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 import scrollToBottom from '../utils/scrollToBottom'
 
+
 const styles = {
   messageBox: {
     height: 'calc(100vh - 248px)',
@@ -132,5 +133,6 @@ const Messages = connect(
   mapStateToProps,
   mapDispatchToProps
 )(MessagesView)
+
 
 export default Messages

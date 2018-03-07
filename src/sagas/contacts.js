@@ -4,6 +4,7 @@ import { addNotification, fetchContactsSuccess, fetchContactsError,
   fetchPubKeysRequest, updateContactProfile } from '../actions'
 import convertToStateUser from '../utils/convertToStateUser'
 
+
 // -> FETCH CONTACTS
 function getContacts (api, apiUser) {
   return apiUser.getContacts()
@@ -113,5 +114,6 @@ function* contactsSaga() {
   yield takeEvery(FETCH_CONTACTS_REQUEST, fetchContacts)
   yield takeEvery(UPDATE_CONTACT_PROFILE_EVENT, updateProfile)
 }
+
 
 export default contactsSaga

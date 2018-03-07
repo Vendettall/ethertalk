@@ -3,6 +3,7 @@ import { call, put, take, takeEvery } from 'redux-saga/effects'
 import { SET_SOCKET_SUCCESS } from '../constants'
 import { addNotification, getApiMessage } from '../actions'
 
+
 function socketEventsChannel (socket) {
   return eventChannel(emitter => {
     socket.on('started', () => {
@@ -51,5 +52,6 @@ function* setupSocketEventsHandler ({ payload }) {
 function* socketEventsSaga() {
   yield takeEvery(SET_SOCKET_SUCCESS, setupSocketEventsHandler)
 }
+
 
 export default socketEventsSaga

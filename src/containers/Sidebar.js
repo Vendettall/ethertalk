@@ -5,6 +5,7 @@ import UsersList from './UsersList'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
 
+
 const sidebarStyle = {
   width: '33%'
 }
@@ -28,4 +29,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(SidebarView)
+const Sidebar = connect(mapStateToProps)(SidebarView)
+
+
+export default Sidebar

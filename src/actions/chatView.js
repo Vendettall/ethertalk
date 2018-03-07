@@ -1,5 +1,6 @@
 import { CHOOSE_VISIBILITY_FILTER, CHOOSE_CHAT_VIEW } from '../constants'
 
+
 export const chooseVisibilityFilter = filter => { // choose which tab show to user
   return {
     type: CHOOSE_VISIBILITY_FILTER,

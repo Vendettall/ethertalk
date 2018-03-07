@@ -99,4 +99,5 @@ function* invitationsEventsSaga() {
   yield takeEvery(ADD_INVITATION_SUCCESS, proceedAddInvitation)
 }
 
+
 export default invitationsEventsSaga

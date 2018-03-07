@@ -1,6 +1,7 @@
 import imageFromHash from './imageFromHash'
 import base64images from '../assets/images/base64images'
 
+
 const stateUser = (apiUser, name, avatar) => {
   return {
     id: apiUser.id,
@@ -22,5 +23,6 @@ const convertToStateUser = (api, apiUser) => {
       return stateUser(apiUser, profile[0], base64images.no_avatar)
     })
 }
+
 
 export default convertToStateUser
