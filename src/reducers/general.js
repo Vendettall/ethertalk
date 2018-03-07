@@ -1,33 +1,16 @@
-import { SET_API, SET_SOCKET } from '../constants'
-import { getAccounts, addNotification } from '../actions'
+import { FETCH_API_SUCCESS, SET_SOCKET_SUCCESS } from '../constants'
 
 const initialState = {
   api: null,
   socket: null
 }
 
-export default function general(state = initialState, {type, payload}) {
+export default function general(state = initialState, { type, payload }) {
   switch (type) {
-    case SET_API:  {
-      if (payload.api) {
-        payload.asyncDispatch(getAccounts(payload.api))
-        return { ...state, api: payload.api }
-      }
-      
-      let errorText = addNotification
-      payload.asyncDispatch(addNotification(errorText))
-      console.log(errorText)
-
-      return state
-    }
-    case SET_SOCKET: {
-      let prevSocket = state.socket
-
-      if (prevSocket)
-        prevSocket.stop()
-
+    case FETCH_API_SUCCESS:
+      return { ...state, api: payload.api }
+    case SET_SOCKET_SUCCESS: 
       return { ...state, socket: payload.socket }
-    }
     default:
       return state
   }

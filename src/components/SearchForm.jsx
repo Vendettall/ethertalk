@@ -24,17 +24,24 @@ const styles = {
   }
 }
 
-function SearchForm({text, api, walletId, invitations, contacts, onUpdateText, onSearch}) {
+function SearchForm({text, onUpdateText, onSearch}) {
   return (
     <div style={styles.searchWrapper}>
       <TextField 
         hintText="Search user ..."
         onChange={(e, text) => onUpdateText(text)}
+        onKeyPress={event => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            onSearch(text)
+
+          }
+        }}
         value={text}
         style={styles.searchField}
       />
       <IconButton
-        onClick={() => onSearch(text, api, walletId, invitations, contacts)}
+        onClick={() => onSearch(text)}
         disabled={text.length !== 42}
         style={styles.searchButton}
       >
@@ -46,10 +53,7 @@ function SearchForm({text, api, walletId, invitations, contacts, onUpdateText, o
 
 SearchForm.propTypes = {
   text: PropTypes.string,
-  api: PropTypes.object,
   walletId: PropTypes.string,
-  invitations: PropTypes.object,
-  contacts: PropTypes.object,
   onUpdateText: PropTypes.func,
   onSearch: PropTypes.func
 }

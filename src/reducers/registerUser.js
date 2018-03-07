@@ -5,7 +5,7 @@ const initialState = {
   avatar: null
 }
 
-export default function registerUser(state = initialState, {type, payload}) {
+export default function registerUser(state = initialState, { type, payload }) {
   switch (type) {
     case UPDATE_REGISTRATION_NAME: 
       return { ...state, name: payload.name }

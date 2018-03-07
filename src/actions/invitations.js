@@ -1,130 +1,136 @@
-import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ACCEPT_INVITATION_BY_INTERLOCUTOR,
-         REJECT_INVITATION_BY_INTERLOCUTOR, SEND_INVITATION, ADD_INVITATION, UPDATE_INVITED_USER_PROFILE } from '../constants'
-import convertToStateInvitation from '../utils/convertToStateInvitation'
+import { FETCH_INVITATIONS_REQUEST, FETCH_INVITATIONS_SUCCESS, FETCH_INVITATIONS_ERROR,
+  ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, ACCEPT_INVITATION_ERROR,
+  REJECT_INVITATION_REQUEST, REJECT_INVITATION_SUCCESS, REJECT_INVITATION_ERROR,
+  SEND_INVITATION_REQUEST, SEND_INVITATION_SUCCESS, SEND_INVITATION_ERROR,
+  ADD_INVITATION_REQUEST, ADD_INVITATION_SUCCESS, ADD_INVITATION_ERROR,
+  REMOVE_INVITATION, UPDATE_INVITEE_PROFILE, UPDATE_INVITEE_PROFILE_EVENT } from '../constants'
 
-export const replaceInvitations = async (api, apiUser) => {
-  const getInvitations = (invitations, isMy) => {
-    let getInvitationsPromises = invitations.map(inv => {
-      return inv.getUser()
-        .then(user => {
-          return convertToStateInvitation(api, inv, user, isMy)
-            .then(result => {return result})
-        })
-    })
-    return Promise.all(getInvitationsPromises)
-      .then(invitations => {
-        if (!invitations.length) return {}
-        return invitations.reduce((obj, inv) => {
-          obj[inv.id] = inv
-          return obj
-        }, {})
-      })
-  }
-
-  let sentInvitations = apiUser.getSentInvitations()
-    .then(invitations => {
-      return getInvitations(invitations, true)
-    })
-  let inboxInvitations = apiUser.getInboxInvitations()
-    .then(invitations => {
-      return getInvitations(invitations, false)
-    })
-  let invitations = await Promise.all([sentInvitations, inboxInvitations])
-    .then(invitations => {
-      return Object.assign({}, invitations[0], invitations[1])
-    }) 
-
+export const fetchInvitationsRequest = (api, apiUser) => {
   return {
-    type: REPLACE_INVITATIONS,
-    payload: {
-      invitations: invitations
-    }
+    type: FETCH_INVITATIONS_REQUEST,
+    payload: ({ api, apiUser })
   }
 }
 
-export const acceptInvitation = async (invitation, apiUser, interactor) => { // if user accept invitation
-  let response = await apiUser.acceptInvitation(invitation.apiInvitation)
-    .then(result => {return result})
-
+export const fetchInvitationsSuccess = invitations => {
   return {
-    type: ACCEPT_INVITATION,
-    payload: {
-      invitation: invitation,
-      interactor: interactor,
-      response: response
-    }
+    type: FETCH_INVITATIONS_SUCCESS,
+    payload: ({ invitations })
   }
 }
 
-export const rejectInvitation = async (invitation, apiUser) => { // if user reject invitation
-  let invitationId = invitation.id
-  let response = await apiUser.rejectInvitation(invitation.apiInvitation)
-    .then(result => {return result})
+export const fetchInvitationsError = error => {
+  return {
+    type: FETCH_INVITATIONS_ERROR,
+    payload: new Error(error),
+    error: true
+  }
+}
 
+export const acceptInvitationRequest = (invitation, interactor) => {
+  return {
+    type: ACCEPT_INVITATION_REQUEST,
+    payload: ({ invitation, interactor })
+  }
+}
+
+export const acceptInvitationSuccess = invitationId => {
+  return {
+    type: ACCEPT_INVITATION_SUCCESS,
+    payload: ({ invitationId })
+  }
+}
+
+export const acceptInvitationError = error => {
+  return {
+    type: ACCEPT_INVITATION_ERROR,
+    payload: new Error(error),
+    error: true
+  }
+}
+
+export const rejectInvitationRequest = invitation => {
   return { 
-    type: REJECT_INVITATION,
-    payload: {
-      invitationId: invitationId,
-      response: response
-    }
+    type: REJECT_INVITATION_REQUEST,
+    payload: ({ invitation })
   }
 }
 
-export const acceptInvitationByInterlocutor = invitation => { // if users invitation accepted
+export const rejectInvitationSuccess = invitationId => {
   return {
-    type: ACCEPT_INVITATION_BY_INTERLOCUTOR,
-    payload: {
-      invitation: invitation
-    }
+    type: REJECT_INVITATION_SUCCESS,
+    payload: ({ invitationId })
   }
 }
 
-export const rejectInvitationByInterlocutor = invitation => { // if users invitation rejected
+export const rejectInvitationError = error => {
   return {
-    type: REJECT_INVITATION_BY_INTERLOCUTOR,
-    payload: {
-      invitation: invitation
-    }
+    type: REJECT_INVITATION_ERROR,
+    payload: new Error(error),
+    error: true
   }
 }
 
-export const sendInvitation = async (apiUser, apiInteractor) => {
-  let response = await apiUser.invite(apiInteractor)
-    .then(response => {return response})
-
+export const sendInvitationRequest = apiInteractor => {
   return {
-    type: SEND_INVITATION,
-    payload: {
-      response: response
-    }
+    type: SEND_INVITATION_REQUEST,
+    payload: ({ apiInteractor })
   }
 }
 
-export const addInvitation = async (api, apiInvitation, isMy) => {
-  let invitation = await apiInvitation.getUser()
-    .then(user => {
-      return convertToStateInvitation(api, apiInvitation, user, isMy)
-        .then(result => {return result})
-    })
-
+export const sendInvitationSuccess = () => {
   return {
-    type: ADD_INVITATION,
-    payload: {
-      invitation: invitation
-    }
+    type: SEND_INVITATION_SUCCESS
   }
 }
 
-export const updateInvitedUserProfile = async invitation => {
-  let profile = await invitation.apiUser.getProfile()
-    .then(result => {return result})
-  let invitationId = invitation.id
-  
+export const sendInvitationError = error => {
   return {
-    type: UPDATE_INVITED_USER_PROFILE,
-    payload: {
-      profile: profile,
-      invitationId: invitationId
-    }
+    type: SEND_INVITATION_ERROR,
+    payload: new Error(error),
+    error: true
+  }
+}
+
+export const addInvitationRequest = (apiInvitation, isMy) => {
+  return {
+    type: ADD_INVITATION_REQUEST,
+    payload: ({ apiInvitation, isMy })
+  }
+}
+
+export const addInvitationSucces = invitation => {
+  return {
+    type: ADD_INVITATION_SUCCESS,
+    payload: ({ invitation })
+  }
+}
+
+export const addInvitationError = error => {
+  return {
+    type: ADD_INVITATION_ERROR,
+    payload: new Error(error),
+    error: true
+  }
+}
+
+export const removeInvitation = invitationId => {
+  return {
+    type: REMOVE_INVITATION,
+    payload: ({ invitationId })
+  }
+}
+
+export const updateInviteeProfileEvent = invitation => {
+  return {
+    type: UPDATE_INVITEE_PROFILE_EVENT,
+    payload: ({ invitation })
+  }
+}
+
+export const updateInviteeProfile = (invitationId, profile) => {
+  return {
+    type: UPDATE_INVITEE_PROFILE,
+    payload: ({ invitationId, profile })
   }
 }

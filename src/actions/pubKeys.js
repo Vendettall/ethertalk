@@ -1,58 +1,52 @@
-import { REPLACE_PUBKEYS, ADD_PUB_KEY, UPDATE_PUB_KEY, DELETE_PUB_KEY } from '../constants'
+import { FETCH_PUBKEYS_REQUEST, FETCH_PUBKEYS_SUCCESS, UPDATE_PUBKEY_REQUEST, UPDATE_PUBKEY_SUCCESS, 
+  UPDATE_PUBKEY_ERROR, ADD_PUB_KEY, DELETE_PUB_KEY } from '../constants'
 
-export const replacePubKeys = async contacts => {
-  let apiContacts = Object.keys(contacts).map(key => contacts[key].apiUser)
-  
-  let pubKeysPromises = apiContacts.map(apiUser =>
-    apiUser.getPubKey()
-      .then(key => {return key})
-  )
-
-  let pubKeys = await Promise.all(pubKeysPromises)
-    .then(pubKeysArray => {
-      return pubKeysArray.reduce((obj, pubKey, index) => {
-        obj[pubKey] = apiContacts[index]
-        return obj
-      }, {})
-    })
-    
+export const fetchPubKeysRequest = contacts => {
   return {
-    type: REPLACE_PUBKEYS,
-    payload: {
-      pubKeys: pubKeys
-    }
+    type: FETCH_PUBKEYS_REQUEST,
+    payload: ({ contacts })
+  }
+}
+
+export const fetchPubKeysSuccess = pubKeys => {
+  return {
+    type: FETCH_PUBKEYS_SUCCESS,
+    payload: ({ pubKeys })
+  }
+}
+
+export const updatePubKeyRequest = apiUser => {
+  return {
+    type: UPDATE_PUBKEY_REQUEST,
+    payload: ({ apiUser })
+  }
+}
+
+export const updatePubKeySuccess = (newPubKey, oldPubKey) => {
+  return {
+    type: UPDATE_PUBKEY_SUCCESS,
+    payload: ({ newPubKey, oldPubKey })
+  }
+}
+
+export const updatePubKeyError = error => {
+  return {
+    type: UPDATE_PUBKEY_ERROR,
+    payload: new Error(error),
+    error: true
   }
 }
 
 export const addPubKey = (pubKey, user) => {
   return {
     type: ADD_PUB_KEY,
-    payload: {
-      pubKey: pubKey,
-      user: user
-    }
-  }
-}
-
-export const updatePubKey = async (userApi, pubKeys) => {
-  let newPubKey = await userApi.getPubKey()
-    .then(result => {return result})
-  let oldPubKey = Object.keys(pubKeys).find(pubKey => userApi.id === pubKeys[pubKey].id)
-  
-  return {
-    type: UPDATE_PUB_KEY,
-    payload: {
-      oldPubKey: oldPubKey,
-      newPubKey: newPubKey
-    }
+    payload: ({ pubKey, user })
   }
 }
 
 export const deletePubKey = pubKey => {
   return {
     type: DELETE_PUB_KEY,
-    payload: {
-      pubKey: pubKey
-    }
+    payload: ({ pubKey })
   }
 }

@@ -1,90 +1,52 @@
-import { GET_ACCOUNTS, CHANGE_ACCOUNT, TOGGLE_ACCOUNT_FORM, PICK_ACCOUNT } from '../constants'
-import convertToStateUser from '../utils/convertToStateUser'
+import { FETCH_ACCOUNTS_REQUEST, FETCH_ACCOUNTS_SUCCESS, FETCH_ACCOUNTS_ERROR,
+  CHANGE_ACCOUNT, SET_ACCOUNT, TOGGLE_ACCOUNT_FORM, PICK_ACCOUNT } from '../constants'
 
-const getStateUser = (api, apiAccount) => {
-  return convertToStateUser(api, apiAccount.user)
-    .then(stateUser => { 
-        return {
-          ...stateUser,
-          apiUser: apiAccount.user,
-          walletId: apiAccount.id
-        }
-    })
+export const fetchAccountsRequest = api => {
+  return {
+    type: FETCH_ACCOUNTS_REQUEST,
+    payload: ({ api })
+  }
 }
 
-export const getAccounts = async api => {
-  let startedAccount = null
-  let user = null
-  
-  let apiAccounts = await api.Accounts.instance().getAccounts()
-    .then(result => {return result})
-  
-  let userNamesPromises = apiAccounts.map(account => { // we will show userNames in accounts list
-    if (account.user)
-      return account.user.getProfile()
-        .then(profile => {return profile[0]})
-    return null
-  })
-
-  let accounts = await Promise.all(userNamesPromises) // get stateAccounts
-    .then(names => {
-      return names.map((name, index) => {
-        let stateAccount = {
-          apiAccount: apiAccounts[index],
-          userName: name
-        }
-
-        if (!startedAccount && name) // if we will find user, we will choose him automatically
-          startedAccount = stateAccount
-
-        return stateAccount
-      })
-    })
-  
-  if (startedAccount)
-    user = await getStateUser(api, startedAccount.apiAccount)
-
+export const fetchAccountsSuccess = (accounts, startedAccount) => {
   return {
-    type: GET_ACCOUNTS,
-    payload: {
-      api: api,
-      accounts: accounts,
-      startedAccount: startedAccount,
-      user: user
-    }
+    type: FETCH_ACCOUNTS_SUCCESS,
+    payload: ({ accounts, startedAccount })
+  }
+}
+
+export const fetchAccountsError = error => {
+  return { 
+    type: FETCH_ACCOUNTS_ERROR,
+    payload: new Error(error),
+    error: true 
+  }
+}
+
+export const changeAccount = account => {
+  return {
+    type: CHANGE_ACCOUNT,
+    payload: ({ account })
+  }
+}
+
+export const setAccount = account => {
+  return {
+    type: SET_ACCOUNT,
+    payload: { account: account }
   }
 }
 
 export const pickAccount = account => { // it's just to control selected radiobutton
   return {
     type: PICK_ACCOUNT,
-    payload: {
-      account: account
-    }
-  }
-}
-
-export const changeAccount = async (account, api) => {
-  let user = null
-
-  if (account.apiAccount.user)
-    user = await getStateUser(api, account.apiAccount.user)
-
-  return {
-    type: CHANGE_ACCOUNT,
-    payload: {
-      api: api,
-      account: account,
-      user: user
-    }
+    payload: ({ account })
   }
 }
 
 export const toggleAccountForm = isOpened => {
   return {
     type: TOGGLE_ACCOUNT_FORM,
-    payload: {
-      isOpened: isOpened
-    }
+    payload: ({ isOpened })
   }
 }

@@ -15,7 +15,7 @@ const styles = {
   }
 }
 
-function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, api, isOpened,
+function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, isOpened,
                        onChoose, onPick, onToggle}) {
   let conjureUpButton = null
 
@@ -39,7 +39,7 @@ function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, a
     <FlatButton
       label="Choose"
       primary={true}
-      onClick={() => onChoose(choosenAccount, api)}
+      onClick={() => onChoose(choosenAccount)}
       disabled={!choosenAccount || choosenAccount === activeAccount}
     />
   ]
@@ -79,7 +79,6 @@ AccountsView.propTypes = {
   accounts: PropTypes.array,
   choosenAccount: PropTypes.object,
   activeAccount: PropTypes.object,
-  api: PropTypes.object,
   isOpened: PropTypes.bool,
   onChoose: PropTypes.func,
   onPick: PropTypes.func,
@@ -89,7 +88,6 @@ AccountsView.propTypes = {
 const mapStateToProps = (state, ownProrps) => {
   return {
     isOpenByClick: ownProrps.isOpenByClick,
-    api: state.general.api,
     accounts: state.accounts.accounts,
     choosenAccount: state.accounts.choosen,
     activeAccount: state.accounts.active,
@@ -99,7 +97,7 @@ const mapStateToProps = (state, ownProrps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onChoose: (choosenAccount, api) => dispatch(changeAccount(choosenAccount, api)),
+    onChoose: (choosenAccount) => dispatch(changeAccount(choosenAccount)),
     onPick: account => dispatch(pickAccount(account)),
     onToggle: isOpened => dispatch(toggleAccountForm(isOpened))
   }

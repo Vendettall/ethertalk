@@ -1,55 +1,38 @@
-import { UPDATE_REGISTRATION_NAME, UPDATE_REGISTRATION_AVATAR, REGISTER_USER } from '../constants'
-import imageFromHash from '../utils/imageFromHash'
-import imageToHash from '../utils/imageToHash'
+import { UPDATE_REGISTRATION_NAME, UPDATE_REGISTRATION_AVATAR,
+  REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR } from '../constants'
 
 export const updateRegistrationName = name => {
   return {
     type: UPDATE_REGISTRATION_NAME,
-    payload: {
-      name: name
-    }
+    payload: ({ name })
   }
 }
 
 export const updateRegistrationAvatar = avatar => {
   return {
     type: UPDATE_REGISTRATION_AVATAR,
-    payload: {
-      avatar: avatar
-    }
+    payload: ({ avatar })
   }
 }
 
-export const registerUser = async (api, account, name, avatarAsFile) => {
-  let apiUser, avatar, response, walletId = account.id
-
-  apiUser = await api.UserRegistry.instance().register() // register user by api
-    .then(user => {
-      account.user = user
-      return user
-    })
-
-  if (apiUser)
-    response = await imageToHash(api, avatarAsFile) 
-    // set hash as avatar in api profile, but get it as bas64 image for state
-      .then(hash => {
-        return imageFromHash(api, hash)
-          .then(image => {
-            avatar = image
-            return apiUser.setProfile(name, hash)
-              .then(result => {return result})
-          })
-      })
-
+export const registerUserRequest = (api, account, name, avatarAsFile) => {
   return {
-    type: REGISTER_USER,
-    payload: {
-      api: api,
-      avatar: avatar,
-      name: name,
-      apiUser: apiUser,
-      walletId: walletId,
-      response: response
-    }
+    type: REGISTER_USER_REQUEST,
+    payload: ({ api, account, name, avatarAsFile })
+  }
+}
+
+export const registerUserSuccess = (apiUser, name, avatar, walletId) => {
+  return {
+    type: REGISTER_USER_SUCCESS,
+    payload: ({ apiUser, name, avatar, walletId })
+  }
+}
+
+export const registerUserError = error => {
+  return {
+    type: REGISTER_USER_ERROR,
+    payload: new Error(error),
+    error: true
   }
 }

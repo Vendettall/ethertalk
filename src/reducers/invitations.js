@@ -1,47 +1,21 @@
-import { REPLACE_INVITATIONS, ACCEPT_INVITATION, REJECT_INVITATION, ADD_INVITATION, ACCEPT_INVITATION_BY_INTERACTOR,
-         REJECT_INVITATION_BY_INTERACTOR, UPDATE_INVITED_USER_PROFILE } from '../constants'
-import { addNotification } from '../actions'
+import { FETCH_INVITATIONS_SUCCESS, ACCEPT_INVITATION_SUCCESS, REJECT_INVITATION_SUCCESS, ADD_INVITATION_SUCCESS, 
+  REMOVE_INVITATION, UPDATE_INVITEE_PROFILE } from '../constants'
 
-export default function invitations(state = {}, {type, payload}) {
+export default function invitations(state = {}, { type, payload }) {
   let newState
   switch (type) {
-    case REPLACE_INVITATIONS:
+    case FETCH_INVITATIONS_SUCCESS:
       return payload.invitations
-    case ACCEPT_INVITATION: {
-      if (payload.response) {
-        newState = { ...state }
-        delete newState[payload.invitation.id]
-        return newState
-      }
-
-      let errorText = 'Error. Invitation wasn\'t accepted.'
-      payload.asyncDispatch(addNotification(errorText))
-      console.log(errorText)
-      
-      return state
-    }
-    case REJECT_INVITATION: {
-      if (payload.response) {
-        newState = { ...state }
-        delete newState[payload.invitationId]
-        return newState
-      }
-
-      let errorText = 'Error. Invitation wasn\'t rejected.'
-      payload.asyncDispatch(addNotification(errorText))
-      console.log(errorText)
-
-      return state
-    }
-    case ADD_INVITATION:
+    case ADD_INVITATION_SUCCESS:
       return { ...state, [payload.invitation.id]: payload.invitation }
-    case ACCEPT_INVITATION_BY_INTERACTOR:
-    case REJECT_INVITATION_BY_INTERACTOR: {
+    case ACCEPT_INVITATION_SUCCESS:
+    case REJECT_INVITATION_SUCCESS:
+    case REMOVE_INVITATION: {
       newState = { ...state }
-      delete newState[payload.invitation.id]
+      delete newState[payload.invitationId]
       return newState
     }
-    case UPDATE_INVITED_USER_PROFILE:
+    case UPDATE_INVITEE_PROFILE:
       return { 
         ...state,
         [payload.invitation]: {

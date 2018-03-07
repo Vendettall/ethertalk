@@ -1,60 +1,52 @@
-import { REPLACE_CONTACTS, ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT_PROFILE } from '../constants'
-import convertToStateUser from '../utils/convertToStateUser'
+import { FETCH_CONTACTS_REQUEST, FETCH_CONTACTS_SUCCESS, FETCH_CONTACTS_ERROR,
+  ADD_CONTACT, DELETE_CONTACT, UPDATE_CONTACT_PROFILE_EVENT, UPDATE_CONTACT_PROFILE } from '../constants'
 
-export const replaceContacts = async (api, apiUser) => {
-  let contactsPromises = await apiUser.getContacts()
-    .then(contacts => {
-      return contacts.map(user => 
-        convertToStateUser(api, user)
-          .then(result => {return result})
-      )
-    })
-
-  let contacts = await Promise.all(contactsPromises)
-    .then(contacts => {
-      if (!contacts.length) return {}
-      return contacts.reduce((obj, contact) => {
-        obj[contact.id] = contact
-        return obj
-      }, {})
-    })
-
+export const fetchContactsRequest = (api, apiUser) => {
   return {
-    type: REPLACE_CONTACTS,
-    payload: {
-      contacts: contacts
-    }
+    type: FETCH_CONTACTS_REQUEST,
+    payload: ({ api, apiUser })
+  }
+}
+
+export const fetchContactsSuccess = contacts => {
+  return {
+    type: FETCH_CONTACTS_SUCCESS,
+    payload: ({ contacts })
+  }
+}
+
+export const fetchContactsError = error => {
+  return {
+    type: FETCH_CONTACTS_ERROR,
+    payload: new Error(error),
+    error: true
   }
 }
 
 export const addContact = contact => {
   return {
     type: ADD_CONTACT,
-    payload: {
-      contact: contact
-    }
+    payload: ({ contact })
   }
 }
 
-export const deleteContact = contact => {
+export const deleteContact = contactId => {
   return {
     type: DELETE_CONTACT,
-    payload: {
-      contact: contact
-    }
+    payload: ({ contactId })
   }
 }
 
-export const updateContactProfile = async apiContact => {
-  let profile = await apiContact.getProfile()
-    .then(result => {return result})   
-  let contactId = apiContact.id
-  
+export const updateContactProfileEvent = contact => {
+  return {
+    type: UPDATE_CONTACT_PROFILE_EVENT,
+    payload: ({ contact })
+  }
+}
+
+export const updateContactProfile = (contactId, profile) => {
   return {
     type: UPDATE_CONTACT_PROFILE,
-    payload: {
-      profile: profile,
-      contactId: contactId
-    }
+    payload: ({ contactId, profile })
   }
 }

@@ -1,12 +1,10 @@
-import { REPLACE_PUBKEYS, ADD_PUB_KEY, UPDATE_PUB_KEY, DELETE_PUB_KEY } from '../constants'
+import { FETCH_PUBKEYS_SUCCESS, UPDATE_PUBKEY_SUCCESS, ADD_PUB_KEY, DELETE_PUB_KEY } from '../constants'
 
-export default function pubKeys(state = {}, {type, payload}) {
+export default function pubKeys(state = {}, { type, payload }) {
   switch (type) {
-    case REPLACE_PUBKEYS:
+    case FETCH_PUBKEYS_SUCCESS:
       return payload.pubKeys
-    case ADD_PUB_KEY:
-      return { ...state, [payload.pubKey]: payload.user }
-    case UPDATE_PUB_KEY: {
+    case UPDATE_PUBKEY_SUCCESS: {
       let newState = { ...state }
 
       Object.defineProperty(newState, payload.newPubKey,
@@ -16,6 +14,8 @@ export default function pubKeys(state = {}, {type, payload}) {
 
       return newState
     }
+    case ADD_PUB_KEY:
+      return { ...state, [payload.pubKey]: payload.user }
     case DELETE_PUB_KEY: {
       let newState = { ...state }
       delete newState[payload.pubKey]

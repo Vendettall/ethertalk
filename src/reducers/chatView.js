@@ -1,4 +1,4 @@
-import { CHOOSE_VISIBILITY_FILTER, CHOOSE_CHAT_VIEW, ACCEPT_INVITATION, REJECT_INVITATION,
+import { CHOOSE_VISIBILITY_FILTER, CHOOSE_CHAT_VIEW, ACCEPT_INVITATION_SUCCESS, REJECT_INVITATION_SUCCESS,
          VISIBILITY_FILTERS, CHAT_VIEWS } from '../constants'
 
 const fallback = {
@@ -7,7 +7,7 @@ const fallback = {
   interactor: null
 }
 
-export default function chatView(state = fallback, {type, payload}) {
+export default function chatView(state = fallback, { type, payload }) {
   switch (type) {
     case CHOOSE_CHAT_VIEW:
       return {
@@ -17,21 +17,15 @@ export default function chatView(state = fallback, {type, payload}) {
       }
     case CHOOSE_VISIBILITY_FILTER:
       return { ...state, filter: payload.filter }
-    case ACCEPT_INVITATION: {
-      if (payload.response)
-        return {
-          ...state,
-          view: CHAT_VIEWS.CHAT_WITH_USER,
-          interactor: payload.invitation
-        }
-        
-      return state
+    case ACCEPT_INVITATION_SUCCESS: {
+      return {
+        ...state,
+        view: CHAT_VIEWS.CHAT_WITH_USER,
+        interactor: payload.invitation.user
+      }
     }
-    case REJECT_INVITATION: {
-      if (payload.response)
-        return fallback
-
-      return state
+    case REJECT_INVITATION_SUCCESS: {
+      return fallback
     }
     default:
       return state

@@ -23,7 +23,7 @@ const styles = {
   }
 }
 
-function InvitationView({apiUser, interactor, invitation, onAccept, onReject}) {
+function InvitationView({interactor, invitation, onAccept, onReject}) {
   return (
     <Card style={styles.interactorPanel}>
       <CardHeader
@@ -33,13 +33,13 @@ function InvitationView({apiUser, interactor, invitation, onAccept, onReject}) {
       >
         <IconButton
           tooltip="Accept"
-          onClick={() => onAccept(apiUser, interactor, invitation)}
+          onClick={() => onAccept(interactor, invitation)}
         >
           <ActionDone color={styles.acceptIcon.color} hoverColor={styles.acceptIcon.hoverColor} />
         </IconButton>
         <IconButton 
           tooltip="Decline"
-          onClick={() => onReject(apiUser, invitation)}
+          onClick={() => onReject(invitation)}
         >
           <ContentClear color={styles.rejectIcon.color} hoverColor={styles.rejectIcon.hoverColor} />
         </IconButton>
@@ -50,7 +50,6 @@ function InvitationView({apiUser, interactor, invitation, onAccept, onReject}) {
 }
 
 InvitationView.propTypes = {
-  apiUser: PropTypes.object,
   interactor: PropTypes.object,
   invitation: PropTypes.object,
   onAccept: PropTypes.func,
@@ -59,7 +58,6 @@ InvitationView.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    apiUser: state.user.apiUser,
     interactor: ownProps.interactor,
     invitation: ownProps.invitation
   }
@@ -67,10 +65,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAccept: (apiUser, interactor, invitation) => 
-      dispatch(acceptInvitation(invitation, apiUser, interactor)),
-    onReject: (apiUser, invitation) =>
-      dispatch(rejectInvitation(invitation, apiUser))
+    onAccept: (interactor, invitation) => dispatch(acceptInvitation(invitation, interactor)),
+    onReject: invitation => dispatch(rejectInvitation(invitation))
   }
 }
 

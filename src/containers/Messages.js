@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { sendMessage, updateMessageText } from '../actions'
+import { sendMessageRequest, updateMessageText } from '../actions'
 import {List, ListItem} from 'material-ui/List'
 import {CardActions, CardText} from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
@@ -86,6 +86,12 @@ class MessagesView extends React.Component {
           <TextField
             hintText="Write a message ..." 
             onChange={(e, text) => this.props.onUpdateText(text)}
+            onKeyPress={event => {
+              if (event.key === 'Enter') {
+                event.preventDefault()
+                this.props.onSend(this.props.socket, this.props.interlocutor.apiUser, this.props.text)
+              }
+            }}
             value={this.props.text}
             style={styles.messageInput}
           />
@@ -128,7 +134,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onUpdateText: text => dispatch(updateMessageText(text)),
     onSend: (socket, apiInterlocutor, text) => 
-      dispatch(sendMessage(socket, apiInterlocutor, text))
+      dispatch(sendMessageRequest(socket, apiInterlocutor, text))
   }
 }
 

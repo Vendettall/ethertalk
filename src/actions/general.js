@@ -1,27 +1,37 @@
-import { SET_API, SET_SOCKET } from '../constants'
-import getWeb3 from '../utils/getWeb3'
-import API from '../api'
+import { FETCH_API_REQUEST, FETCH_API_SUCCESS, FETCH_API_ERROR,
+  SET_SOCKET_REQUEST, SET_SOCKET_SUCCESS } from '../constants'
 
-export const setApi = async () => {
-  let api = await getWeb3
-    .then(web3 => {return API(web3)})
-
+export const fetchApiRequest = () => {
   return {
-    type: SET_API,
-    payload: {
-      api: api
-    }
+    type: FETCH_API_REQUEST
   }
 }
 
-export const setSocket = (api, user) => {
-  let socket = new api.Whisper(user)
-  socket.start()
-  
+export const fetchApiSuccess = api => {
+  return { 
+    type: FETCH_API_SUCCESS,
+    payload: ({ api })
+  }
+}
+
+export const fetchApiError = error => {
   return {
-    type: SET_SOCKET,
-    payload: {
-      socket: socket
-    }
+    type: FETCH_API_ERROR,
+    payload: new Error(error),
+    error: true
+  }
+}
+
+export const setSocketRequest = apiUser => {
+  return {
+    type: SET_SOCKET_REQUEST,
+    payload: ({ apiUser })
+  }
+}
+
+export const setSocketSuccess = socket => {
+  return {
+    type: SET_SOCKET_SUCCESS,
+    payload: ({ socket })
   }
 }

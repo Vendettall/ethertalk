@@ -11,6 +11,10 @@ import { routerReducer } from 'react-router-redux'
 import registerUser from './registerUser'
 import accounts from './accounts'
 import notifications from './notifications'
+import channels from './channels'
+import { configurablePendingTasksReducer } from 'react-redux-spinner'
+
+const pendingTasksReducer = configurablePendingTasksReducer({ actionKeyPath: [ 'meta' ] })
 
 const chatApp = combineReducers({
   searchUser,
@@ -24,7 +28,9 @@ const chatApp = combineReducers({
   routerReducer,
   registerUser,
   accounts,
-  notifications
+  notifications,
+  channels,
+  pendingTasks: pendingTasksReducer
 })
 
 export default chatApp

@@ -1,13 +1,8 @@
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants'
-import { removeNotification } from '../actions'
 
-export default function notifications(state = {}, {type, payload}) {
+export default function notifications(state = {}, { type, payload }) {
   switch (type) {
     case ADD_NOTIFICATION: {
-      setTimeout (() => 
-        payload.asyncDispatch(removeNotification(payload.id))
-      , 5000)
-
       return {
         ...state,
         [payload.id]: {

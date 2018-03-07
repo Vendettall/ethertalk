@@ -1,4 +1,4 @@
-import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE, CHOOSE_CHAT_VIEW, CHAT_VIEWS } from '../constants'
+import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE_SUCCESS, CHOOSE_CHAT_VIEW, CHAT_VIEWS } from '../constants'
 import Storage from '../utils/storage'
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   apiInterlocutor: null
 }
 
-export default function messages(state = initialState, {type, payload}) {
+export default function messages(state = initialState, { type, payload }) {
   switch (type) {
     case UPDATE_MESSAGE_TEXT:
       return { ...state, text: payload.text }
@@ -23,18 +23,15 @@ export default function messages(state = initialState, {type, payload}) {
 
       return state
     }
-    case SEND_MESSAGE: {
-      if (payload.response)
-        return {
-          ...state,
-          text: '',
-          messages: [
-            ...state.messages,
-            payload.message
-          ]
-        }
-
-      return state
+    case SEND_MESSAGE_SUCCESS: {
+      return {
+        ...state,
+        text: '',
+        messages: [
+          ...state.messages,
+          payload.message
+        ]
+      }
     }
     case CHOOSE_CHAT_VIEW: {
       if (payload.view === CHAT_VIEWS.CHAT_WITH_USER) {

@@ -6,18 +6,13 @@ export const addNotification = text => {
   id++
   return {
     type: ADD_NOTIFICATION,
-    payload: {
-      id: id,
-      text: text
-    }
+    payload: ({ id, text })
   }
 }
 
 export const removeNotification = id => {
   return {
     type: REMOVE_NOTIFICATION,
-    payload: {
-      id: id
-    }
+    payload: ({ id })
   }
 }

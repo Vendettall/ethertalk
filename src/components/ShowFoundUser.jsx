@@ -9,7 +9,7 @@ const styles = {
   }
 }
 
-function ShowFoundUser({currentApiUser, stateUser, apiUser, answer, onInvite}) {
+function ShowFoundUser({stateUser, apiUser, answer, onInvite}) {
   let buttons = null
   
   if (answer === 'You can invite this user.') {
@@ -17,7 +17,7 @@ function ShowFoundUser({currentApiUser, stateUser, apiUser, answer, onInvite}) {
       <CardActions>
         <FlatButton 
           label="Invite"
-          onClick={() => onInvite(currentApiUser, apiUser)}
+          onClick={() => onInvite(apiUser)}
         />
       </CardActions>
     )
@@ -36,7 +36,6 @@ function ShowFoundUser({currentApiUser, stateUser, apiUser, answer, onInvite}) {
 }
 
 ShowFoundUser.propTypes = {
-  currentApiUser: PropTypes.object,
   stateUser: PropTypes.object,
   apiUser: PropTypes.object,
   answer: PropTypes.string,

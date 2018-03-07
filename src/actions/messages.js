@@ -1,58 +1,46 @@
-import { SEND_MESSAGE, GET_MESSAGE, UPDATE_MESSAGE_TEXT } from '../constants'
-import Storage from '../utils/storage'
-import formatDate from '../utils/formatDate'
+import { SEND_MESSAGE_REQUEST, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_ERROR,
+  GET_API_MESSAGE, GET_MESSAGE, UPDATE_MESSAGE_TEXT } from '../constants'
 
-export const sendMessage = async (socket, apiInterlocutor, text) => {
-  let message = { // convert to stateMessage
-    text: text,
-    isMy: true,
-    date: formatDate(new Date())
-  }
-
-  let response = socket.sendMessage(apiInterlocutor, text) // send message by socket
-    .then(result => {return result})
-  
-  let messages = Storage.get(apiInterlocutor.id) || []
-  Storage.set(apiInterlocutor.id, [...messages, message]) // add message to storage
-
+export const sendMessageRequest = (socket, apiInterlocutor, text) => {
   return {
-    type: SEND_MESSAGE,
-    payload: {
-      message: message,
-      response: response
-    }
+    type: SEND_MESSAGE_REQUEST,
+    payload: ({ socket, apiInterlocutor, text })
   }
 }
 
-export const getMessage = (apiMessage, pubKeys, currentInterlocutorId) => {
-  let interlocutorId = pubKeys[apiMessage.from].id
-  let isCurrentInterlocutor = false
-
-  let message = { // convert to stateMessage
-    text: apiMessage.message,
-    isMy: false,
-    date: formatDate(apiMessage.sent)
+export const sendMessageSuccess = message => {
+  return {
+    type: SEND_MESSAGE_SUCCESS,
+    payload: ({ message })
   }
+}
 
-  let messages = Storage.get(interlocutorId) || []
-  Storage.set(interlocutorId, [...messages, message]) // add message to storage
+export const sendMessageError = error => {
+  return {
+    type: SEND_MESSAGE_ERROR,
+    payload: new Error(error),
+    error: true
+  }
+}
 
-  if (currentInterlocutorId && currentInterlocutorId === interlocutorId) // check if we are chatting with sender
-    isCurrentInterlocutor = true
-  
+export const getApiMessage = apiMessage => {
+  console.log(apiMessage, 'API_MESSAGE')
+  return {
+    type: GET_API_MESSAGE,
+    payload: ({ apiMessage })
+  }
+}
+
+export const getMessage = (message, isCurrentInterlocutor) => {
   return {
     type: GET_MESSAGE,
-    payload: {
-      message: message,
-      isCurrentInterlocutor: isCurrentInterlocutor
-    }
+    payload: ({ message, isCurrentInterlocutor })
   }
 }
+
 export const updateMessageText = text => {
   return {
     type: UPDATE_MESSAGE_TEXT,
-    payload: {
-      text: text
-    }
+    payload: ({ text })
   }
 }
