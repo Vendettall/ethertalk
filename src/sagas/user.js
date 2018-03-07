@@ -37,7 +37,7 @@ function* fetchUser ({ payload }) {
       yield put(fetchInvitationsRequest(api, apiUser))
       yield put(fetchContactsRequest(api, apiUser))
     } else {
-      console.log(`User wasn't got. Error: ${error}`)
+      console.log(`User wasn't got. ${error}`)
       yield put(addNotification('User wasn\'t got'))
       yield put(fetchUserError(error))
     }
@@ -84,12 +84,12 @@ function* registerUser ({ payload }) {
       yield put(setSocketRequest(api, apiUser))
       yield put(push('/'))
     } else {
-      console.log(`Users profile wasn't set. Error: ${error}`)
+      console.log(`Users profile wasn't set. ${error}`)
       yield put(addNotification('Users profile wasn\'t set'))
       yield put(registerUserError(error))
     }
   } else {
-    console.log(`User wasn't registered. Error: ${error}`)
+    console.log(`User wasn't registered. ${error}`)
     yield put(addNotification('User wasn\'t registered'))
     yield put(registerUserError(error))
   }
@@ -163,7 +163,7 @@ function* searchUser ({ payload }) {
         }
       }
     } else {
-      console.log(`User not found. Error: ${error}`)
+      console.log(`User not found. ${error}`)
       yield put(addNotification('User not found'))
       yield put(searchUserError(error))
       return

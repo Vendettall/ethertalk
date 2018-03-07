@@ -9,7 +9,7 @@ function socketEventsChannel (socket) {
       console.log('Socket opened')
     })
     socket.on('error', error => {
-      console.log(`Socket error. Error: ${error}`)
+      console.log(`Socket error. ${error}`)
       return emitter(addNotification('Socket error'))
     })
     socket.on('stopped', () => {
@@ -24,7 +24,7 @@ function socketEventsChannel (socket) {
         console.log('Socket opened')
       })
       socket.removeListener('error', error => {
-        console.log(`Socket error. Error: ${error}`)
+        console.log(`Socket error. ${error}`)
         return emitter(addNotification('Socket error'))
       })
       socket.removeListener('stopped', () => {

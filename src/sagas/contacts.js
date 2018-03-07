@@ -25,7 +25,7 @@ function* proceedContactUserResult (result) {
   if (contactUser)
     return contactUser
   else {
-    console.log(`Contact user wasn't got. Error: ${error}`)
+    console.log(`Contact user wasn't got. ${error}`)
     yield put(addNotification('Contact user wasn\'t got'))
     return null
   }
@@ -57,7 +57,7 @@ function proceedContactResult (result) {
   if (contact)
     return contact
   else {
-    console.log(`Contact wasn't got. Error: ${error}`)
+    console.log(`Contact wasn't got. ${error}`)
     put(addNotification('Contact wasn\'t got'))
     return null
   }
@@ -83,7 +83,7 @@ function* fetchContacts ({ payload }) {
     yield put(fetchContactsSuccess(stateContacts))
     yield put(fetchPubKeysRequest(stateContacts))
   } else {
-    console.log(`Contacts wasn't got. Error: ${error}`)
+    console.log(`Contacts wasn't got. ${error}`)
     yield put(addNotification('Contacts wasn\'t got'))
     yield put(fetchContactsError(error))
   }
@@ -103,7 +103,7 @@ function* updateProfile (contact) {
   if (contactProfile) {
     yield put(updateContactProfile(contact.id, contactProfile))
   } else {
-    console.log(`Contact profile wasn't got. Error: ${error}`)
+    console.log(`Contact profile wasn't got. ${error}`)
     yield put(addNotification('Contact profile wasn\'t got.'))
   }
 }

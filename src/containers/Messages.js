@@ -10,6 +10,7 @@ import ContentSend from 'material-ui/svg-icons/content/send'
 import TextField from 'material-ui/TextField'
 import {red800, grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
+import scrollToBottom from '../utils/scrollToBottom'
 
 const styles = {
   messageBox: {
@@ -44,23 +45,12 @@ class MessagesView extends React.Component {
   componentDidMount() {
     // if user opened chat and there exists few messages, we will scroll history to last one
     if (this.props.messages)
-      this.scrollToBottom()
+      scrollToBottom(this.messageBoxRef)
   }
   componentWillUpdate(nextProps) {
     // if interlocutor sent message, we will scroll history to it
     if (nextProps.messages && nextProps.messages !== this.props.messages)
-      this.scrollToBottom()
-  }
-  scrollToBottom = () => {
-    let currentScroll = false
-    this.messageBoxRef.onscroll = () => currentScroll = true
-    // if user is scrolling message history we won't disturb him
-    if (currentScroll) return
-    
-    const scrollHeight = this.messageBoxRef.scrollHeight
-    const height = this.messageBoxRef.clientHeight
-    const maxScrollTop = scrollHeight - height
-    this.messageBoxRef.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0
+      scrollToBottom(this.messageBoxRef)
   }
   render() {
     if (this.props.messages.length)

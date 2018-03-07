@@ -7,7 +7,6 @@ import { addNotification, addContact, fetchInvitationsSuccess, fetchInvitationsE
 import convertToStateInvitation from '../utils/convertToStateInvitation'
 
 // -> FETCH INVITATIONS
-
 function getSentInvitations (api, apiUser) {
   return apiUser.getSentInvitations()
     .then(sentInvitations => ({ sentInvitations }))
@@ -34,7 +33,7 @@ function* proceedInvitationUserResult (result) {
   if (invitationUser)
     return invitationUser
   else {
-    console.log(`Invitation sender/receiver wasn't got. Error: ${error}`)
+    console.log(`Invitation sender/receiver wasn't got. ${error}`)
     yield put(addNotification('Invitation sender/receiver wasn\'t got'))
     return null
   }
@@ -66,7 +65,7 @@ function* proceedInvitationResult (result) {
   if (invitation)
     return invitation
   else {
-    console.log(`Invitation wasn't got. Error: ${error}`)
+    console.log(`Invitation wasn't got. ${error}`)
     yield put(addNotification('Invitation wasn\'t got'))
     return null
   }
@@ -124,7 +123,7 @@ function* acceptInvitation({ payload }) {
     yield put(addContact(invitation.user))
     yield put(acceptInvitationSuccess(invitationId))
   } else {
-    console.log(`Invitation wasn't accepted. Error: ${error}`)
+    console.log(`Invitation wasn't accepted. ${error}`)
     yield put(addNotification('Invitation wasn\'t accepted.'))
     yield put(acceptInvitationError(error))
   }
@@ -147,7 +146,7 @@ function* rejectInvitation({ payload }) {
     let invitationId = invitation.id
     yield put(rejectInvitationSuccess(invitationId))
   } else {
-    console.log(`Invitation wasn't rejected. Error: ${error}`)
+    console.log(`Invitation wasn't rejected. ${error}`)
     yield put(addNotification('Invitation wasn\'t rejected.'))
     yield put(rejectInvitationError(error))
   }
@@ -169,7 +168,7 @@ function* sendInvitation({ payload }) {
   if (success) {
     yield put(sendInvitationSuccess())
   } else {
-    console.log(`Invitation wasn't sent. Error: ${error}`)
+    console.log(`Invitation wasn't sent. ${error}`)
     yield put(addNotification('Invitation wasn\'t sent.'))
     yield put(sendInvitationError(error))
   }
@@ -199,12 +198,12 @@ function* addInvitation(apiInvitation, isMy) {
     if (stateInvitation) {
       yield put(addInvitation(stateInvitation))
     } else {
-      console.log(`Can't convert to state invitation. Error: ${error}`)
+      console.log(`Can't convert to state invitation. ${error}`)
       yield put(addNotification('Can\'t convert to state invitation.'))
       yield put(addInvitationError(error))
     }
   } else {
-    console.log(`Inviter wasn't got. Error: ${error}`)
+    console.log(`Inviter wasn't got. ${error}`)
     yield put(addNotification('Inviter wasn\'t got.'))
     yield put(addInvitationError(error))
   }
@@ -225,7 +224,7 @@ function* updateInviteeProfile ({ payload }) {
   if (inviteeProfile) {
     yield put(updateInviteeProfile(invitation.id, inviteeProfile))
   } else {
-    console.log(`Invitee profile wasn't got. Error: ${error}`)
+    console.log(`Invitee profile wasn't got. ${error}`)
     yield put(addNotification('Invitee profile wasn\'t got.'))
   }
 }

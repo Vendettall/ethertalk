@@ -14,7 +14,7 @@ import notificationsSaga from './notifications'
 import spinnerSaga from './spinner'
 
 const sagas = [
-  spinnerSaga, // must be first
+  spinnerSaga, // must be first for catching request before results
   generalSaga,
   accountsSaga,
   contactsSaga,

@@ -27,7 +27,7 @@ function* proceedApiPubKeyResult (result) {
   if (pubKey)
     return pubKey
   else {
-    console.log(`Public key wasn't got. Error: ${error}`)
+    console.log(`Public key wasn't got. ${error}`)
     yield put(addNotification('Public key wasn\'t got'))
     return null
   }
@@ -60,7 +60,7 @@ function* updatePubKey (apiUser) {
     let oldPubKey = Object.keys(pubKeys).find(pubKey => apiUser.id === pubKeys[pubKey].id)
     yield put(updatePubKeySuccess(newPubKey, oldPubKey))
   } else {
-    console.log(`New public key wasn't got. Error: ${error}`)
+    console.log(`New public key wasn't got. ${error}`)
     yield put(addNotification('New public key wasn\'t got'))
     yield put(updatePubKeyError(error))
   }

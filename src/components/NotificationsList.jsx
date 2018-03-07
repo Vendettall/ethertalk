@@ -12,7 +12,7 @@ const styles = {
 function NotificationList({notifications}) {
   return (
     <List style={styles.list}>
-      {notifications.map((notification) =>
+      {notifications.map(notification =>
         <ListItem
           primaryText={notification.text}
           key={notification.id}

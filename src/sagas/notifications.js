@@ -6,7 +6,7 @@ import { removeNotification } from '../actions'
 // -> REMOVE NOTIFICATION
 function* proceedNotification ({ payload }) {
   let { id } = payload
-  yield delay(2000)
+  yield delay(5000)
   yield put(removeNotification(id))
 }
 // <- REMOVE NOTIFICATION

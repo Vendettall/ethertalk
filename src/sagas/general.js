@@ -16,11 +16,12 @@ function getApi () {
 
 function* fetchApi () {
   let { api, error } = yield call(getApi)
+  
   if (api) {
     yield put(fetchApiSuccess(api))
     yield put(fetchAccountsRequest(api))
   } else {
-    console.log(`Api wasn't got. Error: ${error}`)
+    console.log(`Api wasn't got. ${error}`)
     yield put(addNotification('Api wasn\'t got'))
     yield put(fetchApiError(error))
   }

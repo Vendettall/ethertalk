@@ -30,7 +30,7 @@ function* proceedNameResult (result) {
   if (name)
     return name
   else {
-    console.log(`User name wasn't got. Error: ${error}`)
+    console.log(`User name wasn't got. ${error}`)
     yield put(addNotification('User name wasn\'t got'))
     return null
   }
@@ -65,7 +65,7 @@ function* fetchAccounts ({ payload }) {
     yield put(fetchAccountsSuccess(stateAccounts, startedAccount))
     yield put(fetchUserRequest(api, startedAccount))
   } else {
-    console.log(`Accounts wasn't got. Error: ${error}`)
+    console.log(`Accounts wasn't got. ${error}`)
     yield put(addNotification('Accounts wasn\'t got'))
     yield put(fetchAccountsError(error))
   }

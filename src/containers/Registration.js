@@ -50,7 +50,7 @@ function RegistrationForm({api, account, name, avatar, onUpdateName, onUpdateAva
             // emit click on input below, just for better view
             value={avatar? avatar['0'].name: ''} 
           />
-          <input // input which get our avatars
+          <input // input which gets our avatars
             ref={ref => uploadAvatarRef = ref}
             type="file"
             accept=".png, .jpg, .jpeg"

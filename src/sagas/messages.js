@@ -25,7 +25,7 @@ function* sendMessage({ payload }) {
     yield call(Storage.set, apiInterlocutor.id, [...messages, message]) // add message to storage
     yield put(sendMessageSuccess(message))
   } else {
-    console.log(`Message wasn't send. Error: ${error}`)
+    console.log(`Message wasn't send. ${error}`)
     yield put(addNotification('Message wasn\'t send'))
     yield put(sendMessageError(error))
   }
