@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { SEND_MESSAGE_REQUEST, GET_API_MESSAGE } from '../constants'
-import { addNotification, getMessage, sendMessageSuccess, sendMessageError } from '../actions'
+import { SEND_MESSAGE_REQUEST, GET_API_MESSAGE, CHAT_VIEWS, CHOOSE_CHAT_VIEW } from '../constants'
+import { addNotification, getMessage, sendMessageSuccess, sendMessageError, setupNewChat } from '../actions'
 import Storage from '../utils/storage'
 import formatDate from '../utils/formatDate'
 
@@ -56,9 +56,21 @@ function* getApiMessage({ payload }) {
 }
 // <- GET API MESSAGE
 
+// -> GET MESSAGE HISTORY
+function* getMessageHistory ({ payload }) {
+  let { view, interactor } = payload
+
+  if (view === CHAT_VIEWS.CHAT_WITH_USER) {
+    let messages = yield call(Storage.get, interactor.id) || []
+    yield put(setupNewChat(messages, interactor.apiUser))
+  }
+}
+// <- GET MESSAGE HISTORY
+
 function* messagesSaga() {
   yield takeEvery(SEND_MESSAGE_REQUEST, sendMessage)
   yield takeEvery(GET_API_MESSAGE, getApiMessage)
+  yield takeEvery(CHOOSE_CHAT_VIEW, getMessageHistory)
 }
 
 

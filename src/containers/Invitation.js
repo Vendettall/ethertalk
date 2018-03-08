@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { acceptInvitation, rejectInvitation } from '../actions'
+import { acceptInvitationRequest, rejectInvitationRequest } from '../actions'
 import {Card, CardHeader} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
@@ -66,8 +66,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAccept: (interactor, invitation) => dispatch(acceptInvitation(invitation, interactor)),
-    onReject: invitation => dispatch(rejectInvitation(invitation))
+    onAccept: (interactor, invitation) => dispatch(acceptInvitationRequest(invitation, interactor)),
+    onReject: invitation => dispatch(rejectInvitationRequest(invitation))
   }
 }
 

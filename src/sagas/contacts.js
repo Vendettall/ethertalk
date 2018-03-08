@@ -76,6 +76,7 @@ function getStateContacts (contacts) {
 function* fetchContacts ({ payload }) {
   let { api, apiUser } = payload
   let { apiContacts, error } = yield call(getContacts, api, apiUser)
+
   if (apiContacts) {
     let contactsPromises = yield call(getContactsPromises, api, apiContacts)
     let contactsResults = yield all([...contactsPromises]) 

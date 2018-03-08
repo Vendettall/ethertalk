@@ -81,8 +81,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onToggle: isOpened => dispatch(toggleForm(isOpened)),
     onUpdateText: text => dispatch(updateSearchText(text)),
-    onSearch: (text) => dispatch(searchUserRequest(text)),
-    onInvite: (apiUser) => dispatch(sendInvitationRequest(apiUser))
+    onSearch: text => dispatch(searchUserRequest(text)),
+    onInvite: apiUser => dispatch(sendInvitationRequest(apiUser))
   }
 }
 

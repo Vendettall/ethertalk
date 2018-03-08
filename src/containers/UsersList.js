@@ -10,15 +10,13 @@ import { CHAT_VIEWS } from '../constants'
 import objectToArray from '../utils/objectToArray'
 
 
-function UsersListView({filter, pubKeys, contacts, invitations, onChangeFilter,
-                        onChatWithInterlocutor, onProceedInvitation}) {
+function UsersListView({filter, contacts, invitations, onChangeFilter, onChatWithInterlocutor, onProceedInvitation}) {
 	return (
 		<Tabs value={filter} onChange={onChangeFilter}>
 			<Tab label="Contacts" value={VISIBILITY_FILTERS.SHOW_CONTACTS}>
 				<ContactsList 
 					contactsList={contacts}
 					onContactClick={onChatWithInterlocutor}
-					pubKeys={pubKeys}
 				/>
 			</Tab>
 			<Tab label="Ivitations" value={VISIBILITY_FILTERS.SHOW_INVITED}>
@@ -33,7 +31,6 @@ function UsersListView({filter, pubKeys, contacts, invitations, onChangeFilter,
 
 UsersListView.propTypes = {
   filter: PropTypes.string,
-	pubKeys: PropTypes.object,
 	contacts: PropTypes.array,
 	invitations: PropTypes.array,
 	onChangeFilter: PropTypes.func,

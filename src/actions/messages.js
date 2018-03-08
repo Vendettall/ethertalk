@@ -1,6 +1,13 @@
-import { SEND_MESSAGE_REQUEST, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_ERROR,
+import { SETUP_NEW_CHAT, SEND_MESSAGE_REQUEST, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_ERROR,
   GET_API_MESSAGE, GET_MESSAGE, UPDATE_MESSAGE_TEXT } from '../constants'
 
+
+export const setupNewChat = (messages, apiInterlocutor) => {
+  return {
+    type: SETUP_NEW_CHAT,
+    payload: ({ messages, apiInterlocutor })
+  }
+}
 
 export const sendMessageRequest = (socket, apiInterlocutor, text) => {
   return {
@@ -25,7 +32,6 @@ export const sendMessageError = error => {
 }
 
 export const getApiMessage = apiMessage => {
-  console.log(apiMessage, 'API_MESSAGE')
   return {
     type: GET_API_MESSAGE,
     payload: ({ apiMessage })

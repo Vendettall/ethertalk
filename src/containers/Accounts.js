@@ -20,7 +20,7 @@ function AccountsView({isOpenByClick, accounts, choosenAccount, activeAccount, i
                        onChoose, onPick, onToggle}) {
   let conjureUpButton = null
 
-  if (isOpenByClick) { // if we only need dialog window this parameter should be false
+  if (isOpenByClick) { // if we need only dialog window this parameter should be false
     conjureUpButton = (
       <FlatButton 
         label={activeAccount? activeAccount.userName: '   '}
@@ -98,7 +98,7 @@ const mapStateToProps = (state, ownProrps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onChoose: (choosenAccount) => dispatch(changeAccount(choosenAccount)),
+    onChoose: choosenAccount => dispatch(changeAccount(choosenAccount)),
     onPick: account => dispatch(pickAccount(account)),
     onToggle: isOpened => dispatch(toggleAccountForm(isOpened))
   }

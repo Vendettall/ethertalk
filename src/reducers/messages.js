@@ -1,5 +1,4 @@
-import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE_SUCCESS, CHOOSE_CHAT_VIEW, CHAT_VIEWS } from '../constants'
-import Storage from '../utils/storage'
+import { UPDATE_MESSAGE_TEXT, GET_MESSAGE, SEND_MESSAGE_SUCCESS, SETUP_NEW_CHAT } from '../constants'
 
 
 const initialState = {
@@ -34,19 +33,13 @@ export default function messages(state = initialState, { type, payload }) {
         ]
       }
     }
-    case CHOOSE_CHAT_VIEW: {
-      if (payload.view === CHAT_VIEWS.CHAT_WITH_USER) {
-        let messages = Storage.get(payload.interactor.id) || []
-        return {
-          ...state,
-          text: '',
-          messages: messages,
-          apiInterlocutor: payload.interactor.apiUser
-        }
+    case SETUP_NEW_CHAT:
+      return {
+        ...state,
+        text: '',
+        messages: payload.messages,
+        apiInterlocutor: payload.apiInterlocutor
       }
-
-      return state
-    }
     default:
       return state
   }
